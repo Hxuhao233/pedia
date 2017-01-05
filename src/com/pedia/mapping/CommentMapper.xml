@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pedia.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.pedia.model.Comment">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="commentContent" jdbcType="VARCHAR" property="commentcontent" />
+    <result column="commentTime" jdbcType="TIMESTAMP" property="commenttime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cid, eid, uid, commentContent, commentTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Comment
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+    <select id="selectByEid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Comment
+    where eid = #{eid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Comment
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pedia.model.Comment">
+    insert into Comment (cid, eid, uid, 
+      commentContent, commentTime)
+    values (#{cid,jdbcType=INTEGER}, #{eid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{commentcontent,jdbcType=VARCHAR}, #{commenttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pedia.model.Comment">
+    insert into Comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="eid != null">
+        eid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="commentcontent != null">
+        commentContent,
+      </if>
+      <if test="commenttime != null">
+        commentTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="eid != null">
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="commentcontent != null">
+        #{commentcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="commenttime != null">
+        #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pedia.model.Comment">
+    update Comment
+    <set>
+      <if test="eid != null">
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="commentcontent != null">
+        commentContent = #{commentcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="commenttime != null">
+        commentTime = #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pedia.model.Comment">
+    update Comment
+    set eid = #{eid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      commentContent = #{commentcontent,jdbcType=VARCHAR},
+      commentTime = #{commenttime,jdbcType=TIMESTAMP}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+
+</mapper>

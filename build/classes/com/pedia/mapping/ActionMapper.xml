@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pedia.dao.ActionMapper">
+  <resultMap id="BaseResultMap" type="com.pedia.model.Action">
+    <id column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="neweid" jdbcType="INTEGER" property="neweid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="actionTime" jdbcType="TIMESTAMP" property="actiontime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    aid, eid, uid, neweid, status, actionTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Action
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+    <select id="selectByStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Action
+    where status = #{status,jdbcType=INTEGER}
+  </select>
+   <select id="selectByKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Action
+    where neweid = #{neweid,jdbcType=INTEGER}
+  </select>
+     <select id="selectByEid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Action
+    where eid = #{eid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Action
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pedia.model.Action">
+    insert into Action (aid, eid, uid, 
+      neweid, status, actionTime
+      )
+    values (#{aid,jdbcType=INTEGER}, #{eid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{neweid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{actiontime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pedia.model.Action">
+    insert into Action
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        aid,
+      </if>
+      <if test="eid != null">
+        eid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="neweid != null">
+        neweid,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="actiontime != null">
+        actionTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="eid != null">
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="neweid != null">
+        #{neweid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="actiontime != null">
+        #{actiontime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pedia.model.Action">
+    update Action
+    <set>
+      <if test="eid != null">
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="neweid != null">
+        neweid = #{neweid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="actiontime != null">
+        actionTime = #{actiontime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pedia.model.Action">
+    update Action
+    set eid = #{eid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      neweid = #{neweid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      actionTime = #{actiontime,jdbcType=TIMESTAMP}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>

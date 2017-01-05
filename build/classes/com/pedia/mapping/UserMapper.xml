@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pedia.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.pedia.model.User">
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="iconAddr" jdbcType="VARCHAR" property="iconaddr" />
+    <result column="role" jdbcType="INTEGER" property="role" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="exp" jdbcType="INTEGER" property="exp" />
+    <result column="lastLoginTime" jdbcType="TIMESTAMP" property="lastlogintime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, account, password, userName, iconAddr, role, level, exp, lastLoginTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from User
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from User
+    where account = #{account,jdbcType=VARCHAR}
+  </select>
+   <select id="selectAccount" parameterType="java.lang.String"  resultType="java.lang.Integer">
+  	select count(account)
+  	from User
+  	where account = #{account,jdbcType=VARCHAR}       
+  </select>
+  <select id="selectByAccountAndPassword" parameterType="map" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from User
+  	where account = #{account,jdbcType=VARCHAR} 
+	and  
+    <if test="password != null">
+      password = md5(#{password,jdbcType=VARCHAR})
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from User
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pedia.model.User" useGeneratedKeys="true"  keyProperty="uid">
+    insert into User (uid, account, password, 
+      userName, iconAddr, role, 
+      level, exp, lastLoginTime
+      )
+    values (#{uid,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, md5(#{password,jdbcType=VARCHAR}), 
+      #{username,jdbcType=VARCHAR}, #{iconaddr,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{exp,jdbcType=INTEGER}, #{lastlogintime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pedia.model.User" useGeneratedKeys="true"  keyProperty="uid">
+    insert into User
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="iconaddr != null">
+        iconAddr,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="exp != null">
+        exp,
+      </if>
+      <if test="lastlogintime != null">
+        lastLoginTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        md5(#{password,jdbcType=VARCHAR}),
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="iconaddr != null">
+        #{iconaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null">
+        #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogintime != null">
+        #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pedia.model.User">
+    update User
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="iconaddr != null">
+        iconAddr = #{iconaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null">
+        exp = #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogintime != null">
+        lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pedia.model.User">
+    update User
+    set account = #{account,jdbcType=VARCHAR},
+      password = md5(#{password,jdbcType=VARCHAR}),
+      userName = #{username,jdbcType=VARCHAR},
+      iconAddr = #{iconaddr,jdbcType=VARCHAR},
+      role = #{role,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      exp = #{exp,jdbcType=INTEGER},
+      lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+
+</mapper>
