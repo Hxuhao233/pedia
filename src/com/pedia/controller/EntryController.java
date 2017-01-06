@@ -181,4 +181,55 @@ public class EntryController {
 			return ret;
 		}
 	
+	
+	//点赞
+		@ResponseBody
+		@RequestMapping(value="/priase/{eid}",method = RequestMethod.GET)
+		public ResponseData priase(@PathVariable("eid")Integer entryID,HttpSession session){
+			ResponseData ret=new ResponseData();
+			Map<String, Object> data=new HashMap<>();
+			List<Integer> priaseList=(List<Integer>)session.getAttribute("priaseList");
+			for (int i=0;i<priaseList.size();i++)
+			{
+				if (priaseList.get(i)==entryID){
+					ret.setCode(500);
+					data.put("info", "点赞失败，该用户短期内对该词条点过赞");
+					ret.setData(data);
+					return ret;
+				}
+			}
+			entryService.priase(entryID);
+			priaseList.add(entryID);
+			session.setAttribute("priaseList", priaseList);
+			ret.setCode(200);
+			data.put("info", "点赞成功");
+			ret.setData(data);
+			return ret;
+		}
+		
+		//差评
+		@ResponseBody
+		@RequestMapping(value="/badReviewList/{eid}",method = RequestMethod.GET)
+		public ResponseData badReviewList(@PathVariable("eid")Integer entryID,HttpSession session){
+			ResponseData ret=new ResponseData();
+			Map<String, Object> data=new HashMap<>();
+			List<Integer> badReviewList=(List<Integer>)session.getAttribute("badReviewList");
+			for (int i=0;i<badReviewList.size();i++)
+			{
+				if (badReviewList.get(i)==entryID){
+					ret.setCode(500);
+					data.put("info", "差评失败，该用户短期内对该词条给过差评");
+					ret.setData(data);
+					return ret;
+				}
+			}
+			entryService.badReview(entryID);
+			badReviewList.add(entryID);
+			session.setAttribute("badReviewList", badReviewList);
+			ret.setCode(200);
+			data.put("info", "差评成功");
+			ret.setData(data);
+			return ret;
+			
+		}
 }
