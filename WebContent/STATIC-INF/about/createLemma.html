@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../css/createLemma.css">
+</head>
+<body>
+	<div id="header">
+		<img src="../images/createLemma/logo.png">
+		<div id="user">
+			<a href="self.html"><img src="../images/createLemma/userCenter.png"><p>个人中心</p></a>			
+		</div>
+	</div>
+    <div id="navigateBar">
+    	<div id="stage0"><a href="javascript:void(0)" class="goback_default"></a></div>
+    	<span class="connect span1"></span>
+    	<div id="stage1"><a href="#none" class="list_default"></a></div>
+    	<span class="connect span2"></span>
+    	<div id="stage2"><a href="#none" class="list_default"></a></div>
+    	<span class="connect span3"></span>
+    	<div id="stage3"><a href="#none" class="list_default"></a></div>
+    </div>
+	<div id="maincontainer">
+		<div id="step1">
+			<p id="lemmaName">词条名：<input type="text"></p>
+			<p id="labelList">标签<span class="remarks">(选填）：</span><input type="text" class="tag1 tag"><input type="text" class="tag2 tag"><br/><input type="text" class="tag3 tag"><input type="text" class="tag4 tag"></p>
+			<a id="scr1"><img src="../images/createLemma/next.png"></a>
+		</div>
+		<div id="step2">
+	        <p class="textLabel">正文</p>
+	        <textarea id="text"></textarea>
+	        <a id="pre"><img src="../images/createLemma/pre.png"></a>
+	        <a id="next"><img src="../images/createLemma/next.png"></a>
+		</div>
+		<div id="step3">
+		    <form id="upload_form">
+		    <input type="text" id="lemmaId" name="eid" value="" style="display:none">
+			<input type="text" id="lemma" name="entryName" readonly="readonly">
+			<p id="labelmark">标签</p>
+			<div id="tags">
+			    <input type="text" name="label1" class="tally tally1" style="display:none" value="">
+			    <input type="text" name="label2" class="tally tally2" style=" display:none" value="">
+			    <input type="text" name="label3" class="tally tally3" style="display:none" value="">
+			    <input type="text" name="label4" class="tally tally4" style="display:none" value="">
+			</div>
+			<span id="verLine"></span>
+			<div id="starboard">
+				<input type="file" name="file" id="upload" accept="image/*" style="display:none">
+	            <a id="addPhoto"><img src="../images/createLemma/addPhoto.png" alt="预览图"></a>
+			</div>
+			<span class="cutLine cut"></span>
+			<p class="textLabel label2">正文</p>
+			<p class="textArea"></p>
+			<input type="text" readonly="readonly" name="entryContent" id="realText" style=" opacity: 0;">
+			<a id="prev"><img src="../images/createLemma/pre.png"></a>
+	        <input id="submit" type="button"/>
+	        </form>
+		</div>
+	</div>
+	<script type="text/javascript" src="../scripts/jquery-2.2.1.js"></script>
+	<script type="text/javascript" src="../scripts/createLemma.js"></script>
+</body>
+</html>

@@ -51,7 +51,7 @@ public class ManagerServiceImpl implements IManagerService{
 
 		for(Entry item : result){
 			User publisher = userDao.selectByPrimaryKey(item.getUid());
-			String publisherName = publisher.getUsername() != null ?publisher.getUsername() : publisher.getAccount(); 
+			String publisherName = publisher.getUsername() != null ?publisher.getUsername() : "未知"; 
 			//List<Label> labels = labelDao.selectByEid(item.getEid());
 			entryDataList.addUncheckedEntry(item, publisherName);
 		}
@@ -150,6 +150,8 @@ public class ManagerServiceImpl implements IManagerService{
 			
 			Entry newEntry = entryDao.selectByPrimaryKey(entryId);
 			newEntry.setStatus(2);
+			newEntry.setPraisetimes(oldEntry.getPraisetimes());
+			newEntry.setBadreviewtimes(oldEntry.getBadreviewtimes());
 			newEntry.setUid(oldEntry.getUid());
 			ret = entryDao.updateByPrimaryKeySelective(newEntry);
 			

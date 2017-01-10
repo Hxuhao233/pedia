@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pedia.entity.Student;
+import com.pedia.dao.UserMapper;
+
 import com.pedia.model.Entry;
 import com.pedia.model.User;
 import com.pedia.service.IEntryService;
@@ -39,19 +40,33 @@ public class UserController {
 	@Autowired
 	private IEntryService EntryService;
 	
+	@Autowired
+	private UserMapper userDao;
 	
 	// 获取个人主页
 	@ResponseBody
 	@RequestMapping(value = "/getPersonalHomePage", method = RequestMethod.GET)
-	public ResponseData getPersonalHomePage(HttpSession session) {
+	public ResponseData getPersonalHomePage(HttpSession session,@RequestParam(value="uid",required=false)Integer uid) {
 		User user=(User)session.getAttribute("user");
+
 		ResponseData ret=new ResponseData();
-		if (user!=null)
+		if (user!=null|| (user==null&&uid!=null))
 		{
+
 			Map<String,Object> data = new HashMap<String,Object>();
-			data.put("level", user.getLevel());//等级
-			data.put("exp", user.getExp());//经验
-			DetailedUserData detailedUserData=UserService.enterPersonalHomePage(user.getUid());
+			DetailedUserData detailedUserData;
+			if(uid!=null){
+				User u = userDao.selectByPrimaryKey(uid);
+				data.put("level", u.getLevel());//等级
+				data.put("exp", u.getExp());//经验
+				detailedUserData=UserService.enterPersonalHomePage(uid);
+			}else{
+				data.put("level", user.getLevel());//等级
+				data.put("exp", user.getExp());//经验
+				detailedUserData=UserService.enterPersonalHomePage(user.getUid());
+			}
+
+
 			List<Entry> entriesList=detailedUserData.getEntries();
 			data.put("entriesNum",entriesList.size());//提交版本数
 			List<Map<String, Object>> hasPassList=new ArrayList<>();
@@ -65,19 +80,20 @@ public class UserController {
 					case 2:
 						//已通过
 						Map<String, Object> hasPassMap=new HashMap<String, Object>();
-						hasPassMap.put("entryId", entry.getEid());//词条id
+						hasPassMap.put("eid", entry.getEid());//词条id
 						hasPassMap.put("entryName", entry.getEntryname());//词条名称
-						hasPassMap.put("createDate",new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
-						hasPassMap.put("passDate", new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(entry.getPublishtime()));//通过时间 //TODO 目前用创建时间，需要改成通过时间
+						hasPassMap.put("createDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
+						hasPassMap.put("passDate", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getPublishtime()));//通过时间 //TODO 目前用创建时间，需要改成通过时间
 						hasPassMap.put("modifyTimes", 0);//被他人修改次数 //TODO 目前用0替代，需要改成被修改次数
 						hasPassList.add(hasPassMap);
 						break;
+						
 					case 1:case 6:
 						//待通过
 						Map<String, Object> toPassMap=new HashMap<String, Object>();
 						toPassMap.put("eid", entry.getEid());//词条id
 						toPassMap.put("entryName", entry.getEntryname());//词条名称
-						toPassMap.put("createDate",new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
+						toPassMap.put("createDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
 						toPassList.add(toPassMap);
 						break;
 				
@@ -86,7 +102,7 @@ public class UserController {
 						Map<String, Object> hasNotPassMap = new HashMap<String, Object>();
 						hasNotPassMap.put("eid", entry.getEid());//词条id
 						hasNotPassMap.put("entryName", entry.getEntryname());//词条名称
-						hasNotPassMap.put("createDate",new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
+						hasNotPassMap.put("createDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
 						hasNotPassMap.put("refuseReason", entry.getRefusereason());
 						hasNotPassList.add(hasNotPassMap);
 						break;
@@ -98,12 +114,14 @@ public class UserController {
 			data.put("hasPassList", hasPassList);//已通过版本列表
 			data.put("toPassList", toPassList);//待通过版本列表
 			data.put("hasNotPassList", hasNotPassList);//未通过版本列表
-			data.put("passRate", hasPassList.size()/(hasPassList.size()+hasNotPassList.size()));//通过率
+			data.put("passRate", hasPassList.size()/ ( (hasPassList.size()+hasNotPassList.size())==0 ? 1 :hasPassList.size()+hasNotPassList.size()  )        );                //通过率
+			data.put("username", user.getUsername());
 			ret.setData(data);
 			System.out.println("获取个人主页成功！");
 			ret.setCode(200);
 		}
 		else {
+
 			System.out.println("获取个人主页失败！session为null");
 			ret.setCode(500);
 		}
@@ -112,7 +130,7 @@ public class UserController {
 	
 	//删除词条
 	@RequestMapping(value = "/deleteEntry/{eid}", method = RequestMethod.GET)
-	public @ResponseBody ResponseData addCollectList(@PathVariable("eid") int eid, HttpSession session) {
+	public @ResponseBody ResponseData deleteEntry(@PathVariable("eid") int eid, HttpSession session) {
 		User user=(User)session.getAttribute("user");
 		ResponseData ret=new ResponseData();
 		if (user!=null){
@@ -145,6 +163,9 @@ public class UserController {
 	// 用户注册
 		@RequestMapping(value = "/signup", method = RequestMethod.POST)
 		public @ResponseBody ResponseData signUp(@RequestBody User user) {
+			if(user.getUsername()!=null){
+				System.out.println("名字:"  + user.getUsername());
+			}
 			int id = UserService.register(user);
 			ResponseData ret=new ResponseData();
 			Map<String, Object> data=new HashMap<>();
@@ -154,7 +175,8 @@ public class UserController {
 				ret.setData(data);
 			} else {
 				ret.setCode(500);
-				data.put("info", "注册失败");
+				data.put("info", "注册失败,用户名已存在");
+				ret.setData(data);
 			}
 			return ret;
 		}
@@ -178,9 +200,10 @@ public class UserController {
 					data.put("info", "登录成功");
 					data.put("exp", toLoginUser.getExp());
 					data.put("iconaddr", toLoginUser.getIconaddr());
-					data.put("lastLoginTime", new SimpleDateFormat("yyyy-mm-dd").format(toLoginUser.getLastlogintime()));
+					data.put("lastLoginTime", new SimpleDateFormat("yyyy-MM-dd").format(toLoginUser.getLastlogintime()));
 					data.put("level", toLoginUser.getLevel());
 					data.put("userName", toLoginUser.getUsername());
+					data.put("role", toLoginUser.getRole());
 				}else {
 					ret.setCode(500);
 					data.put("info", "用户名或密码错误");

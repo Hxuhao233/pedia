@@ -1,0 +1,965 @@
+html
+{
+    width: 1250px;
+    margin-right: auto;
+    margin-left: auto;
+
+    background: white;
+}
+
+body
+{
+    font-family: '微软雅黑','Hiragino Sans GB', 'Corbel','Microsoft Yahei', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+
+    min-height: 1950px;
+    margin: 0;
+    padding: 0;
+
+    vertical-align: bottom;
+
+    background: rgb(241,245,247);
+}
+
+a
+{
+    display: block;
+
+    text-decoration: none;
+}
+
+p
+{
+    margin: 0;
+}
+
+img
+{
+    vertical-align: bottom;
+}
+
+header
+{
+    position: relative;
+
+    width: 1250px;
+    height: 200px;
+
+    background: url('../images/readDetail/header.png') no-repeat center;
+}
+
+#LOGO
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 242px;
+    height: 125px;
+}
+
+header input[type='text']
+{
+    font-size: 13px;
+
+    position: relative;
+    top: 80px;
+    left: 400px;
+
+    float: left;
+
+    width: 394px;
+    height: 32px;
+    padding: 1px 0 1px 0;
+
+    color: rgb(153,153,153);
+    border: 2px inset;
+}
+
+#tapSearch
+{
+    position: relative;
+    top: 80px;
+    left: 400px;
+
+    float: left;
+
+    width: 68px;
+    height: 36px;
+
+    border: 0;
+    background: url('../images/readDetail/search.png') no-repeat center;
+}
+
+#tapGoTo
+{
+    position: relative;
+    top: 80px;
+    left: 400px;
+
+    float: left;
+
+    width: 68px;
+    height: 36px;
+
+    border: 0;
+    background: url('../images/readDetail/GoTo.png') no-repeat center;
+}
+
+#headerRight
+{
+    position: relative;
+
+    float: right;
+
+    width: 100px;
+    height: 36px;
+}
+
+#headerRight p
+{
+    position: relative;
+    top: 20px;
+    right: 60px;
+
+    float: right;
+
+    width: 20px;
+    height: 20px;
+
+    text-align: center;
+
+    color: #e4e4e4;
+}
+
+#headerRight a
+{
+    position: relative;
+    top: 20px;
+    right: 60px;
+
+    float: right;
+
+    width: 28px;
+    height: 20px;
+
+    color: #e4e4e4;
+}
+
+
+#userCenter
+{
+    position: relative;
+
+    display: none;
+    float: right;
+
+    width: 100px;
+    height: 36px;
+}
+
+#userCenter a
+{
+    position: relative;
+    top: 13px;
+    right: 40px;
+
+    float: right;
+
+    width: 32px;
+    height: 32px;
+
+    background: url('../images/readList/userCenter.png') no-repeat center;
+}
+
+#edit
+{
+    position: fixed;
+    z-index: 999;
+    top: 250px;
+    right: 100px;
+
+    width: 80px;
+    height: 80px;
+}
+
+#edit img
+{
+    position: relative;
+
+    width: 80px;
+    height: 80px;
+}
+
+#load
+{
+    position: relative;
+
+    width: 1250px;
+    height: auto;
+}
+
+#describe
+{
+    position: relative;
+
+    width: 1250px;
+    height: 430px;
+
+    border-bottom: 1px solid rgb(215,215,215);
+}
+
+#describe a
+{
+    position: relative;
+
+    float: left;
+
+    width: 64px;
+    height: 64px;
+    margin: 36px 80px 300px 56px;
+
+    background: url('../images/readDetail/back.png') no-repeat center;
+}
+
+#comments
+{
+    position: relative;
+
+    float: left;
+
+    width: 1250px;
+    min-height: 850px;
+}
+
+#tableTitle
+{
+    position: relative;
+
+    float: left;
+
+    width: 300px;
+    height: 330px;
+    margin: 36px 0 24px 0;
+
+    background: url('../images/readDetail/tableTitle.png') no-repeat center;
+}
+
+#tableTitle p
+{
+    overflow: hidden;
+
+    max-width: 125px;
+}
+
+#title
+{
+    font-size: 16px;
+    line-height: 40px;
+
+    position: relative;
+
+    width: 140px;
+    height: 40px;
+    margin: 30px 135px 40px 25px;
+
+    text-align: center;
+
+    color: white;
+    background: url('../images/readDetail/titleBg.png') no-repeat center;
+}
+
+#label0
+{
+    position: relative;
+
+    float: left;
+
+    width: 50px;
+    height: 20px;
+    margin: 0 225px 20px 25px;
+
+    color: #949494;
+}
+
+#label1
+{
+    line-height: 30px;
+
+    position: relative;
+
+    float: left;
+
+    width: 80px;
+    height: 30px;
+    margin: 10px 10px 0 60px;
+
+    text-align: center;
+
+    color: #333;
+    background: rgb(242,242,242);
+}
+#label1.null
+{
+    background: white;
+}
+
+
+#label2
+{
+    line-height: 30px;
+
+    position: relative;
+
+    float: left;
+
+    min-width: 80px;
+    height: 30px;
+    margin: 10px 0 0 10px;
+
+    text-align: center;
+
+    color: #333;
+    background: rgb(242,242,242);
+}
+#label2.null
+{
+    background: white;
+}
+
+
+#label3
+{
+    line-height: 30px;
+
+    position: relative;
+
+    float: left;
+
+    width: 80px;
+    height: 30px;
+    margin: 40px 10px 0 60px;
+
+    text-align: center;
+
+    color: #333;
+    background: rgb(242,242,242);
+}
+#label3.null
+{
+    background: white;
+}
+
+#label4
+{
+    line-height: 30px;
+
+    position: relative;
+
+    float: left;
+
+    min-width: 80px;
+    height: 30px;
+    margin: 40px 0 0 10px;
+
+    text-align: center;
+
+    color: #333;
+    background: rgb(242,242,242);
+}
+#label4.null
+{
+    background: white;
+}
+
+#tableLike
+{
+    position: relative;
+
+    float: left;
+
+    width: 550px;
+    height: 50px;
+    margin: 36px 200px 0 0;
+}
+
+#great
+{
+    position: relative;
+
+    float: left;
+
+    width: 160px;
+    height: 45px;
+    margin: 0 1px 5px 33px;
+
+    background: white;
+}
+
+#great img
+{
+    position: relative;
+
+    float: left;
+
+    width: 22px;
+    height: 22px;
+    margin: 11px 10px 12px 18px;
+}
+
+#great p
+{
+    font-size: 12px;
+    line-height: 22px;
+
+    position: relative;
+
+    float: left;
+
+    width: 100px;
+    margin: 11px 0 12px 10px;
+
+    color: rgb(148,148,148);
+}
+
+
+#bad
+{
+    position: relative;
+
+    float: left;
+
+    width: 160px;
+    height: 45px;
+    margin: 0 1px 5px 1px;
+
+    background: white;
+}
+
+#bad img
+{
+    position: relative;
+
+    float: left;
+
+    width: 22px;
+    height: 22px;
+    margin: 11px 10px 12px 18px;
+}
+
+#bad p
+{
+    font-size: 12px;
+    line-height: 22px;
+
+    position: relative;
+
+    float: left;
+
+    width: 100px;
+    margin: 11px 0 12px 10px;
+
+    color: rgb(148,148,148);
+}
+
+#report
+{
+    position: relative;
+
+    float: left;
+
+    width: 160px;
+    height: 45px;
+    margin: 0 33px 5px 1px;
+
+    background: white;
+}
+
+#report img
+{
+    position: relative;
+
+    float: left;
+
+    width: 22px;
+    height: 22px;
+    margin: 11px 10px 12px 38px;
+}
+
+#report p
+{
+    font-size: 12px;
+    line-height: 22px;
+
+    position: relative;
+
+    float: left;
+
+    width: 50px;
+    margin: 11px 30px 12px 10px;
+
+    color: rgb(148,148,148);
+}
+
+
+#tablePic
+{
+    position: relative;
+
+    float: left;
+
+    width: 550px;
+    height: 220px;
+    margin: 60px 200px 24px 0;
+}
+
+#tablePic img
+{
+    position: relative;
+
+    width: 220px;
+    height: 220px;
+    margin: 0 165px 0 165px;
+}
+
+#tableReport
+{
+    position: relative;
+
+    display: none;
+    float: left;
+
+    width: 457px;
+    height: 334px;
+    margin: 5px 0 0 120px;
+
+    background: url('../images/readDetail/subBg.png') no-repeat center;
+}
+
+#endPic
+{
+    position: relative;
+
+    float: right;
+    clear: both;
+
+    width: 26px;
+    height: 26px;
+    margin: 30px 40px 0 0;
+}
+
+#tableReport p
+{
+    font-size: 16px;
+
+    position: relative;
+
+    float: left;
+
+    width: 130px;
+    height: 21px;
+    margin: 10px 270px 0 57px;
+
+    color: rgb(121,121,121);
+}
+
+#tableReport input
+{
+    position: relative;
+
+    float: left;
+
+    width: 347px;
+    height: 36px;
+    margin: 10px 63px 0 57px;
+}
+
+#endReport
+{
+    position: relative;
+
+    float: left;
+
+    width: 140px;
+    height: 40px;
+    margin: 50px 160px 0 157px;
+}
+
+#details
+{
+    position: relative;
+
+    float: left;
+
+    width: 1250px;
+    min-height: 480px;
+
+    border-bottom: 1px solid rgb(215,215,215);
+}
+
+#detailsTitle
+{
+    font-size: 16px;
+
+    position: relative;
+    top: 50px;
+    left: 205px;
+
+    float: left;
+    clear: both;
+}
+
+#mainDetail
+{
+    font-size: 13px;
+
+    position: relative;
+    top: 80px;
+
+    float: left;
+    overflow-y: scroll;
+
+    width: 800px;
+    min-height: 300px;
+    margin: 20px 250px 0 200px;
+
+    color: #333;
+    background: white;
+}
+
+#titleDetail
+{
+    position: relative;
+
+    width: 740px;
+    height: 20px;
+    margin: 45px 35px 5px 25px;
+
+    text-align: center;
+}
+
+#textDetail
+{
+    position: relative;
+
+    display: block;
+
+    width: 740px;
+    height: 225px;
+    margin: 0 35px 25px 25px;
+
+    text-align: center;
+    white-space: pre-wrap;
+}
+
+#chervon:link
+{
+    position: relative;
+    top: 50px;
+    left: 200px;
+
+    float: left;
+
+    width: 56px;
+    height: 36px;
+
+    background: url('../images/readDetail/chervon.png') no-repeat center;
+}
+#chervon:hover
+{
+    top: 48px;
+
+    width: 56px;
+    height: 40px;
+
+    background: url('../images/readDetail/chervon_hover.png') no-repeat center;
+}
+
+#commentTitle
+{
+    font-size: 20px;
+
+    position: relative;
+    top: 55px;
+    left: 220px;
+
+    float: left;
+
+    width: 150px;
+
+    color: rgb(94,94,94);
+}
+
+#commentNumTitle
+{
+    font-size: 12px;
+}
+
+#addTitle
+{
+    font-size: 14px;
+
+    position: relative;
+    top: 70px;
+    right: 300px;
+
+    float: right;
+
+    cursor: pointer;
+    text-decoration: underline;
+
+    color: #868686;
+}
+
+#write
+{
+    position: relative;
+    top: 50px;
+    right: 305px;
+
+    float: right;
+
+    width: 42px;
+    height: 42px;
+}
+
+#addTables
+{
+    position: absolute;
+    z-index: 10;
+    top: 100px;
+    right: 80px;
+
+    display: none;
+
+    width: 400px;
+    height: auto;
+
+    border: 2px solid rgb(228,228,228);
+    background: white;
+}
+
+#addTable
+{
+    position: relative;
+    z-index: 10;
+
+    float: left;
+
+    width: 400px;
+    height: 80px;
+
+    background: white;
+}
+
+#addTable.input
+{
+    height: 200px;
+}
+
+#addTable input
+{
+    position: relative;
+
+    float: left;
+    clear: both;
+
+    width: 335px;
+    height: 32px;
+    margin: 20px 40px 0 25px;
+}
+
+#twoButton
+{
+    position: relative;
+    z-index: 10;
+
+    display: none;
+    float: left;
+
+    width: 400px;
+    height: 40px;
+
+    background: white;
+}
+
+#Ok:link
+{
+    font-weight: bold;
+    line-height: 25px;
+
+    position: relative;
+
+    float: left;
+
+    width: 50px;
+    height: 25px;
+    margin: 0 50px 15px 100px;
+
+    text-align: center;
+
+    color: white;
+    background: rgb(243,169,83);
+}
+#Ok:visited
+{
+    color: white;
+}
+#Ok:hover
+{
+    background: rgb(225,139,42);
+}
+
+#cancel:link
+{
+    line-height: 25px;
+
+    position: relative;
+
+    float: left;
+
+    width: 50px;
+    height: 25px;
+    margin: 0 100px 15px 50px;
+
+    text-align: center;
+
+    color: #6b6b6b;
+}
+#cancel:visited
+{
+    color: #6b6b6b;
+}
+#cancel:hover
+{
+    color: rgb(148,148,148);
+}
+
+#addTableBotton
+{
+    position: relative;
+    z-index: 10;
+
+    float: left;
+
+    width: 400px;
+    height: 40px;
+
+    border-top: 1px solid rgb(228,228,228);
+    background: white;
+}
+
+#addTableBotton a:link
+{
+    font-size: 14px;
+
+    position: relative;
+    top: 10px;
+    right: 15px;
+
+    float: right;
+
+    width: 30px;
+    height: 32px;
+
+    color: #6b6b6b;
+}
+#addTableBotton a:visited
+{
+    color: #6b6b6b;
+}
+#addTableBotton a:hover
+{
+    color: rgb(148,148,148);
+}
+
+#addTableBotton img
+{
+    position: relative;
+    right: 8px;
+
+    float: right;
+
+    width: 32px;
+    height: 32px;
+}
+
+#commentTable
+{
+    position: relative;
+
+    float: left;
+    clear: both;
+
+    width: 850px;
+    margin: 80px 2200px 0 180px;
+}
+
+.content
+{
+    width: 850px;
+    height: 170px;
+
+    border-bottom: 2px solid rgb(242,242,242);
+    background: white;
+}
+
+.content a
+{
+    display: block;
+}
+
+.headPic
+{
+    float: left;
+
+    width: 56px;
+    height: 56px;
+    margin: 10px 20px 104px 30px;
+}
+
+.nickName
+{
+    font-family: 'Arial Normal', 'Arial';
+    font-size: 14px;
+
+    float: left;
+
+    width: 375px;
+    height: 16px;
+    margin: 30px 0 15px 0;
+
+    color: #515151;
+}
+
+.date
+{
+    font-size: 12px;
+
+    color: #868686;
+}
+
+.commentDiv
+{
+    float: left;
+
+    width: 375px;
+    height: 72px;
+
+    background: url(../images/readDetail/commentBar.png);
+}
+
+.commentDiv.hover
+{
+    width: 425px;
+}
+
+.commentDiv p
+{
+    font-size: 14px;
+
+    margin: 25px 20px 0 20px;
+
+    color: rgb(107,107,107);
+}

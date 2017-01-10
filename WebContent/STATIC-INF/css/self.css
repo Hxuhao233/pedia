@@ -1,0 +1,450 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+:focus {
+  outline: none;
+}
+
+html {
+  width: 1250px;
+  height: 2460px;
+  margin: 0px auto;
+}
+
+#mainWindow {
+  width: 100%;
+  height: 2460px;
+  font-size: 14px;
+  font-family: '微软雅黑', 'Hiragino Sans GB', "Corbel", 'Microsoft Yahei',
+    sans-serif;
+  color: #ffffff;
+
+}
+#header{
+  width: 1250px;
+  height:67px;
+  background-image: url("../images/self/header.png");
+  z-index:999;
+}
+#header #logo{
+  float: left;
+  width: 245px;
+  height: 125px;
+  background-image: url("../images/self/logo.png");
+  z-index:1000;
+}
+#header #usernameController{
+  float: right;
+  height: 20px;
+  width: 100px;
+  position: relative;
+  right: 75px;
+  top: 25px;
+}
+#header #usernameController:hover{
+  cursor: pointer;
+}
+#username{
+  float: left;
+}
+#drop{
+  float: right;
+}
+
+
+#middle{
+  width: 1250px;
+  height:400px;
+  background-image: url("../images/self/u808.png");
+}
+#BackHome{
+  height: 26px;
+  width: 82px;
+  float: right;
+  position: relative;
+  top: 66px;
+  left: -1015px;
+}
+#BackHome img{
+  float: left;
+}
+#BackHome a{
+  float: left;
+  display:block;
+  position: relative;
+  top: 2px;
+}
+#UserInformation{
+  width: 900px;
+  height: 283px;
+  margin: 0px auto;
+  position: relative;
+  top: 84px;
+}
+#UserGrade{
+  float: left;
+  width: 150px;
+  height: 283px;
+}
+#Degree{
+  width: 32px;
+  height: 32px;
+  position: relative;
+  top: 50px;
+  left: 90px;
+  background-image: url("../images/self/u916.png");
+  color: #000000;
+  text-align: center;
+  line-height: 35px;
+}
+#UserGrade img{
+  width: 88px;
+  height: 88px;
+  position: relative;
+  top: 55px;
+  left: 18px;
+}
+#UserGrade #exp{
+  width: 100px;
+  height: 16px;
+  position: relative;
+  top: 80px;
+  color: #6B6B6B;
+  font-size: 12px;
+  text-align: center;
+}
+#UserGrade #exp #expTitle{
+  float: left;
+  margin-left: 25px;
+  margin-right: 10px;
+}
+#UserGrade #exp #expNum{
+  float: left;
+}
+#UserState{
+  float: right;
+  width: 679px;
+  height: 283px;
+  background-image: url("../images/self/small_background.png");
+}
+#UserStateHeader{
+  font-size: 16px;
+
+  position: relative;
+  top: 10px;
+  left: 60px;
+  color: #6B6B6B;
+}
+#UserStateMiddle{
+  width: 500px;
+  height:96px;
+  margin: 0px auto;
+  position: relative;
+  top: 65px;
+  text-align: center;
+}
+.myCicle{
+  float: left;
+  width: 96px;
+  height: 96px;
+  margin-left: 25px;
+  margin-right: 45px;
+  background-image: url("../images/self/u823.png");
+  font-size: 12px;
+  color:#6B6B6B;
+}
+.myCicleText{
+  font-size:36px;
+  color: #868686;
+  margin-top: 3px;
+  margin-bottom: 10px;
+}
+
+#UserStateLast{
+  width: 250px;
+  height: 20px;
+  margin: 0px auto;
+  position: relative;
+  top: 115px;
+  color: #6B6B6B;
+  font-size: 12px;
+}
+#report{
+  float: left;
+}
+#report div{
+  float: left;
+}
+#passRate{
+  float: right;
+}
+#passRate div{
+  float: left;
+}
+#dropFrame{
+  width:118px;
+  height: 116px;
+  float: right;
+  position: relative;
+  top: -366px;
+  right: -129px;
+
+  border:#ACACAC solid 2px;
+  filter:alpha(opacity=90);
+  opacity: 0.90;
+
+  display:none;
+}
+#dropFrame dl{
+  height: auto;
+  display:block;
+}
+#dropFrame dt{
+  height: 29px;
+}
+#dropFrame dt a{
+  height: 29px;
+  display: block;
+}
+#changePW{
+  background-image: url("../images/self/changePW.png");
+}
+#Picture{
+  background-image: url("../images/self/u901.png");
+}
+#changeMsg{
+  background-image: url("../images/self/u903.png");
+}
+#revoke{
+  background-image: url("../images/self/u905.png");
+}
+#changePW:hover{
+  cursor: pointer;
+  background-image: url("../images/self/changePW_mouseOver.png");
+}
+#Picture:hover{
+  cursor: pointer;
+  background-image: url("../images/self/u901_mouseOver.png");
+}
+#changeMsg:hover{
+  cursor: pointer;
+  background-image: url("../images/self/u903_mouseOver.png");
+}
+#revoke:hover{
+  cursor: pointer;
+  background-image: url("../images/self/u905_mouseOver.png");
+}
+
+
+
+
+
+
+
+#content{
+  height:1098px;
+  background-image: url("../images/self/u808.png");
+  /*text-align:center;*/
+}
+#contentTitle{
+  font-size: 28px;
+  color: #6B6B6B;
+  position: relative;
+  top: 15px;
+  margin: 0px auto;
+  height: 37px;
+  width: 125px;
+}
+#buttons{
+  width: 504px;
+  height:41px;
+  margin: 0px auto;
+  position: relative;
+  top: 30px;
+}
+#buttons .mybutton{
+  float: left;
+  width:168px;
+  height: 41px;
+}
+#buttons .mybutton:hover{
+  cursor: pointer;
+}
+#tables{
+  position: relative;
+  width: 1000px;
+  margin: 0px auto;
+  top: 80px;
+
+}
+.mytable{
+  border-collapse:collapse;
+  border:1px solid #F00;
+  margin: 0px auto;
+
+}
+.mytable tr{
+  height: 50px;
+}
+.mytable tr td{
+  width: 200px;
+  border-bottom:1px solid #F00;
+  font-size: 20px;
+  color: #000000;
+}
+.mytable div{
+  width: 67px;
+  height:29px;
+  margin: auto auto;
+  background-image: url("../images/self/u872.png");
+}
+.mytable div:hover{
+  cursor: pointer;
+  background-image: url("../images/self/u872_mouseOver.png");
+}
+
+.white_content {
+  display: none;
+  position: absolute;
+  top: 15%;
+  left: 25%;
+
+  background:url(../images/self/edit_background.png) no-repeat transparent;
+  width: 740px;
+  height: 810px;
+
+  z-index:1002;
+  color: #000000;
+}
+.black_overlay {
+  position: fixed;
+  z-index:1000;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+  overflow: hidden;
+  background-color: #000;
+}
+#woh{
+  position: relative;
+  left: 40px;
+  top: 30px;
+  background:url(../images/self/lemmabackground.png) no-repeat transparent;
+  background-size: 60% 100%;
+  max-width: 210px;
+  width: 140%;
+  height: 40px;
+}
+#lemma{
+  color: #ffffff;
+  padding-left: 14px;
+  padding-top: 10px;
+}
+#labelmark{
+  position: relative;
+  top:60px;
+  left: 44px;
+  width: 40px;
+  height: 20px;
+  color: #000000;
+}
+#tags{
+  position: relative;
+  width: 260px;
+  height: 140px;
+  left: 40px;
+  top: 72px;
+}
+.tally{
+  position: relative;
+  background-color: #f2f2f2;
+  color: #333333;
+  font-size: 12px;
+  max-height: 30px;
+  max-width: 100px;
+  display: inline-block;
+  padding: 8px;
+  margin:20px;
+}
+#verLine{
+    border:none;
+    border-left:1px dotted #d7d7d7;
+    height:280px;
+    width:1px;
+    display: inline-block;
+    position: relative;
+    left:320px;
+    top: -190px;
+}
+#goback{
+  width: 26px;
+  height: 26px;
+  background-image: url(../images/self/u145.png);
+  float: right;
+  position: relative;
+  top: -185px;
+  right: 60px;
+}
+#goback:hover{
+  cursor: pointer;
+}
+#starboard{
+  position: relative;
+  width: 340px;
+  height: 254px;
+  left: 360px;
+  top: -456px;
+}
+#starboard>img{
+  position: relative;
+  max-width: 340px;
+  max-height: 254px;
+}
+.cutLine{
+  position:relative;
+  top: 60px;
+  left: 12px;
+  display: inline-block;
+    border:none;
+    border-top:1px dotted #bcbcbc;
+    height: 1px;
+    width: 715px;
+}
+.cut{
+  top: -460px;
+}
+.label2{
+  position: relative;
+  width: 40px;
+  height: 21px;
+  top: -460px;
+  left: 30px;
+  color: #000000;
+}
+.textArea{
+  position: relative;
+  border:1px solid #d7d7d7;
+  width: 620px;
+  height: 360px;
+  left: 60px;
+  top: -450px;
+  font-size: 14px;
+}
+#btn1{
+  position: relative;
+  left: 160px;
+  top: -430px;
+  cursor: pointer;
+}
+#btn2{
+  position: relative;
+  top: -430px;
+  left: 280px;
+  cursor: pointer;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>register</title>
+<link rel="stylesheet" type="text/css" href="../css/register.css">
+<script type="text/javascript" src="../scripts/jquery-2.2.1.js"></script>
+<script type="text/javascript" src="../scripts/jquery.rotate.min.js"></script>
+<script type="text/javascript" src="../scripts/register.js"></script>
+</head>
+<body>
+	<div id="all">
+		<div id="back_Btn">
+			<a href="login.html"><img
+				src="../images/register/goback_default.png" alt="回退按钮" /></a>
+			<p>注册</p>
+		</div>
+		<div id="help_Btn">
+			<div>
+				<p>有问题？</p>
+				<p class="little_Font">访问我们的帮助中心叭</p>
+			</div>
+		</div>
+		<div id="content_Table">
+			<div id="register_Form">
+				<p class="label">用户名</p>
+				<input type="text" name="nickName" required> <br>
+				<!-- <p class="label">所属学校（请选择）</p>
+				<select name="school">
+					<option value="1">华南理工大学</option>
+					<option value="2">中山大学</option>
+					<option value="3">广州大学</option>
+					<option value="4">广州工业大学</option>
+					<option value="5">广州外语外贸大学</option>
+					<option value="6">广州中医药大学</option>
+					<option value="7">华南师范大学</option>
+					<option value="8">广州美术学院</option>
+					<option value="9">广东医学院</option>
+					<option value="10">星海音乐学院</option>
+				</select> <br> -->
+				<p class="label" id="password">密码</p>
+				<input type="password" name="password" required> <br>
+				<p class="label" id="pwdConfirm">确认密码</p>
+				<input type="password" name="passwordConfirm" required> <br>
+				<p class="label" id="account">手机号码/邮箱</p>
+				<input type="text" name="contactInfo" placeholder="必填" required>
+				<br> <br> <br>
+				<button name="register" id="register_Btn" value=""
+					onclick="register()"></button>
+			</div>
+			<p id="login">
+				<span>已有账号？</span> <a href="login.html">登录</a>
+			</p>
+		</div>
+		<div id="footer">
+			<img src="../images/register/twoSheep.png" alt="小羊" id="twoSheep" />
+			<img src="../images/register/leftSheep.png" alt="小羊" id="leftSheep" />
+			<img src="../images/register/rightSheep.png" alt="小羊" id="rightSheep" />
+		</div>
+	</div>
+
+</body>
+</html>

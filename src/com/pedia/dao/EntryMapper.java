@@ -15,7 +15,7 @@ public interface EntryMapper {
 
     Entry selectByPrimaryKey(@Param("eid") Integer eid);
     
-    Entry selectByEntryName(@Param("entryName") String entryName,@Param("status") Integer status);
+    Entry selectByAllEntryName(@Param("entryName") String entryName,@Param("status") Integer status);
     
     List<Entry> selectByInfo(@Param("info")  String info,@Param("status") Integer status);
 

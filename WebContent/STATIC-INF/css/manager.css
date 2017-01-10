@@ -1,0 +1,391 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+:focus {
+  outline: none;
+}
+
+html {
+  width: 1250px;
+  height: 2460px;
+  margin: 0px auto;
+}
+
+#mainWindow {
+  width: 100%;
+  height: 2460px;
+  font-size: 14px;
+  font-family: '微软雅黑', 'Hiragino Sans GB', "Corbel", 'Microsoft Yahei',
+    sans-serif;
+  color: #ffffff;
+
+}
+#header{
+  width: 1250px;
+  height:67px;
+  background-image: url("../images/manager/header.png");
+  z-index:999;
+}
+#header #logo{
+  float: left;
+  width: 245px;
+  height: 125px;
+  background-image: url("../images/manager/logo.png");
+  z-index:1000;
+}
+#header #usernameController{
+  float: right;
+  height: 20px;
+  width: 100px;
+  position: relative;
+  right: 75px;
+  top: 25px;
+}
+#header #usernameController:hover{
+  cursor: pointer;
+
+}
+#username{
+  float: left;
+}
+#drop{
+  float: right;
+}
+#controller{
+  width: 1250px;
+  height:248px;
+  background-image: url("../images/manager/navibar.png");
+}
+#controller #middle{
+  margin: 0px auto;
+  width:732px;
+  height: 100%;
+}
+#controller #BackHome{
+  float: right;
+  width: 64px;
+  height: 64px;
+  position: relative;
+  top: 86px;
+  right: 1060px;
+  background-image: url("../images/manager/u437.png");
+}
+#controller #BackHome:hover{
+  cursor: pointer;
+}
+#middle .mybutton{
+  float: left;
+  width:244px;
+  height: 100%;
+  text-align:center;
+}
+#middle .mybutton:hover{
+  cursor:pointer;
+}
+.mybutton img{
+  position: relative;
+  top: 70px;
+}
+.mybutton div{
+  position: relative;
+  top: 95px;
+}
+#dropFrame{
+  width:118px;
+  height: 58px;
+  float: right;
+  position: relative;
+  top: -247px;
+  right: 68px;
+
+  border:#ACACAC solid 2px;
+  filter:alpha(opacity=90);
+  opacity: 0.90;
+
+  display:none;
+}
+#dropFrame dl{
+  height: auto;
+  display:block;
+}
+#dropFrame dt{
+  height: 29px;
+}
+#dropFrame dt a{
+  height: 29px;
+  display: block;
+}
+#Picture{
+  background-image: url("../images/manager/u909.png");
+}
+#revoke{
+  background-image: url("../images/manager/u913.png");
+}
+#Picture:hover{
+  cursor: pointer;
+  background-image: url("../images/manager/u909_mouseOver.png");
+}
+#revoke:hover{
+  cursor: pointer;
+  background-image: url("../images/manager/u913_mouseOver.png");
+}
+#content{
+  height:1098px;
+  background-image: url("../images/manager/u808.png");
+  text-align:center;
+}
+#tables{
+  position: relative;
+  width: 1000px;
+  margin: 0px auto;
+  top: 70px;
+
+}
+.mytable{
+  border-collapse:collapse;
+  border:1px solid #F00;
+  margin: 0px auto;
+
+}
+.mytable tr{
+  height: 50px;
+}
+.mytable tr td{
+  width: 200px;
+  border-bottom:1px solid #F00;
+  font-size: 20px;
+  color: #000000;
+}
+.mytable div{
+  width: 67px;
+  height:29px;
+  margin: auto auto;
+  background-image: url("../images/manager/u1028.png");
+}
+.mytable div:hover{
+  cursor: pointer;
+  background-image: url("../images/manager/u1028_mouseOver.png");
+}
+#table2 div{
+  background-image: url("../images/manager/u1059.png");
+}
+#table2 div:hover{
+  background-image: url("../images/manager/u1059_mouseOver.png");
+}
+.white_content {
+  display: none;
+  position: absolute;
+  top: 15%;
+  left: 25%;
+
+  background:url(../images/manager/edit_background.png) no-repeat transparent;
+  width: 740px;
+  height: 810px;
+
+  z-index:1002;
+  color: #000000;
+}
+.black_overlay {
+  position: fixed;
+  z-index:1000;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+  overflow: hidden;
+  background-color: #000;
+}
+
+#woh{
+  position: relative;
+  left: 40px;
+  top: 30px;
+  background:url(../images/manager/lemmabackground.png) no-repeat transparent;
+  background-size: 60% 100%;
+  max-width: 210px;
+  width: 140%;
+  height: 40px;
+}
+#lemma{
+  color: #ffffff;
+  padding-left: 14px;
+  padding-top: 10px;
+}
+#labelmark{
+  position: relative;
+  top:60px;
+  left: 44px;
+  width: 40px;
+  height: 20px;
+  color: #000000;
+}
+#tags{
+  position: relative;
+  width: 260px;
+  height: 140px;
+  left: 40px;
+  top: 72px;
+}
+#tags div{
+  width: 76px;
+  height: 30px;
+  background-image: url(../images/manager/labelBackground.png);
+}
+.tally{
+  position: relative;
+  background-color: #f2f2f2;
+  color: #333333;
+  font-size: 12px;
+  max-height: 30px;
+  max-width: 100px;
+  display: inline-block;
+  padding: 8px;
+  margin:20px;
+}
+#verLine{
+    border:none;
+    border-left:1px dotted #d7d7d7;
+    height:280px;
+    width:1px;
+    display: inline-block;
+    position: relative;
+    left:320px;
+    top: -190px;
+}
+#goback{
+  width: 26px;
+  height: 26px;
+  background-image: url(../images/manager/u145.png);
+  float: right;
+  position: relative;
+  top: -185px;
+  right: 60px;
+}
+#goback:hover{
+  cursor: pointer;
+}
+#starboard{
+  position: relative;
+  width: 340px;
+  height: 254px;
+  left: 360px;
+  top: -425px;
+}
+#starboard>img{
+  position: relative;
+  max-width: 340px;
+  max-height: 254px;
+}
+.cutLine{
+  position:relative;
+  top: 60px;
+  left: 12px;
+  display: inline-block;
+    border:none;
+    border-top:1px dotted #bcbcbc;
+    height: 1px;
+    width: 715px;
+}
+.cut{
+  top: -460px;
+}
+.label2{
+  position: relative;
+  width: 40px;
+  height: 21px;
+  top: -460px;
+  left: 30px;
+  color: #000000;
+}
+.textArea{
+  position: relative;
+  border:1px solid #d7d7d7;
+  width: 620px;
+  height: 360px;
+  left: 60px;
+  top: -450px;
+  font-size: 14px;
+}
+#btn1{
+  position: relative;
+  left: 160px;
+  top: -430px;
+  cursor: pointer;
+}
+#btn2{
+  position: relative;
+  top: -430px;
+  left: 280px;
+  cursor: pointer;
+}
+#tableReport
+{
+    position: relative;
+    top: -840px;
+
+    display: none;
+    float: left;
+
+    width: 457px;
+    height: 334px;
+    margin: 5px 0 0 120px;
+
+    background: url('../images/manager/subBg.png') no-repeat center;
+}
+
+#endPic
+{
+    position: relative;
+
+    float: right;
+    clear: both;
+
+    width: 26px;
+    height: 26px;
+    margin: 30px 40px 0 0;
+}
+
+#tableReport p
+{
+    font-size: 16px;
+
+    position: relative;
+
+    float: left;
+
+    width: 130px;
+    height: 21px;
+    margin: 10px 270px 0 57px;
+
+    color: rgb(121,121,121);
+}
+
+#tableReport input
+{
+    position: relative;
+
+    float: left;
+
+    width: 347px;
+    height: 36px;
+    margin: 10px 63px 0 57px;
+    color:#000000;
+    background-image: url(../images/manager/会话条_u432.png);
+    background-size: cover;
+}
+
+#endReport
+{
+    position: relative;
+
+    float: left;
+
+    width: 140px;
+    height: 40px;
+    margin: 50px 160px 0 157px;
+}

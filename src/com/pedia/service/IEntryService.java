@@ -9,7 +9,7 @@ import com.pedia.model.Entry;
 import com.pedia.model.Label;
 import com.pedia.model.Report;
 import com.pedia.tool.BaseEntryDataList;
-
+import com.pedia.tool.CommentData;
 import com.pedia.tool.DetailedEntryData;
 
 public interface IEntryService {
@@ -27,6 +27,11 @@ public interface IEntryService {
 	
 	String uploadImage(String pathRoot, MultipartFile file);		// 上传词条图片
 	boolean checkEntryCreatable(String entryName);
+
+	BaseEntryDataList seeEntry(int eid);
+	int handleReport(int rid, int eid, int status);
+	CommentData getComment(Comment item);
+	DetailedEntryData enterEntry(String info);
 	
 
 }

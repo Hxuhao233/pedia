@@ -2,6 +2,8 @@ package com.pedia.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pedia.model.Report;
 
 public interface ReportMapper {
@@ -14,6 +16,8 @@ public interface ReportMapper {
     Report selectByPrimaryKey(Integer rid);
     
     List<Report> selectByStatus(Integer Status);
+    
+    int updateByEid(@Param("eid")Integer eid,@Param("status")Integer status);
     
     int updateByPrimaryKeySelective(Report record);
 

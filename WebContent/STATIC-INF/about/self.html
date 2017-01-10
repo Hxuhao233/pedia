@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+<head>
+  <title>个人主页</title>
+  <link rel="stylesheet" type="text/css" href="../css/self.css">
+  <script src="../scripts/jquery-2.2.1.js"></script>
+  <script src="../scripts/self.js"></script>
+</head>
+<body>
+  <div id="mainWindow">
+    <div id="header">
+      <div id="logo"></div>
+      <div id="usernameController">
+        <div id="username">用户名</div>
+        <img src="../images/self/u896.png" id="drop">
+      </div>
+    </div>
+    <div id="middle">
+      <div id="BackHome">
+        <img src="../images/self/u810.png">
+        <a href="#">返回首页</a>
+      </div>
+      <div id="UserInformation">
+        <div id="UserGrade">
+          <div id="Degree">5</div>
+          <img src="../images/self/u814.png">
+          <div id="exp">
+            <div id="expTitle">经验</div>
+            <div id="expNum">10</div>
+          </div>
+        </div>
+        <div id="UserState">
+          <div id="UserStateHeader">我的贡献</div>
+          <div id="UserStateMiddle">
+            <div id="hasPass" class="myCicle">
+              <div id="hasPassNum" class="myCicleText">1</div>
+              <div>已通过版本</div>
+            </div>
+            <div id="toPass" class="myCicle">
+              <div id="toPassNum" class="myCicleText">0</div>
+              <div>待通过版本</div>
+            </div>
+            <div id="hasNotPass" class="myCicle">
+              <div id="hasNotPassNum" class="myCicleText">0</div>
+              <div>未通过版本</div>
+            </div>
+          </div>
+          <div id="UserStateLast">
+            <div id="report">
+              <div>提交版本:&nbsp&nbsp&nbsp</div>
+              <div id="reportNum">10</div>
+            </div>
+            <div id="passRate">
+              <div>通过率:&nbsp&nbsp&nbsp</div>
+              <div id="passRateNum">100%</div>
+            </div>
+          </div>
+        </div>
+        <div id="dropFrame">
+          <dl>
+            <dt><a href="#"  id="changePW"></a></dt>
+          </dl>
+          <dl>
+            <dt><a href="#" id="Picture"></a></dt>
+          </dl>
+          <dl>
+            <dt><a href="#"  id="changeMsg"></a></dt>
+          </dl>
+          <dl>
+            <dt><a href="#"  id="revoke"></a></dt>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div id="content">
+      <div id="contentTitle">我的词条</div>
+      <div id="buttons">
+        <div class="mybutton" id="button1" onclick="Cmd(1)"></div>
+        <div class="mybutton" id="button2" onclick="Cmd(2)"></div>
+        <div class="mybutton" id="button3" onclick="Cmd(3)"></div>
+      </div>
+      <div id="tables">
+        <table id="table1" class="mytable" style="display:none;">
+          <tr>
+            <td>词条名称</td>
+            <td>创建时间</td>
+            <td>通过时间</td>
+            <td>被他人修改次数</td>
+            <td></td>
+          </tr>
+
+        </table>
+        <table id="table2" class="mytable" style="display:none;">
+            <tr>
+              <td>词条名称</td>
+              <td>创建时间</td>
+              <td></td>
+            </tr>
+
+        </table>
+        <table id="table3" class="mytable" style="display:none;">
+            <tr>
+              <td>词条名称</td>
+              <td>创建时间</td>
+              <td>未通过原因</td>
+              <td></td>
+            </tr>
+
+        </table>
+      </div>
+    </div>
+    <div id="light" class="white_content">
+      <div id="woh"><p id="lemma">Snapchat</p></div>
+      <p id="labelmark">标签</p>
+      <div id="tags">
+      </div>
+      <span id="verLine"></span>
+      <div id="goback"></div>
+      <div id="starboard">
+        <img src="../images/self/exam.png">
+      </div>
+      <span class="cutLine cut"></span>
+      <p class="textLabel label2">正文</p>
+      <p class="textArea"></p>
+    </div>
+    <div id="fade" class="black_overlay" style="display:none;"></div>
+
+  </div>
+
+
+</body>
+</html>

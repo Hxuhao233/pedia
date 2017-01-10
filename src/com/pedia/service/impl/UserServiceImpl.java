@@ -26,9 +26,8 @@ import com.pedia.dao.CommentMapper;
 import com.pedia.dao.EntryMapper;
 import com.pedia.dao.LabelMapper;
 import com.pedia.dao.ReportMapper;
-import com.pedia.dao.StudentMapper;
 import com.pedia.dao.UserMapper;
-import com.pedia.entity.Student;
+
 import com.pedia.model.Action;
 import com.pedia.model.Comment;
 import com.pedia.model.Entry;
@@ -126,6 +125,7 @@ public class UserServiceImpl implements IUserService {
 	public int register(User u) {   	//注册 输入待注册User对象，输出 成功：注册用户的ID 失败：0
 		int ret = 0;
 		if (userDao.selectAccount(u.getAccount()) == 0)	{
+			System.out.println(u.getAccount());
 			userDao.insertSelective(u);
 			ret=u.getUid();
 			System.out.println("注册成功！用户account："+u.getAccount());

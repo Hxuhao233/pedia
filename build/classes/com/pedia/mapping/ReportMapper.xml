@@ -24,6 +24,10 @@
     from Report
     where status = #{status,jdbcType=INTEGER}
   </select>
+
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from Report
     where rid = #{rid,jdbcType=INTEGER}
@@ -108,5 +112,11 @@
       status = #{status,jdbcType=INTEGER},
       reportTime = #{reporttime,jdbcType=TIMESTAMP}
     where rid = #{rid,jdbcType=INTEGER}
+  </update>
+    <update id="updateByEid" >
+    update Report
+    set 
+    status = #{status,jdbcType=INTEGER}
+    where eid = #{eid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,0 +1,435 @@
+*{
+	padding:0;
+	margin:0;
+}
+:focus{
+	outline: none;
+}
+html{
+	height: 2280px;
+	background: url(../images/createLemma/background.png) no-repeat transparent;
+	background-size: 100% 100%;
+}
+body{
+	height: 2280px;
+	color: #ffffff;
+    font-family: '微软雅黑','Hiragino Sans GB', "Corbel",'Microsoft Yahei', sans-serif;
+}
+body a{
+	color: #ffffff;
+    font-family: '微软雅黑','Hiragino Sans GB', "Corbel",'Microsoft Yahei', sans-serif;
+}
+#header{
+	position: relative;
+	left: -1px;
+	top: -1px;
+	height: 54px;
+	background:url(../images/createLemma/header.png) no-repeat transparent;
+	background-size: 101% 100%;
+}
+#header>img{
+	display: block;
+}
+#user{
+	position: relative;
+	top: -120px;
+	float: right;
+	right: 10px;
+	width: 96px;
+	height: 40px;
+}
+#user img{
+	position: relative;
+	top: 8px;
+}
+#user p{
+	display: inline-block;
+}
+#user p:hover{
+	text-decoration: underline;
+}
+#navigateBar{
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	width:500px;
+	height: 90px;
+	top: 50px;
+}
+#navigateBar div{
+	position: relative;
+	width: 90px;
+	height: 90px;
+}
+#navigateBar div>a{
+	display: inline-block;
+	width: 90px;
+	height: 90px;
+}
+#stage0>a{
+	cursor: pointer;
+}
+#stage0{
+    top: 16px;
+    left: 0px;
+}
+.goback_default{
+	background:url(../images/createLemma/goback_default.png) no-repeat transparent;
+}
+.goback_hover{
+	background:url(../images/createLemma/goback_hover.png) no-repeat transparent;
+}
+.connect{
+	position:relative;
+	display: inline-block;
+	top: -50px;
+    border:none;
+    border-top:1px dotted #ffffff;
+    height: 1px;
+    width: 60px;
+}
+.span1{
+	top: -50px;
+	left:83px;
+}
+#stage1>.list_default{
+	background:url(../images/createLemma/stage1.png) no-repeat transparent;
+}
+#stage1>.list_focus{
+	background:url(../images/createLemma/stage1_focus.png) no-repeat transparent;
+}
+#stage1{
+	left:139px;
+	top: -94px;
+}
+#stage1>a{
+	cursor:default;
+}
+.span2{
+	left: 222px;
+	top: -161px;
+}
+#stage2>.list_default{
+	background:url(../images/createLemma/stage2.png) no-repeat transparent;
+}
+#stage2>.list_focus{
+	background:url(../images/createLemma/stage2_focus.png) no-repeat transparent;
+}
+#stage2{
+	left: 279px;
+	top: -205px;
+}
+#stage2>a{
+	cursor:default;
+}
+.span3{
+	left: 361px;
+	top: -271px;
+}
+#stage3>.list_default{
+	background:url(../images/createLemma/stage3.png) no-repeat transparent;
+}
+#stage3>.list_focus{
+	background:url(../images/createLemma/stage3_focus.png) no-repeat transparent;
+}
+#stage3{
+	left:416px;
+	top: -316px;
+}
+#stage3>a{
+	cursor:default;
+}
+#maincontainer{
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+	width: 740px;
+	height: 810px;
+	top: 80px;
+	color: #797979;
+}
+#step1{
+	position: relative;
+	background:url(../images/createLemma/step1_background.png) no-repeat transparent;
+	width: 520px;
+	height: 380px;
+	margin-right: auto;
+	margin-left: auto;
+}
+#step1 p{
+	position: relative;
+}
+input{
+    height: 38px;
+    border: 1px solid #E4E4E4;   
+    font-size: 14px;
+    font-family: '微软雅黑','Hiragino Sans GB', "Corbel",'Microsoft Yahei', sans-serif;
+    color: #434343;
+}
+#step1 input{
+	width: 300px;
+}
+#lemmaName{
+    left: 50px;
+    top: 60px;
+}
+#labelList input{
+	width: 122px;
+}
+#labelList{
+	left: 50px;
+	top: 100px;
+}
+.remarks{
+	font-size: 12px;
+}
+.tag2{
+	position: relative;
+	left: 28px;
+}
+.tag3{
+	position: relative;
+	left: 89px;
+	top: 20px;
+}
+.tag4{
+	position: relative;
+	left: 118px;
+	top: 20px;
+}
+#scr1{
+	position: relative;
+	top: 150px;
+	left: 200px;
+	cursor: pointer;
+}
+#step2{
+	position: absolute;
+	top: 0px;
+	background:url(../images/createLemma/edit_background.png) no-repeat transparent;
+	width: 740px;
+	height: 810px;
+	visibility: hidden;
+}
+#addPhoto{
+	position: relative;
+	top: -40px;
+	left: 60px;
+	cursor: pointer;
+}
+.cutLine{
+	position:relative;
+	top: 60px;
+	left: 12px;
+	display: inline-block;
+    border:none;
+    border-top:1px dotted #bcbcbc;
+    height: 1px;
+    width: 715px;
+}
+.textLabel{
+	position: relative;
+	top: 70px;
+	left: 36px;
+}
+#text{
+	width: 560px;
+    height: 460px;
+    position: relative;
+    top: 90px;
+    left: 80px;
+    resize:none;
+    overflow: hidden;
+    border-color: #E4E4E4;
+    font-size: 14px;
+}
+#pre{
+    position: relative;
+    top: 200px;
+    left: -400px;
+    cursor: pointer;
+}
+#next{
+    position: relative;
+    top:155px;
+    left: 400px;
+    cursor: pointer;
+}
+#step3{
+	position: absolute;
+	top: 0px;
+	background:url(../images/createLemma/edit_background.png) no-repeat transparent;
+	width: 740px;
+	height: 840px;
+	background-size: 100% 100%;
+	visibility: hidden;
+}
+#step3 input{
+  position: relative;
+  border: none;   
+  font-family: '微软雅黑','Hiragino Sans GB', "Corbel",'Microsoft Yahei', sans-serif;
+}
+#step3>form{
+	height: 500px;
+}
+#lemma{
+	width: 100px;
+	height: 40px;
+	left: 40px;
+	top: 30px;
+	background-color: #ffcc66;
+    border-radius: 4px;
+	color: #ffffff;
+	font-size: 14px;
+	padding-left: 8px;
+	padding-top: 2px;
+}
+#labelmark{
+	position: relative;
+	top:60px;
+	left: 44px;
+	width: 40px;
+	height: 20px;
+}
+#tags{
+	position: relative;
+	width: 260px;
+	height: 140px;
+	left: 40px;
+	top: 72px;
+}
+.tally{
+	position: relative;
+	background-color: #f2f2f2;
+	color: #333333;
+	font-size: 11px;
+	width: 70px;
+	height: 30px;
+	max-width: 100px;
+	padding:2px;
+	padding-left: 4px;
+	margin:10px;
+}
+.blank{
+	position: relative;
+	background-color: #f2f2f2;
+	color: #333333;
+	font-size: 11px;
+	width: 60px;
+	height: 22px;
+	max-height: 30px;
+	margin:20px;
+	padding-top: 8px;
+	padding-left: 10px;
+}
+.tally1{
+	top: -10px;
+	left: 16px;
+}
+.tally2{
+	top: -10px;
+	left: 10px;
+}
+.tally3{
+	top: -10px;
+	left: 16px;
+}
+.tally4{
+	top: -10px;
+	left: 10px;
+}
+#verLine{
+    border:none;
+    border-left:1px dotted #d7d7d7;
+    height:240px;
+    width:1px;
+    display: inline-block;
+    position: relative;
+    left:320px;
+    top: -210px;
+}
+#starboard{
+	position: relative;
+	width: 340px;
+	height: 254px;
+	left: 340px;
+	top: -416px;
+}
+#starboard>a{
+	position: relative;
+	left: 20px;
+	top: 0px;
+}
+#starboard img{
+	position: relative;
+	max-width: 260px;
+	max-height: 170px;
+}
+.cut{
+	top: -482px;
+}
+.label2{
+	width: 40px;
+	height: 21px;
+	top: -460px;
+	left: 30px;
+}
+.textArea{
+	position: relative;
+	border:1px solid #d7d7d7;
+	width: 620px;
+	height: 360px;
+	left: 60px;
+	top: -450px;
+	font-size: 14px;
+}
+#realText{
+	position: relative;
+	border:1px solid #d7d7d7;
+	width: 620px;
+	height: 360px;
+	left: 60px;
+	top: -820px;
+	font-size: 14px;
+	z-index: -1;
+}
+#prev{
+	position: relative;
+	left: 160px;
+	top: -775px;
+	cursor: pointer;
+}
+#submit{
+	background: url(../images/createLemma/submit.png) no-repeat transparent;
+	position: relative;
+	top: -775px;
+	left: 280px;
+	width: 140px;
+	height: 40px;
+	cursor: pointer;
+}
+.errorTips{
+   font-size: 12px;
+   color: #cc0033;
+   position: relative;
+}
+.tip1{
+	left: 280px;
+	top: -74px;
+}
+.tip2{
+	left: 40px;
+	top: -114px;
+}
+.tip3{
+	left: 180px;
+	top: -160px;
+}
+.hyperLink{
+	color: #185eac;
+	position: relative;
+	top: -114px;
+	left: 48px;
+	font-size: 14px;
+	font-family: '微软雅黑','Hiragino Sans GB', "Corbel",'Microsoft Yahei', sans-serif;
+}

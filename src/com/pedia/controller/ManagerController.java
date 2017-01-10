@@ -120,12 +120,18 @@ public class ManagerController {
 	
 	// 删除被举报词条
 	@ResponseBody
-	@RequestMapping(value="/deleteEntry",method = RequestMethod.GET)
-	public ResponseData deleteEntry(@RequestParam("eid") int eid){
+	@RequestMapping(value="/checkReportedEntry",method = RequestMethod.GET)
+	public ResponseData deleteEntry(@RequestParam("rid")int rid,@RequestParam("eid") int eid,@RequestParam("allow") int allow){
 		ResponseData response = new ResponseData();
 
-
-		int ret = entryService.deleteEntry(eid);
+		int ret =0;
+		if(allow==1){
+			ret = entryService.deleteEntry(eid);
+			entryService.handleReport(rid,eid, 2);
+		}else{
+			ret = entryService.handleReport(rid,eid, 3);
+			
+		}
 		if(ret > 0){
 			response.setCode(200);
 		}else{

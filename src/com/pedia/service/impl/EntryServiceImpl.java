@@ -2,6 +2,8 @@ package com.pedia.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +25,7 @@ import com.pedia.model.Report;
 import com.pedia.model.User;
 import com.pedia.service.IEntryService;
 import com.pedia.tool.BaseEntryDataList;
-
+import com.pedia.tool.CommentData;
 import com.pedia.tool.DetailedEntryData;
 
 @Service("entryService")
@@ -108,6 +110,21 @@ public class EntryServiceImpl implements IEntryService{
 		}	
 		
 	}
+	
+	//处理举报
+	@Override
+	public int handleReport(int rid,int eid,int status){
+		int ret = 0;
+		if(status == 2 ){
+			ret= reportDao.updateByEid(eid,status);
+		}else{
+			Report r = new Report();
+			r.setRid(rid);
+			r.setStatus(status);
+			ret = reportDao.updateByPrimaryKeySelective(r);
+		}
+ 		return ret;
+	}
 
 	
 	
@@ -122,8 +139,22 @@ public class EntryServiceImpl implements IEntryService{
 			String publisher = u.getUsername() != null ? u.getUsername() : u.getAccount(); 
 			List<Label> labels = labelDao.selectByEid(result.getEid());
 			List<Comment> comments = commentDao.selectByEid(result.getEid());
+			List<CommentData> commentData = new ArrayList<CommentData>();
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+			
+			for(Comment item : comments){
+				CommentData data = new CommentData();
+				User commenter = userDao.selectByPrimaryKey(item.getUid());
+				data.setCommenterName(commenter.getUsername());
+				data.setCommenterPic(commenter.getIconaddr());
+				data.setCommentDate(simpleDateFormat.format(item.getCommenttime()));
+				data.setCommentDetail(item.getCommentcontent());
+				commentData.add(data);
+			}
+			
 			detailedEntryData.setEntry(result);
-			detailedEntryData.setComments(comments);
+			detailedEntryData.setComments(commentData);
 			detailedEntryData.setLabels(labels);
 			detailedEntryData.setPublisher(publisher);
 			return detailedEntryData;
@@ -146,7 +177,22 @@ public class EntryServiceImpl implements IEntryService{
 		return entryDataList;
 	}
 	
+	
+	@Override
+	public BaseEntryDataList seeEntry(int eid) {
+		// TODO Auto-generated method stub
+		BaseEntryDataList entryDataList = new BaseEntryDataList();
+		Entry item  = entryDao.selectByPrimaryKey(eid);
 
+		User u = userDao.selectByPrimaryKey(item.getUid());
+		String publisher = u.getUsername() != null ? u.getUsername() : u.getAccount(); 
+		List<Label> labels = labelDao.selectByEid(item.getEid());
+		//System.out.println("233");
+		entryDataList.addNormalEntry(item, publisher, labels);
+	
+		return entryDataList;
+	}
+	
 	@Override
 	public int submitComment(Comment comment) {
 		// TODO Auto-generated method stub
@@ -222,5 +268,50 @@ public class EntryServiceImpl implements IEntryService{
 			if (entries.get(i).getStatus()==2) return false; //只要有已发布版本就不能被创建
 		}
 		return true;
+	}
+
+	@Override
+	public CommentData getComment(Comment item){
+		item = commentDao.selectByPrimaryKey(item.getCid());
+		CommentData data = new CommentData();
+		User commenter = userDao.selectByPrimaryKey(item.getUid());
+		data.setCommenterName(commenter.getUsername());
+		data.setCommenterPic(commenter.getIconaddr());
+		data.setCommentDate(new SimpleDateFormat("yyyy-MM-dd").format(item.getCommenttime()));
+		data.setCommentDetail(item.getCommentcontent());
+		return data;
+	}
+	
+	@Override
+	public DetailedEntryData enterEntry(String info) {
+		// TODO Auto-generated method stub
+		DetailedEntryData detailedEntryData = new DetailedEntryData();
+		Entry result  = entryDao.selectByAllEntryName(info, 2);
+		if(result !=null){
+			User u = userDao.selectByPrimaryKey(result.getUid());
+			String publisher = u.getUsername() != null ? u.getUsername() : u.getAccount(); 
+			List<Label> labels = labelDao.selectByEid(result.getEid());
+			List<Comment> comments = commentDao.selectByEid(result.getEid());
+			List<CommentData> commentData = new ArrayList<CommentData>();
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+			
+			for(Comment item : comments){
+				CommentData data = new CommentData();
+				User commenter = userDao.selectByPrimaryKey(item.getUid());
+				data.setCommenterName(commenter.getUsername());
+				data.setCommenterPic(commenter.getIconaddr());
+				data.setCommentDate(simpleDateFormat.format(item.getCommenttime()));
+				data.setCommentDetail(item.getCommentcontent());
+				commentData.add(data);
+			}
+			
+			detailedEntryData.setEntry(result);
+			detailedEntryData.setComments(commentData);
+			detailedEntryData.setLabels(labels);
+			detailedEntryData.setPublisher(publisher);
+			return detailedEntryData;
+		}
+		return null;
 	}
 }

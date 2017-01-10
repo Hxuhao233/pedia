@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+	<meta charset="utf-8">
+<head>
+<title>log</title>
+<link rel="stylesheet" type="text/css" href="../css/login.css">
+</head>
+<body>
+	<div id="mainwindow">
+		<div id="header">
+			<div id="tip">
+				<div id="wrapper">
+					<a id="goback" href="#"><img src="../images/login/goback.png"></a>
+					<p id="log">登录</p>
+				</div>
+			</div>
+			<img id="logo" src="../images/login/logo.png" alt="logo" />
+		</div>
+		<div id="maincontainer">
+			<form action="#" method="POST">
+				<p>
+					<input type="text" name="username" id="username" class="label"
+						placeholder="请输入邮箱/手机号码" required /><br /> <input
+						type="password" name="password" id="password" class="label"
+						placeholder="请输入密码" required /><br />
+				</p>
+				<p>
+					<a class="hint" href="findBackPsw.html">忘记密码？</a>
+				</p>
+				<p>
+					<input type="button" id="submit" value="登录">
+				</p>
+				<p id="login">
+					<span id="span1">没有帐户？</span> <span id="span2"><a
+						href="register.html">注册</a></span>
+				</p>
+			</form>
+		</div>
+		<div id="footer">
+			<img id="tree" src="../images/login/tree.png" alt="a tree" />
+		</div>
+	</div>
+	<script src="../scripts/jquery-1.6.2.js"></script>
+	<script src="../scripts/login.js"></script>
+</body>
+</html>

@@ -20,9 +20,9 @@
 
 	<!-- if you use annotation you must configure following setting -->
 
-	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**"/> <bean 
+	<mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**"/> <bean 
 		id= "loginInterceptor" class="com.pedia.interceptor.LoginInterceptor" /> 
-		</mvc:interceptor> </mvc:interceptors>  -->
+		</mvc:interceptor> </mvc:interceptors>  
 
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
@@ -72,6 +72,6 @@
 
 
 	<!-- 静态资源 -->
-	<mvc:resources mapping="/STATIC-INF/**" location="/STATIC-INF/" />
+	<mvc:resources mapping="/**" location="/STATIC-INF/" />
 
 </beans>

@@ -24,14 +24,14 @@
     from Entry
     where eid = #{eid,jdbcType=INTEGER}
   </select>
-  <!-- <select id="selectByEntryName"  resultMap="BaseResultMap">
+  <select id="selectByAllEntryName"  resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from Entry
     where entryName = #{entryName,jdbcType=INTEGER}
-    and status = #{status,jdbcType=INTEGER}
+    and status = 2
   </select>
-   -->
+   
     <select id="selectByInfo"  resultMap="BaseResultMap">
     select 
 	Entry.eid, uid, entryName, entryContent, status, praiseTimes, badReviewTimes, reportTimes, 
@@ -40,6 +40,7 @@
     where (entryName REGEXP #{info,jdbcType=VARCHAR}
     or labelContent REGEXP #{info,jdbcType=VARCHAR})
     and status = #{status,jdbcType=INTEGER}
+    and Entry.eid = Label.eid
     group by Entry.eid
   </select>
    <select id="selectByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">

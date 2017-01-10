@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+<head>
+  <title>管理员界面</title>
+  <link rel="stylesheet" type="text/css" href="../css/manager.css">
+  <script src="../scripts/jquery-2.2.1.js"></script>
+  <script src="../scripts/manager.js"></script>
+  <script type="text/javascript">
+
+  </script>
+</head>
+<body>
+  <div id="mainWindow">
+    <div id="header">
+      <div id="logo"></div>
+      <div id="usernameController">
+        <div id="username">用户名</div>
+        <img src="../images/manager/u896.png" id="drop">
+      </div>
+    </div>
+    <div id="controller">
+      <div id="BackHome"></div>
+      <div id="middle">
+        <div class="mybutton" id="button1" onclick="Cmd(1)">
+          <img src="../images/manager/button1.png">
+          <div>待发布词条</div>
+        </div>
+        <div class="mybutton" id="button2" onclick="Cmd(2)">
+          <img src="../images/manager/button2.png">
+          <div>被举报词条</div>
+        </div>
+        <div class="mybutton" id="button3" onclick="Cmd(3)">
+          <img src="../images/manager/button3.png">
+          <div>被修改词条</div>
+        </div>
+      </div>
+      <div id="dropFrame">
+        <dl>
+          <dt><a href="#"  id="Picture"></a></dt>
+        </dl>
+        <dl>
+          <dt><a href="#" id="revoke"></a></dt>
+        </dl>
+      </div>
+    </div>
+    <div id="content">
+      <div id="tables">
+        <table id="table1" class="mytable" style="display:none;">
+          <tr>
+            <td>词条名称</td>
+            <td>创建时间</td>
+            <td>创建者</td>
+            <td></td>
+          </tr>
+
+        </table>
+        <table id="table2" class="mytable" style="display:none;">
+            <tr>
+              <td>词条名称</td>
+              <td>举报者</td>
+              <td>举报原因</td>
+              <td></td>
+            </tr>
+
+        </table>
+        <table id="table3" class="mytable" style="display:none;">
+            <tr>
+              <td>词条名称</td>
+              <td>修改时间</td>
+              <td>修改者</td>
+              <td></td>
+            </tr>
+
+        </table>
+      </div>
+    </div>
+    <div id="light" class="white_content">
+      <div id="woh"><p id="lemma">Snapchat</p></div>
+      <p id="labelmark">标签</p>
+      <div id="tags">
+        <div id="labels1"></div>
+        <div id="labels2"></div>
+        <div id="labels3"></div>
+        <div id="labels4"></div>
+      </div>
+      <span id="verLine"></span>
+      <div id="goback"></div>
+      <div id="starboard">
+        <img src="../images/manager/exam.png" alt="图片">
+      </div>
+      <span class="cutLine cut"></span>
+      <p class="textLabel label2">正文</p>
+      <p class="textArea" id="textAreas"></p>
+      <a id="btn1" myAttr="4" myAttrs="1"><img src="../images/manager/u1408.png"></a>
+      <a id="btn2" myAttr="4" myAttrs="1"><img src="../images/manager/u1324.png"></a>
+      <!-- <div id="tableReport">
+        <img src="../images/manager/end.png" alt="关闭" id="endPic">
+        <p>请填写举报理由</p>
+        <input type="text" id="reportReason" name="reportReason">
+        <img src="../images/manager/reportEnd.png" alt="完成" id="endReport">
+      </div> -->
+    </div>
+    <div id="fade" class="black_overlay" style="display:none;"></div>
+
+  </div>
+
+
+</body>
+</html>

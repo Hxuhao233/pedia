@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>查看词条列表</title>
+	<link rel="stylesheet" type="text/css" href="../css/readList.css">
+	<script type="text/javascript" src="../scripts/jquery-1.6.2.js"></script>
+	<script type="text/javascript" src="../scripts/readList.js"></script>
+</head>
+<body>
+	<header>
+		<img src="../images/readList/logo.png" alt="Logo" id="LOGO" />
+		<div id="header">
+			<input type="text" name="search" placeholder="请输入要查询的内容" />
+			<button id="tapSearch"></button>
+			<div id="headerRight">
+				<a href="register.html">注册</a> <!--href处添加注册页面链接-->
+				<p>|</p>
+				<a href="login.html">登录</a> <!--href处添加登录页面链接-->
+			</div>
+			<div id="userCenter">				
+				<a href="self.html"></a> <!--href处添加个人主页链接-->
+			</div>
+		</div>
+	</header>
+	<div id="describe">
+		<a href="../index.html" id="back"></a>
+		<div id="tableHeader">
+			
+		</div>
+	</div>
+	<div id="tableList">
+		<!--此处通过jQuery动态生成list列表-->
+	</div>
+</body>
+</html>

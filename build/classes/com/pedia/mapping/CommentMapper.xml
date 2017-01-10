@@ -27,13 +27,13 @@
     delete from Comment
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pedia.model.Comment">
+  <insert id="insert" parameterType="com.pedia.model.Comment" useGeneratedKeys="true"  keyProperty="cid">
     insert into Comment (cid, eid, uid, 
       commentContent, commentTime)
     values (#{cid,jdbcType=INTEGER}, #{eid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{commentcontent,jdbcType=VARCHAR}, #{commenttime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.pedia.model.Comment">
+  <insert id="insertSelective" parameterType="com.pedia.model.Comment" useGeneratedKeys="true"  keyProperty="cid">
     insert into Comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cid != null">

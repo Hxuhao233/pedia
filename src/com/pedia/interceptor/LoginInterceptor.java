@@ -22,8 +22,8 @@ import com.pedia.tool.ResponseData;
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	// 允许不登录就访问的内容
-	private static final String[] IGNORE_URI = { "/index","/login","/signup", "/queryEntry", "/logout", "/images", "/register",
-			"/scripts","/css" };
+	private static final String[] IGNORE_URI = { "/index","/login","enterEntryDirectly","/signup","/readDetail","/readList.html","/readDetail.html", "/queryEntry","enterEntry", "/logout", "/images", "/register",
+			"/scripts","/css","/about","/seeEntry" };
 	
 	// 允许管理员访问的内容
 	private static final String[] MANAGER_URI = { "/manager"};
@@ -75,10 +75,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			responseData.setCode(403);
 			responseData.setData(info);
 
-			PrintWriter pw = response.getWriter();
-			pw.write(mapper.writeValueAsString(responseData));
-			pw.flush();
-			pw.close();
+			//PrintWriter pw = response.getWriter();
+			//pw.write(mapper.writeValueAsString(responseData));
+			//pw.flush();
+			//pw.close();
 		}
 		return flag;
 	}

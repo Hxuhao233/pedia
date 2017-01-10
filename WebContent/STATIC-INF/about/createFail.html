@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>createDone</title>
+	<style type="text/css">
+	html{
+       font-family: '微软雅黑','Hiragino Sans GB', "Corbel",'Microsoft Yahei', sans-serif;
+       width: 100%;
+	}
+	:focus{
+		outline: none;
+	}
+	.info {
+      position: absolute;
+      line-height: 20px;
+
+      left: 20px;
+      top: 20px;
+      color: #67ADDF;
+      font-size: 14px;
+      }
+    #monocleMan{
+      width:100%;
+      height:500px;
+      cursor:pointer;
+    }
+    .hint{
+       position: relative;
+       font-size: 14px;
+       width: 560px;
+       height: 50px;
+       margin-left: auto;
+       margin-right: auto;
+       top: 240px;
+     }
+     .comfort{
+      position: relative;
+      left: 150px;
+     }
+     .comfort img{
+     	position: relative;
+     	top: 8px;
+     	left: -2px;
+     }
+     #link{
+      text-decoration: none;
+      position: relative;
+      font-size: 14px;
+      left: 162px;
+      top: 10px;
+      border-radius:8px;
+      width: 100px;
+      height: 30px;
+      display: block;
+      color: white;
+      background-color: #f3a953;
+      margin-top: 25px;
+      padding-left: 28px;
+      padding-top: 10px;
+      cursor: pointer;
+     }
+	</style>
+</head>
+<body>
+  <div class="info">
+  <b><a href="javascript:void(0)">返回首页</a></b>
+  </div>
+  <div class="hint">
+  	<p class="comfort"><img src="../images/createFail/bad.png"><span class="bad">提交失败!!</span></p>
+    <a id="link" href="javascript:void(0)">再去试一次</a>
+  </div>
+  
+  <script type="text/javascript" src="../scripts/jquery-2.2.1.js"></script>
+  <script type="text/javascript">
+  var msg="";
+  var userName="null";
+  $(function(){
+    var url=decodeURI(location.href);
+    var tmp1=url.split("?")[1];
+    if(tmp1!=""){
+        var tmp2=tmp1.split("&")[0];
+        var tmp3=tmp1.split("&")[1];
+        if(tmp2!=""){
+          msg=tmp2.split("=")[1];
+          if(msg!=""){
+            $(".bad").text(msg);
+          }
+        }
+        if(tmp3!=""){
+          userName=tmp3.split("=")[1];
+        }
+    }
+    $(".info").find("a").click(function(){
+        window.location.href=encodeURI("../index.html"+"?"+"username="+userName);
+    });
+    $("#link").click(function(){
+        window.location.href=encodeURI("createLemma.html"+"?"+"username="+userName);
+    });
+});
+	(function snowflakeCursor() {
+     var possibleEmoji = ["❄️"]
+     var width = window.innerWidth;
+     var height = window.innerHeight;
+     var cursor = {x: width/2, y: width/2};
+     var particles = [];
+  function init() {
+    bindEvents();
+    loop();
+  }
+  // Bind events that are needed
+  function bindEvents() {
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('touchmove', onTouchMove);
+    document.addEventListener('touchstart', onTouchMove);   
+    window.addEventListener('resize', onWindowResize);
+  } 
+  function onWindowResize(e) {
+    width = window.innerWidth;
+    height = window.innerHeight;
+  } 
+  function onTouchMove(e) {
+    if( e.touches.length > 0 ) {
+      for( var i = 0; i < e.touches.length; i++ ) {
+        addParticle( e.touches[i].clientX, e.touches[i].clientY, possibleEmoji[Math.floor(Math.random()*possibleEmoji.length)]);
+      }
+    }
+  } 
+  function onMouseMove(e) {    
+    cursor.x = e.clientX;
+    cursor.y = e.clientY;  
+    addParticle( cursor.x, cursor.y, possibleEmoji[Math.floor(Math.random()*possibleEmoji.length)]);
+  }  
+  function addParticle(x, y, character) {
+    var particle = new Particle();
+    particle.init(x, y, character);
+    particles.push(particle);
+  } 
+  function updateParticles() {  
+    // Updated
+    for( var i = 0; i < particles.length; i++ ) {
+      particles[i].update();
+    } 
+    // Remove dead particles
+    for( var i = particles.length -1; i >= 0; i-- ) {
+      if( particles[i].lifeSpan < 0 ) {
+        particles[i].die();
+        particles.splice(i, 1);
+      }
+    }    
+  } 
+  function loop() {
+    requestAnimationFrame(loop);
+    updateParticles();
+  }
+  function Particle() {
+    this.initialStyles ={
+      "position": "absolute",
+      "display": "block",
+      "pointerEvents": "none",
+      "z-index": "10000000",
+      "fontSize": "16px",
+      "will-change": "transform"
+    };
+    // Init, and set properties
+    this.init = function(x, y, character) {
+      this.velocity = {
+        x:  (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
+        y: (1 + Math.random())
+      };    
+      this.lifeSpan = 120 + Math.floor(Math.random() * 60); //ms     
+      this.position = {x: x - 20, y: y - 20};
+      this.element = document.createElement('span');
+      this.element.innerHTML = character;
+      applyProperties(this.element, this.initialStyles);
+      this.update();     
+      document.body.appendChild(this.element);
+    };  
+    this.update = function() {
+      this.position.x += this.velocity.x;
+      this.position.y += this.velocity.y;    
+      this.velocity.x += (Math.random() < 0.5 ? -1 : 1) * 2 / 75;
+      this.velocity.y -= Math.random() / 400;     
+      this.lifeSpan--;
+      this.element.style.transform = "translate3d(" + this.position.x + "px," + this.position.y + "px,0) scale(" + (this.lifeSpan / 180) + ") rotate("
++ (2 * this.lifeSpan) + "deg)";  
+    }   
+    this.die = function() {
+      this.element.parentNode.removeChild(this.element);
+    }    
+  }
+  // Applies css `properties` to an element.
+  function applyProperties( target, properties ) {
+    for( var key in properties ) {
+      target.style[ key ] = properties[ key ];
+    }
+  }  
+  init();
+})();
+</script>
+</body>
+</html>

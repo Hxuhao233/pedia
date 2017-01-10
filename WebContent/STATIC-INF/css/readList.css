@@ -1,0 +1,319 @@
+html
+{
+    width: 1250px;
+    margin-right: auto;
+    margin-left: auto;
+
+    background: white;
+}
+
+body
+{
+    font-family: '微软雅黑','Hiragino Sans GB', 'Corbel','Microsoft Yahei', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+
+    min-height: 1950px;
+    margin: 0;
+    padding: 0;
+
+    vertical-align: bottom;
+
+    background: rgb(241,245,247);
+}
+
+a
+{
+    display: block;
+
+    text-decoration: none;
+}
+
+p
+{
+    margin: 0;
+}
+
+header
+{
+    position: relative;
+
+    width: 1250px;
+    height: 61px;
+
+    background: url('../images/readList/header.png') no-repeat center;
+}
+
+#LOGO
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 242px;
+    height: 125px;
+}
+
+header input[type='text']
+{
+    font-size: 13px;
+
+    position: relative;
+    top: 12px;
+    left: 400px;
+
+    float: left;
+
+    width: 394px;
+    height: 32px;
+    padding: 1px 0 1px 0;
+
+    color: rgb(153,153,153);
+    border: 2px inset;
+}
+
+button
+{
+    position: relative;
+    top: 12px;
+    left: 400px;
+
+    float: left;
+
+    width: 68px;
+    height: 36px;
+
+    border: 0;
+    background: url('../images/readList/search.png') no-repeat center;
+}
+
+#headerRight
+{
+    position: relative;
+
+    float: right;
+
+    width: 100px;
+    height: 36px;
+}
+
+#headerRight p
+{
+    position: relative;
+    top: 20px;
+    right: 60px;
+
+    float: right;
+
+    width: 20px;
+    height: 20px;
+
+    text-align: center;
+
+    color: #e4e4e4;
+}
+
+#headerRight a
+{
+    position: relative;
+    top: 20px;
+    right: 60px;
+
+    float: right;
+
+    width: 28px;
+    height: 20px;
+
+    color: #e4e4e4;
+}
+
+#userCenter
+{
+    position: relative;
+
+    display: none;
+    float: right;
+
+    width: 100px;
+    height: 36px;
+}
+
+#userCenter a
+{
+    position: relative;
+    top: 13px;
+    right: 40px;
+
+    float: right;
+
+    width: 32px;
+    height: 32px;
+
+    background: url('../images/readList/userCenter.png') no-repeat center;
+}
+
+#describe
+{
+    position: relative;
+
+    width: 1250px;
+    height: 150px;
+}
+
+#describe a
+{
+    position: relative;
+
+    float: left;
+
+    width: 64px;
+    height: 64px;
+    margin: 68px 98px 18px 98px;
+
+    background: url('../images/readList/back.png') no-repeat center;
+}
+
+#tableHeader
+{
+    position: relative;
+
+    width: 730px;
+    height: 150px;
+    margin: 0 260px 0 260px;
+}
+
+#tableHeader p
+{
+    position: relative;
+    top: 90px;
+
+    color: rgb(107,107,107);
+}
+
+#tableHeader span
+{
+    color: rgba(26,131,207,.658824);
+}
+
+#tableList
+{
+    position: relative;
+
+    width: 730px;
+}
+
+.list
+{
+    position: relative;
+
+    clear: both;
+
+    width: 730px;
+    height: 320px;
+    margin: 50px 260px 0 260px;
+
+    border-bottom: 1px solid rgb(161,161,161);
+}
+
+.list p
+{
+    color: rgb(161,161,161);
+}
+
+.listHeader
+{
+    position: relative;
+
+    clear: both;
+
+    width: 730px;
+    height: 50px;
+}
+
+.listTitle
+{
+    font-size: 28px;
+
+    position: relative;
+
+    float: left;
+
+    width: 122px;
+    height: 36px;
+
+    color: rgb(243,169,83);
+}
+.listTitle:hover
+{
+    text-decoration: underline;
+}
+
+.listCreate
+{
+    position: relative;
+    top: 10px;
+
+    float: right;
+
+    text-align: right;
+}
+
+.listPic
+{
+    position: relative;
+
+    float: left;
+
+    width: 220px;
+    height: 220px;
+    padding: 5px 30px 0 0;
+}
+
+.listDetail
+{
+    line-height: 20px;
+
+    position: relative;
+
+    display: -webkit-box;
+    float: right;
+    overflow: hidden;
+    overflow: hidden;
+
+    width: 480px;
+    height: 180px;
+    margin-bottom: 10px;
+    padding-top: 15px;
+
+    white-space: pre-line;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 9;
+}
+
+.listLabels
+{
+    position: relative;
+
+    float: right;
+
+    width: 480px;
+    height: 20px;
+}
+
+.listLabels
+{
+    position: relative;
+
+    height: 20px;
+}
+
+.listLabels span
+{
+    color: #363636;
+}
+
+.listLabels .listLabel0
+{
+    color: rgba(26,131,207,.658824);
+}

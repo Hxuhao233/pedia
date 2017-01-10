@@ -27,10 +27,10 @@ public class BaseEntryDataList {
 		//EntryData newEntry = new EntryData(item,publisher,labels);
 		Map<String,Object>entryInfo;
 		entryInfo = new HashMap<String,Object>();
-		entryInfo.put("entryId", item.getEid().toString());
+		entryInfo.put("eid", item.getEid().toString());
 		entryInfo.put("entryName",item.getEntryname());
 		entryInfo.put("createName",publisher);
-		entryInfo.put("createDate",new SimpleDateFormat("yyyy-mm-dd").format(item.getPublishtime()));
+		entryInfo.put("createDate",new SimpleDateFormat("yyyy-MM-dd").format(item.getPublishtime()));
 		entryInfo.put("pic",item.getPictureaddr());
 		entryInfo.put("detail",item.getEntrycontent());
 		for(int i=0;i<labels.size();i++){
@@ -49,6 +49,7 @@ public class BaseEntryDataList {
 		Map<String,Object>item;
 		item = new HashMap<String,Object>();
 		item.put("entryId", entry.getEid().toString());
+		item.put("rid",report.getRid());
 		item.put("entryName",entry.getEntryname());
 		item.put("reported", reporter);
 		item.put("reason",report.getReason());
@@ -63,7 +64,7 @@ public class BaseEntryDataList {
 		item.put("entryId", entry.getEid().toString());
 		item.put("entryName",entry.getEntryname());
 		item.put("publisher", publisher);
-		item.put("createTime",new SimpleDateFormat("yyyy-mm-dd").format(entry.getPublishtime()));
+		item.put("createTime",new SimpleDateFormat("yyyy-MM-dd").format(entry.getPublishtime()));
 		data.add(item);
 		//listNum++;
 		return 1;
@@ -74,7 +75,7 @@ public class BaseEntryDataList {
 		item.put("entryId", entry.getEid().toString());
 		item.put("entryName",entry.getEntryname());
 		item.put("publisher", publisher);
-		item.put("modifyTime",new SimpleDateFormat("yyyy-mm-dd").format(entry.getPublishtime()));
+		item.put("modifyTime",new SimpleDateFormat("yyyy-MM-dd").format(entry.getPublishtime()));
 		data.add(item);
 		//listNum++;
 		return 1;

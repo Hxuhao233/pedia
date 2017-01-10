@@ -15,7 +15,7 @@ public class NewEntryInfo {
 	private String label4;
 	private String creater;
 	private String pictureAddr;
-	
+	private String eid;
 	public NewEntryInfo() {
 		super();
 	}
@@ -98,6 +98,16 @@ public class NewEntryInfo {
 
 	public void setPictureAddr(String pictureAddr) {
 		this.pictureAddr = pictureAddr;
+	}
+
+
+	public String getEid() {
+		return eid;
+	}
+
+
+	public void setEid(String eid) {
+		this.eid = eid;
 	}
 	
 }
