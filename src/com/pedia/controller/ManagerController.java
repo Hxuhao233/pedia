@@ -61,7 +61,7 @@ public class ManagerController {
 		@RequestMapping(value="/seeEntry",method=RequestMethod.GET)
 		public ResponseData seeEntry(@RequestParam(value = "eid") int eid){
 			ResponseData response = new ResponseData();
-			BaseEntryDataList entryData = managerService.seeEntry(eid);
+			BaseEntryDataList entryData = entryService.seeEntry(eid);
 			if(entryData.getData().size()>0){
 				response.setCode(200);
 				//Map<String,String> entryinfo = new Has

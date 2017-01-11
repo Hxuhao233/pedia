@@ -11,6 +11,6 @@ public interface IManagerService {
 	
 	int checkEntry(int entryId,Boolean allow,String reson);					// 审核待发布词条
 	int checkModifiedEntry(int entryId,Boolean allow,String reson);	// 审核已修改词条
-	int deleteEntry(int entryId);												// 删除词条
-	BaseEntryDataList seeEntry(int eid);									// 查看词条
+
+
 }

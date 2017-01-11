@@ -3,20 +3,16 @@
 <mapper namespace="com.pedia.dao.EntryMapper">
   <resultMap id="BaseResultMap" type="com.pedia.model.Entry">
     <id column="eid" jdbcType="INTEGER" property="eid" />
-    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="publisher" jdbcType="VARCHAR" property="publisher" />
     <result column="entryName" jdbcType="VARCHAR" property="entryname" />
-    <result column="entryContent" jdbcType="VARCHAR" property="entrycontent" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="praiseTimes" jdbcType="INTEGER" property="praisetimes" />
     <result column="badReviewTimes" jdbcType="INTEGER" property="badreviewtimes" />
     <result column="reportTimes" jdbcType="INTEGER" property="reporttimes" />
-    <result column="pictureAddr" jdbcType="VARCHAR" property="pictureaddr" />
     <result column="publishTime" jdbcType="TIMESTAMP" property="publishtime" />
-    <result column="refuseReason" jdbcType="VARCHAR" property="refusereason" />
   </resultMap>
   <sql id="Base_Column_List">
-    eid, uid, entryName, entryContent, status, praiseTimes, badReviewTimes, reportTimes, 
-    pictureAddr, publishTime, refuseReason
+    eid, publisher, entryName, status, praiseTimes, badReviewTimes, reportTimes, publishTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,63 +20,53 @@
     from Entry
     where eid = #{eid,jdbcType=INTEGER}
   </select>
-  <select id="selectByAllEntryName"  resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from Entry
-    where entryName = #{entryName,jdbcType=INTEGER}
-    and status = 2
-  </select>
-   
-    <select id="selectByInfo"  resultMap="BaseResultMap">
-    select 
-	Entry.eid, uid, entryName, entryContent, status, praiseTimes, badReviewTimes, reportTimes, 
-    pictureAddr, publishTime, refuseReason
-    from Entry,Label
-    where (entryName REGEXP #{info,jdbcType=VARCHAR}
-    or labelContent REGEXP #{info,jdbcType=VARCHAR})
-    and status = #{status,jdbcType=INTEGER}
-    and Entry.eid = Label.eid
-    group by Entry.eid
-  </select>
-   <select id="selectByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from Entry
-    where uid = #{uid,jdbcType=INTEGER}
-  </select>
-  
   <select id="selectByEntryName" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from Entry
-    where entryName = #{entryName,jdbcType=VARCHAR}
+  	select
+  	<include refid="Base_Column_List" />
+  	from Entry
+  	where entryName = #{entryName,jdbcType=VARCHAR}
+  </select>
+    <select id="selectByAllEntryName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from Entry
+  	where entryName = #{entryName,jdbcType=VARCHAR}
+  </select>
+      <select id="selectByInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from Entry
+  	where entryName  REGEXP #{entryName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByStatus" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from Entry
+  	where status = #{status,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from Entry
     where eid = #{eid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pedia.model.Entry" useGeneratedKeys="true"  keyProperty="eid">
-    insert into Entry ( uid, entryName, 
-      entryContent, status, praiseTimes, 
-      badReviewTimes, reportTimes, pictureAddr, 
-      publishTime, refuseReason)
-    values ( #{uid,jdbcType=INTEGER}, #{entryname,jdbcType=VARCHAR}, 
-      #{entrycontent,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{praisetimes,jdbcType=INTEGER}, 
-      #{badreviewtimes,jdbcType=INTEGER}, #{reporttimes,jdbcType=INTEGER}, #{pictureaddr,jdbcType=VARCHAR}, 
-      #{publishtime,jdbcType=TIMESTAMP}, #{refusereason,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.pedia.model.Entry"  useGeneratedKeys="true" keyProperty="eid">
+    insert into Entry (eid, publisher, entryName, 
+      status, praiseTimes, badReviewTimes, 
+      reportTimes, publishTime)
+    values (#{eid,jdbcType=INTEGER}, #{publisher,jdbcType=VARCHAR}, #{entryname,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{praisetimes,jdbcType=INTEGER}, #{badreviewtimes,jdbcType=INTEGER}, 
+      #{reporttimes,jdbcType=INTEGER}, #{publishtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.pedia.model.Entry"  keyProperty="eid" useGeneratedKeys="true">
+  <insert id="insertSelective" parameterType="com.pedia.model.Entry"  useGeneratedKeys="true" keyProperty="eid">
     insert into Entry
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
+      <if test="eid != null">
+        eid,
+      </if>
+      <if test="publisher != null">
+        publisher,
       </if>
       <if test="entryname != null">
         entryName,
-      </if>
-      <if test="entrycontent != null">
-        entryContent,
       </if>
       <if test="status != null">
         status,
@@ -94,25 +80,19 @@
       <if test="reporttimes != null">
         reportTimes,
       </if>
-      <if test="pictureaddr != null">
-        pictureAddr,
-      </if>
       <if test="publishtime != null">
         publishTime,
       </if>
-       <if test="refusereason != null">
-        refuseReason,
-     	</if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=INTEGER},
+      <if test="eid != null">
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="publisher != null">
+        #{publisher,jdbcType=VARCHAR},
       </if>
       <if test="entryname != null">
         #{entryname,jdbcType=VARCHAR},
-      </if>
-      <if test="entrycontent != null">
-        #{entrycontent,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -126,28 +106,19 @@
       <if test="reporttimes != null">
         #{reporttimes,jdbcType=INTEGER},
       </if>
-      <if test="pictureaddr != null">
-        #{pictureaddr,jdbcType=VARCHAR},
-      </if>
       <if test="publishtime != null">
         #{publishtime,jdbcType=TIMESTAMP},
       </if>
-       <if test="refusereason != null">
-        #{refusereason,jdbcType=VARCHAR},
-       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.pedia.model.Entry">
     update Entry
     <set>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=INTEGER},
+      <if test="publisher != null">
+        publisher = #{publisher,jdbcType=VARCHAR},
       </if>
       <if test="entryname != null">
         entryName = #{entryname,jdbcType=VARCHAR},
-      </if>
-      <if test="entrycontent != null">
-        entryContent = #{entrycontent,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -161,42 +132,26 @@
       <if test="reporttimes != null">
         reportTimes = #{reporttimes,jdbcType=INTEGER},
       </if>
-      <if test="pictureaddr != null">
-        pictureAddr = #{pictureaddr,jdbcType=VARCHAR},
-      </if>
       <if test="publishtime != null">
         publishTime = #{publishtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="refusereason != null">
-       refuseReason = #{refusereason,jdbcType=VARCHAR},
       </if>
     </set>
     where eid = #{eid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pedia.model.Entry">
     update Entry
-    set uid = #{uid,jdbcType=INTEGER},
+    set publisher = #{publisher,jdbcType=VARCHAR},
       entryName = #{entryname,jdbcType=VARCHAR},
-      entryContent = #{entrycontent,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       praiseTimes = #{praisetimes,jdbcType=INTEGER},
       badReviewTimes = #{badreviewtimes,jdbcType=INTEGER},
       reportTimes = #{reporttimes,jdbcType=INTEGER},
-      pictureAddr = #{pictureaddr,jdbcType=VARCHAR},
-      publishTime = #{publishtime,jdbcType=TIMESTAMP},
-      refuseReason = #{refusereason,jdbcType=VARCHAR}
+      publishTime = #{publishtime,jdbcType=TIMESTAMP}
     where eid = #{eid,jdbcType=INTEGER}
   </update>
-<update id="addOne" >
+  <update id="addOneByPrimaryKey">
   	update Entry
-  	set  
-	${field} = ${field} + 1
-  	where eid = #{eid,jdbcType=INTEGER};
-  </update>
-    <update id="subtractOne" >
-  	update Entry
-  	set  
-	${field} = ${field} - 1
-  	where eid = #{eid,jdbcType=INTEGER};
+  	set ${field} = ${field} + 1
+  	where eid = #{eid,jdbcType=INTEGER}
   </update>
 </mapper>

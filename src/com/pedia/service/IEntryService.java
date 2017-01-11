@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pedia.model.Action;
 import com.pedia.model.Comment;
 import com.pedia.model.Entry;
-import com.pedia.model.Label;
 import com.pedia.model.Report;
 import com.pedia.tool.BaseEntryDataList;
 import com.pedia.tool.CommentData;
 import com.pedia.tool.DetailedEntryData;
 
 public interface IEntryService {
-	int createEntry(Entry newEntry,List<Label> labels);																					// 创建词条
-	int modifyEntry(int oldEntryid,Entry newEntry,List<Label> labels);														// 修改词条
-	int deleteEntry(int eid);    																																		// 删除词条
+	int createEntry(Entry newEntry,Action create);							// 创建词条
+	int modifyEntry(Action modify);														// 修改词条
+	int deleteEntry(int eid);    																	// 删除词条
 	
 	DetailedEntryData enterEntry(int eid);											// 进入词条（返回类型待定）
 	BaseEntryDataList queryEntry(String info);								// 搜索词条

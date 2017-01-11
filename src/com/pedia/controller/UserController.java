@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pedia.dao.UserMapper;
-
+import com.pedia.model.Action;
 import com.pedia.model.Entry;
 import com.pedia.model.User;
 import com.pedia.service.IEntryService;
@@ -67,47 +67,11 @@ public class UserController {
 			}
 
 
-			List<Entry> entriesList=detailedUserData.getEntries();
-			data.put("entriesNum",entriesList.size());//提交版本数
-			List<Map<String, Object>> hasPassList=new ArrayList<>();
-			List<Map<String, Object>> toPassList=new ArrayList<>();
-			List<Map<String, Object>> hasNotPassList=new ArrayList<>();
-			for (int i=0;i<entriesList.size();i++)
-			{
-				Entry entry=entriesList.get(i);
-				switch (entry.getStatus())
-				{
-					case 2:
-						//已通过
-						Map<String, Object> hasPassMap=new HashMap<String, Object>();
-						hasPassMap.put("eid", entry.getEid());//词条id
-						hasPassMap.put("entryName", entry.getEntryname());//词条名称
-						hasPassMap.put("createDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
-						hasPassMap.put("passDate", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getPublishtime()));//通过时间 //TODO 目前用创建时间，需要改成通过时间
-						hasPassMap.put("modifyTimes", 0);//被他人修改次数 //TODO 目前用0替代，需要改成被修改次数
-						hasPassList.add(hasPassMap);
-						break;
-						
-					case 1:case 6:
-						//待通过
-						Map<String, Object> toPassMap=new HashMap<String, Object>();
-						toPassMap.put("eid", entry.getEid());//词条id
-						toPassMap.put("entryName", entry.getEntryname());//词条名称
-						toPassMap.put("createDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
-						toPassList.add(toPassMap);
-						break;
-				
-					case 3:
-						//未通过
-						Map<String, Object> hasNotPassMap = new HashMap<String, Object>();
-						hasNotPassMap.put("eid", entry.getEid());//词条id
-						hasNotPassMap.put("entryName", entry.getEntryname());//词条名称
-						hasNotPassMap.put("createDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getPublishtime()));//创建时间
-						hasNotPassMap.put("refuseReason", entry.getRefusereason());
-						hasNotPassList.add(hasNotPassMap);
-						break;
-				}
-			}
+			List<Map<String,Object>> hasPassList = detailedUserData.getPassEntryList();
+			List<Map<String,Object>> hasNotPassList = detailedUserData.getUnpassEntryList();
+			List<Map<String,Object>> toPassList = detailedUserData.getUncheckedEntryList();
+			data.put("entriesNum",hasPassList.size()+hasNotPassList.size()+toPassList.size());//提交版本数
+		
 			data.put("hasPassNum", hasPassList.size());//已通过版本数
 			data.put("toPassNum", toPassList.size());//已通过版本数
 			data.put("hasNotPassNum", hasNotPassList.size());//未通过版本数
@@ -135,7 +99,7 @@ public class UserController {
 		ResponseData ret=new ResponseData();
 		if (user!=null){
 			//检测该用户是否拥有该词条
-			List<Entry> entriesList=UserService.getUserEntries(user.getUid());
+			List<Action> entriesList=UserService.getUserEntries(user.getUid());
 			ret.setCode(500);
 			for (int i=0;i<entriesList.size();i++)
 			{

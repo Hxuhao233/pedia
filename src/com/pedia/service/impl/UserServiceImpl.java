@@ -2,7 +2,7 @@ package com.pedia.service.impl;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,14 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pedia.dao.ActionMapper;
 import com.pedia.dao.CommentMapper;
 import com.pedia.dao.EntryMapper;
-import com.pedia.dao.LabelMapper;
 import com.pedia.dao.ReportMapper;
 import com.pedia.dao.UserMapper;
 
 import com.pedia.model.Action;
 import com.pedia.model.Comment;
 import com.pedia.model.Entry;
-import com.pedia.model.Label;
 import com.pedia.model.Report;
 import com.pedia.model.User;
 import com.pedia.service.IUserService;
@@ -49,6 +47,8 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private EntryMapper entryDao;
 	
+	@Autowired
+	private ActionMapper actionDao;
 
 	/*
 	@Autowired
@@ -196,15 +196,54 @@ public class UserServiceImpl implements IUserService {
 		DetailedUserData detailedUserData=new DetailedUserData();
 		User user=userDao.selectByPrimaryKey(uid);
 		if (user!=null){
-			List<Entry> entries=entryDao.selectByUid(uid);
 			detailedUserData.setUser(user);
-			detailedUserData.setEntries(entries);
-			if(entries==null){
-				System.out.println("获取主页异常，词条数组为null");
+			
+			List<Action> actionList = actionDao.selectByUid(uid);
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			for(Action action : actionList){
+				switch (action.getStatus()) {
+				// 未审核
+				case 1:
+					Map<String,Object> entryInfo = new HashMap<String,Object>();
+					Entry entry = entryDao.selectByPrimaryKey(action.getEid());
+					entryInfo.put("eid", action.getAid());
+					entryInfo.put("entryName", entry.getEntryname());
+					entryInfo.put("createDate", simpleDateFormat.format(action.getActiontime()));
+					detailedUserData.addUncheckedEntry(entryInfo);
+					break;
+				
+				// 以通过	
+				case 2:
+					Map<String,Object> entryInfo2 = new HashMap<String,Object>();
+					Entry entry2 = entryDao.selectByPrimaryKey(action.getEid());
+					entryInfo2.put("eid", action.getAid());
+					entryInfo2.put("entryName", entry2.getEntryname());
+					entryInfo2.put("createDate", simpleDateFormat.format(action.getActiontime()));
+					entryInfo2.put("passDate", simpleDateFormat.format(entry2.getPublishtime()));
+					entryInfo2.put("modifiTimes", actionDao.selectByEidAndStatus(entry2.getEid(),2).size());
+					detailedUserData.addPassEntry(entryInfo2);
+					
+					break;
+				
+				// 未通过
+				case 3:
+					Map<String,Object> entryInfo3 = new HashMap<String,Object>();
+					Entry entry3 = entryDao.selectByPrimaryKey(action.getEid());
+					entryInfo3.put("eid", action.getAid());
+					entryInfo3.put("entryName", entry3.getEntryname());
+					entryInfo3.put("createDate", simpleDateFormat.format(action.getActiontime()));
+					entryInfo3.put("refuseReason", action.getRefusereason());
+					detailedUserData.addModifiedEntry(entryInfo3);
+					
+					break;
+					
+				default:
+					break;
+				}
 			}
-			else {
-				System.out.println("获取主页成功！"+"获取了"+user.getAccount()+"的"+entries.size()+"个词条");
-			}
+			
 		}
 		else {
 			System.out.println("获取主页失败！没有该用户");
@@ -216,8 +255,8 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
-	public List<Entry> getUserEntries(int uid) {
-		List<Entry> data=entryDao.selectByUid(uid);
+	public List<Action> getUserEntries(int uid) {
+		List<Action> data=actionDao.selectByUid(uid);
 		return data;
 	}
 }

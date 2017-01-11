@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 import com.pedia.dao.ActionMapper;
 import com.pedia.dao.CommentMapper;
 import com.pedia.dao.EntryMapper;
-import com.pedia.dao.LabelMapper;
 import com.pedia.dao.ReportMapper;
 import com.pedia.dao.UserMapper;
 import com.pedia.model.Action;
 import com.pedia.model.Entry;
-import com.pedia.model.Label;
 import com.pedia.model.Report;
 import com.pedia.model.User;
 import com.pedia.service.IManagerService;
@@ -29,12 +27,7 @@ public class ManagerServiceImpl implements IManagerService{
 	
 	@Autowired
 	private EntryMapper entryDao;
-	
-	@Autowired
-	private LabelMapper labelDao;
-	
-
-	
+		
 	@Autowired
 	private ReportMapper reportDao;
 	
@@ -47,13 +40,11 @@ public class ManagerServiceImpl implements IManagerService{
 	public BaseEntryDataList getUnCheckedEntry() {
 		// TODO Auto-generated method stub
 		BaseEntryDataList entryDataList = new BaseEntryDataList();
-		List<Entry> result  = entryDao.selectByInfo(".*",1);
+		List<Entry> result  = entryDao.selectByStatus(1);
 
 		for(Entry item : result){
-			User publisher = userDao.selectByPrimaryKey(item.getUid());
-			String publisherName = publisher.getUsername() != null ?publisher.getUsername() : "未知"; 
 			//List<Label> labels = labelDao.selectByEid(item.getEid());
-			entryDataList.addUncheckedEntry(item, publisherName);
+			entryDataList.addUncheckedEntry(item);
 		}
 		System.out.println(result.size());
 		System.out.println(entryDataList.getData().size());
@@ -84,7 +75,7 @@ public class ManagerServiceImpl implements IManagerService{
 		// TODO Auto-generated method stub
 
 		BaseEntryDataList entryDataList = new BaseEntryDataList();
-		List<Action> actions = actionDao.selectByStatus(1);
+		List<Action> actions = actionDao.selectByStatusAndType(1,2);
 		for (Action action : actions){
 			User modifier = userDao.selectByPrimaryKey(action.getUid());
 			String modifierName = modifier.getUsername()!=null? modifier.getUsername() : modifier.getAccount();
@@ -95,115 +86,66 @@ public class ManagerServiceImpl implements IManagerService{
 
 	}
 	
-	@Override
-	public BaseEntryDataList seeEntry(int eid) {
-		// TODO Auto-generated method stub
-		BaseEntryDataList entryDataList = new BaseEntryDataList();
-		Entry item  = entryDao.selectByPrimaryKey(eid);
-
-		User u = userDao.selectByPrimaryKey(item.getUid());
-		String publisher = u.getUsername() != null ? u.getUsername() : u.getAccount(); 
-		List<Label> labels = labelDao.selectByEid(item.getEid());
-		//System.out.println("233");
-		entryDataList.addNormalEntry(item, publisher, labels);
-	
-		return entryDataList;
-	}
 	
 
 	
 	
 	@Override
-	public int checkEntry(int entryId, Boolean allow,String reason) {
+	public int checkEntry(int aid, Boolean allow,String reason) {
 		// TODO Auto-generated method stub
-		Entry e = entryDao.selectByPrimaryKey(entryId);
+		Action a = actionDao.selectByPrimaryKey(aid);
 		//allow false 不通过 true 通过
 		if(allow == true){
 			
-			e.setStatus(2);
-			User u = userDao.selectByPrimaryKey(e.getUid());
+			a.setStatus(2);
+			User u = userDao.selectByPrimaryKey(a.getUid());
 			u.AddExp(5);
 			userDao.updateByPrimaryKeySelective(u);
-			
+			Entry e = entryDao.selectByPrimaryKey(a.getEid());
+			e.setStatus(2);
+			entryDao.updateByPrimaryKeySelective(e);
 		}else{
 			
-			e.setStatus(3);
-			e.setRefusereason(reason);
+			a.setStatus(3);
+			a.setRefusereason(reason);
 		}
 		
-		int ret = entryDao.updateByPrimaryKeySelective(e);
+		int ret = actionDao.updateByPrimaryKeySelective(a);
 		return ret;
 	}
 
 	@Override
-	public int checkModifiedEntry(int entryId, Boolean allow, String reson) {
+	public int checkModifiedEntry(int aid, Boolean allow, String reason) {
 		// TODO Auto-generated method stub
-		Action action = actionDao.selectByKey(entryId);
+		Action action = actionDao.selectByPrimaryKey(aid);
 		int ret = 0;
 		
 		if(allow == true){
 			
-			int oldEntryId = action.getEid();
-			Entry oldEntry = entryDao.selectByPrimaryKey(oldEntryId);
-			oldEntry.setStatus(4);
-			entryDao.updateByPrimaryKeySelective(oldEntry);
+			int eid = action.getEid();
+			List<Action> oldContent = actionDao.selectByEidAndStatus(eid,2);
+			oldContent.get(0).setStatus(4);
+			actionDao.updateByPrimaryKeySelective(oldContent.get(0));
 			
-			Entry newEntry = entryDao.selectByPrimaryKey(entryId);
-			newEntry.setStatus(2);
-			newEntry.setPraisetimes(oldEntry.getPraisetimes());
-			newEntry.setBadreviewtimes(oldEntry.getBadreviewtimes());
-			newEntry.setUid(oldEntry.getUid());
-			ret = entryDao.updateByPrimaryKeySelective(newEntry);
-			
+			action.setStatus(2);
+			ret = actionDao.updateByPrimaryKeySelective(action);
 			
 			User modifier = userDao.selectByPrimaryKey(action.getUid());
 			modifier.AddExp(5);
 			userDao.updateByPrimaryKeySelective(modifier);
 			
-			
-			
-			List<Action> otherActions = actionDao.selectByEid(oldEntryId);
-			for(Action item : otherActions){
-				
-				if(item.getNeweid() == entryId){
-					item.setStatus(2);	
-				}	
-				else{			
-					item.setEid(entryId);
-				}
-				actionDao.updateByPrimaryKeySelective(item);
-			}
-
 		}else{
 			
-			Entry newEntry = entryDao.selectByPrimaryKey(entryId);
-			newEntry.setStatus(5);
-			newEntry.setRefusereason(reson);
-			ret = entryDao.updateByPrimaryKeySelective(newEntry);
-		
+			action.setRefusereason(reason);
 			action.setStatus(3);
-			actionDao.updateByPrimaryKey(action);
+			ret = actionDao.updateByPrimaryKeySelective(action);
+		
+
 			
 		}
 		
 		return ret;
 	}
 
-
-
-	@Override
-	public int deleteEntry(int entryId) {
-		Entry entry=entryDao.selectByPrimaryKey(entryId);
-		if (entry!=null){
-			entry.setStatus(5);
-			entryDao.updateByPrimaryKeySelective(entry);
-			System.out.println("管理员删除词条成功！"+entry.getEntryname()+"词条的状态值更改为5");
-			return 1;
-		}
-		else {
-			System.out.println("管理员删除词条失败！没有该词条");
-			return 0;
-		}	
-	}
 
 }

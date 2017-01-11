@@ -2,6 +2,8 @@ package com.pedia.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pedia.model.Action;
 
 public interface ActionMapper {
@@ -13,12 +15,16 @@ public interface ActionMapper {
 
     Action selectByPrimaryKey(Integer aid);
     
+    List<Action> selectByEidAndStatus(@Param("eid")Integer eid,@Param("status")Integer status);
+
     List<Action> selectByEid(Integer eid);
     
-    Action selectByKey(Integer neweid);
-    
-    List<Action> selectByStatus(Integer status);
+	List<Action> selectByStatus(Integer status);
 
+	List<Action> selectByStatusAndType(@Param("status")Integer status , @Param("type")Integer type);
+
+	List<Action> selectByUid(int uid);
+	
     int updateByPrimaryKeySelective(Action record);
 
     int updateByPrimaryKey(Action record);

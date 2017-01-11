@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pedia.model.Action;
 import com.pedia.model.Entry;
-import com.pedia.model.Label;
 import com.pedia.model.Report;
 
 public class BaseEntryDataList {
@@ -22,23 +22,21 @@ public class BaseEntryDataList {
 		//listNum=0;
 		data = new ArrayList<Map<String,Object>>();
 	}
-	public int addNormalEntry(Entry item,String publisher,List<Label> labels){
+	public int addNormalEntry(Entry item,Action nowContent){
 		
 		//EntryData newEntry = new EntryData(item,publisher,labels);
 		Map<String,Object>entryInfo;
 		entryInfo = new HashMap<String,Object>();
 		entryInfo.put("eid", item.getEid().toString());
 		entryInfo.put("entryName",item.getEntryname());
-		entryInfo.put("createName",publisher);
+		entryInfo.put("createName",item.getPublisher());
 		entryInfo.put("createDate",new SimpleDateFormat("yyyy-MM-dd").format(item.getPublishtime()));
-		entryInfo.put("pic",item.getPictureaddr());
-		entryInfo.put("detail",item.getEntrycontent());
-		for(int i=0;i<labels.size();i++){
-			entryInfo.put("label" + (i+1),labels.get(i).getLabelcontent());
-		}
-		for(int i=labels.size();i<4;i++){
-			entryInfo.put("label" + (i+1),"");
-		}
+		entryInfo.put("pic",nowContent.getPictureaddr());
+		entryInfo.put("detail",nowContent.getEntrycontent());
+		entryInfo.put("label1", nowContent.getLabel1());
+		entryInfo.put("label2", nowContent.getLabel2());
+		entryInfo.put("label3", nowContent.getLabel3());
+		entryInfo.put("label4", nowContent.getLabel4());
 		data.add(entryInfo);
 		//listNum++;
 		return 1;
@@ -58,23 +56,23 @@ public class BaseEntryDataList {
 		return 1;
 	}
 	
-	public int addUncheckedEntry(Entry entry,String publisher){
+	public int addUncheckedEntry(Entry entry){
 		Map<String,Object>item;
 		item = new HashMap<String,Object>();
 		item.put("entryId", entry.getEid().toString());
 		item.put("entryName",entry.getEntryname());
-		item.put("publisher", publisher);
+		item.put("publisher", entry.getPublisher());
 		item.put("createTime",new SimpleDateFormat("yyyy-MM-dd").format(entry.getPublishtime()));
 		data.add(item);
 		//listNum++;
 		return 1;
 	}
-	public int addModifiedEntry(Entry entry,String publisher){
+	public int addModifiedEntry(Entry entry,String modifier){
 		Map<String,Object>item;
 		item = new HashMap<String,Object>();
 		item.put("entryId", entry.getEid().toString());
 		item.put("entryName",entry.getEntryname());
-		item.put("publisher", publisher);
+		item.put("publisher",modifier);
 		item.put("modifyTime",new SimpleDateFormat("yyyy-MM-dd").format(entry.getPublishtime()));
 		data.add(item);
 		//listNum++;

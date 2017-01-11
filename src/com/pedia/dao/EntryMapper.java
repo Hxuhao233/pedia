@@ -13,22 +13,19 @@ public interface EntryMapper {
 
     int insertSelective(Entry record);
 
-    Entry selectByPrimaryKey(@Param("eid") Integer eid);
-    
-    Entry selectByAllEntryName(@Param("entryName") String entryName,@Param("status") Integer status);
-    
-    List<Entry> selectByInfo(@Param("info")  String info,@Param("status") Integer status);
+    Entry selectByPrimaryKey(Integer eid);
 
     int updateByPrimaryKeySelective(Entry record);
 
     int updateByPrimaryKey(Entry record);
-    
-    int addOne(@Param("eid") Integer eid, @Param("field") String field);
 
-	int subtractOne(@Param("eid") Integer eid, @Param("field") String field);
-	
-	List<Entry> selectByUid(Integer uid);
-	
-	
-	List<Entry> selectByEntryName(String entryName);
+    int addOneByPrimaryKey(@Param("eid")Integer eid,@Param("field")String field);
+
+
+
+	Entry selectByAllEntryName(String info);
+
+	List<Entry> selectByInfo(String info);
+
+	List<Entry> selectByStatus(Integer status);
 }

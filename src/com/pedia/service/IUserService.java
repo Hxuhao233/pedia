@@ -8,9 +8,9 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pedia.model.Action;
 import com.pedia.model.Comment;
 import com.pedia.model.Entry;
-import com.pedia.model.Label;
 import com.pedia.model.Report;
 import com.pedia.model.User;
 import com.pedia.tool.BaseEntryDataList;
@@ -32,7 +32,7 @@ public interface IUserService {
 	
 
 	DetailedUserData enterPersonalHomePage(int uid); 				// 进入个人主页
-	List<Entry> getUserEntries(int uid);  //获取用户词条
+	List<Action> getUserEntries(int uid);  //获取用户词条
 
 
 	

@@ -8,19 +8,18 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationConfigurationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pedia.dao.ActionMapper;
 import com.pedia.dao.CommentMapper;
 import com.pedia.dao.EntryMapper;
-import com.pedia.dao.LabelMapper;
 import com.pedia.dao.ReportMapper;
 import com.pedia.dao.UserMapper;
 import com.pedia.model.Action;
 import com.pedia.model.Comment;
 import com.pedia.model.Entry;
-import com.pedia.model.Label;
 import com.pedia.model.Report;
 import com.pedia.model.User;
 import com.pedia.service.IEntryService;
@@ -37,9 +36,7 @@ public class EntryServiceImpl implements IEntryService{
 	
 	@Autowired
 	private EntryMapper entryDao;
-	
-	@Autowired
-	private LabelMapper labelDao;
+
 	
 	@Autowired
 	private CommentMapper commentDao;
@@ -51,64 +48,43 @@ public class EntryServiceImpl implements IEntryService{
 	private ActionMapper actionDao;
 	
 	@Override
-	public int createEntry(Entry newEntry,List<Label> labels) {
+	public int createEntry(Entry newEntry,Action create) {
 		// TODO Auto-generated method stub
 		int ret = entryDao.insertSelective(newEntry);
 		int newEntryId = newEntry.getEid();
-		System.out.println("create Entry " + newEntryId);
-		if(newEntryId > 0){
-			for(Label item : labels){
-				item.setEid(newEntryId);
-				labelDao.insertSelective(item);
-			}
-			return 1;
+		if(ret > 0){
+			System.out.println("create Entry " + newEntryId);
+			create.setEid(newEntryId);
+			ret = actionDao.insertSelective(create);
 		}
-		return 0;
+		return ret;
 	}
 
 	@Override
-	public int modifyEntry(int oldEntryId, Entry newEntry, List<Label> labels) {
+	public int modifyEntry(Action modify) {
 		// TODO Auto-generated method stub
-		Entry oldEntry = entryDao.selectByPrimaryKey(oldEntryId);
-		Integer newUId = newEntry.getUid();
-		newEntry.setUid(oldEntry.getUid());
-		newEntry.setStatus(6);
-		int newEntryId = entryDao.insertSelective(newEntry);
-		if(newEntryId > 0){
-			
-			for(Label item : labels){
-				item.setEid(newEntryId);
-				labelDao.insertSelective(item);
-			}
-			Action action = new Action();
-			action.setEid(oldEntryId);
-			action.setUid(newUId);
-			action.setNeweid(newEntryId);
-			return 1;
-		}
-		return 0;
+		int ret = actionDao.insertSelective(modify);
+		return ret;
+		
 	}
 
 	@Override
 	public int deleteEntry(int eid) { //删除词条 输入eid 输出删除结果
-		Entry entry=entryDao.selectByPrimaryKey(eid);
-		if (entry!=null){
-			entry.setStatus(5);
-			entryDao.updateByPrimaryKeySelective(entry);
-			System.out.println("删除词条成功！"+entry.getEntryname()+"词条的状态值更改为5");
-			Action a = actionDao.selectByKey(eid);
-			if(a!=null){
-				Entry oldEntry = entryDao.selectByPrimaryKey(a.getEid());
-				oldEntry.setStatus(2);
-				entryDao.updateByPrimaryKeySelective(oldEntry);
-			}
-			return 1;
-		}
-		else {
-			System.out.println("删除词条失败！没有该词条");
-			return 0;
-		}	
+
+		List<Action> nowContent = actionDao.selectByEidAndStatus(eid,2);
+		int ret = 0;
 		
+		nowContent.get(0).setStatus(5);
+		ret = actionDao.updateByPrimaryKey(nowContent.get(0));
+		if(ret > 0){
+			List<Action> previousContentList = actionDao.selectByEidAndStatus(eid,5);
+			Action previousContent = previousContentList.get(previousContentList.size()-1);
+			previousContent.setStatus(2);
+			actionDao.updateByPrimaryKey(previousContent);
+		}
+		
+		
+		return ret;
 	}
 	
 	//处理举报
@@ -135,9 +111,7 @@ public class EntryServiceImpl implements IEntryService{
 		DetailedEntryData detailedEntryData = new DetailedEntryData();
 		Entry result  = entryDao.selectByPrimaryKey(eid);
 		if(result !=null){
-			User u = userDao.selectByPrimaryKey(result.getUid());
-			String publisher = u.getUsername() != null ? u.getUsername() : u.getAccount(); 
-			List<Label> labels = labelDao.selectByEid(result.getEid());
+			List<Action> nowContent = actionDao.selectByEidAndStatus(eid, 2);
 			List<Comment> comments = commentDao.selectByEid(result.getEid());
 			List<CommentData> commentData = new ArrayList<CommentData>();
 			
@@ -155,8 +129,7 @@ public class EntryServiceImpl implements IEntryService{
 			
 			detailedEntryData.setEntry(result);
 			detailedEntryData.setComments(commentData);
-			detailedEntryData.setLabels(labels);
-			detailedEntryData.setPublisher(publisher);
+			detailedEntryData.setNowContent(nowContent.get(0));
 			return detailedEntryData;
 		}
 		return null;
@@ -166,29 +139,24 @@ public class EntryServiceImpl implements IEntryService{
 	public BaseEntryDataList queryEntry(String info) {
 		// TODO Auto-generated method stub
 		BaseEntryDataList entryDataList = new BaseEntryDataList();
-		List<Entry> result  = entryDao.selectByInfo(info,2);
+		List<Entry> result  = entryDao.selectByInfo(info);
 		for(Entry item : result){
-			User u = userDao.selectByPrimaryKey(item.getUid());
-			String publisher = u.getUsername() != null ? u.getUsername() : u.getAccount(); 
-			List<Label> labels = labelDao.selectByEid(item.getEid());
+			List<Action> nowContent = actionDao.selectByEidAndStatus(item.getEid(),2);
 			//System.out.println("233");
-			entryDataList.addNormalEntry(item, publisher, labels);
+			entryDataList.addNormalEntry(item,nowContent.get(0));
 		}
 		return entryDataList;
 	}
 	
 	
 	@Override
-	public BaseEntryDataList seeEntry(int eid) {
+	public BaseEntryDataList seeEntry(int aid) {
 		// TODO Auto-generated method stub
 		BaseEntryDataList entryDataList = new BaseEntryDataList();
-		Entry item  = entryDao.selectByPrimaryKey(eid);
 
-		User u = userDao.selectByPrimaryKey(item.getUid());
-		String publisher = u.getUsername() != null ? u.getUsername() : u.getAccount(); 
-		List<Label> labels = labelDao.selectByEid(item.getEid());
-		//System.out.println("233");
-		entryDataList.addNormalEntry(item, publisher, labels);
+		Action Content = actionDao.selectByPrimaryKey(aid);
+		Entry item  = entryDao.selectByPrimaryKey(Content.getEid());
+		entryDataList.addNormalEntry(item,Content);
 	
 		return entryDataList;
 	}
@@ -203,20 +171,20 @@ public class EntryServiceImpl implements IEntryService{
 	public int submitReport(Report report) {
 		// TODO Auto-generated method stub
 	
-		entryDao.addOne(report.getEid(), "reportTimes");
+		entryDao.addOneByPrimaryKey(report.getEid(), "reportTimes");
 		return reportDao.insertSelective(report);
 	}
 
 	@Override
 	public int priase(int entryId) {//点赞 输入词条id 输出是否点赞成功
 		System.out.println("为id为"+entryId+"的词条点赞");
-		return entryDao.addOne(entryId, "praiseTimes");
+		return entryDao.addOneByPrimaryKey(entryId, "praiseTimes");
 	}
 
 	@Override
 	public int badReview(int entryId) {//差评 输入词条id 输出是否差评成功
 		System.out.println("为id为"+entryId+"的词条差评");
-		return entryDao.addOne(entryId, "badReviewTimes");
+		return entryDao.addOneByPrimaryKey(entryId, "badReviewTimes");
 	}
 	
 	@Override
@@ -262,11 +230,11 @@ public class EntryServiceImpl implements IEntryService{
 
 	@Override
 	public boolean checkEntryCreatable(String entryName) { //检测词条是否可以被创建
-		List<Entry> entries=entryDao.selectByEntryName(entryName);
-		for (int i=0;i<entries.size();i++)
-		{
-			if (entries.get(i).getStatus()==2) return false; //只要有已发布版本就不能被创建
-		}
+		Entry entry=entryDao.selectByAllEntryName(entryName);
+		
+		if (entry!=null &&entry.getStatus()==2) 
+			return false; //只要有已发布版本就不能被创建
+
 		return true;
 	}
 
@@ -286,11 +254,10 @@ public class EntryServiceImpl implements IEntryService{
 	public DetailedEntryData enterEntry(String info) {
 		// TODO Auto-generated method stub
 		DetailedEntryData detailedEntryData = new DetailedEntryData();
-		Entry result  = entryDao.selectByAllEntryName(info, 2);
+		Entry result  = entryDao.selectByAllEntryName(info);
 		if(result !=null){
-			User u = userDao.selectByPrimaryKey(result.getUid());
-			String publisher = u.getUsername() != null ? u.getUsername() : u.getAccount(); 
-			List<Label> labels = labelDao.selectByEid(result.getEid());
+			
+			List<Action> nowContent = actionDao.selectByEidAndStatus(result.getEid(), 2);
 			List<Comment> comments = commentDao.selectByEid(result.getEid());
 			List<CommentData> commentData = new ArrayList<CommentData>();
 			
@@ -308,8 +275,7 @@ public class EntryServiceImpl implements IEntryService{
 			
 			detailedEntryData.setEntry(result);
 			detailedEntryData.setComments(commentData);
-			detailedEntryData.setLabels(labels);
-			detailedEntryData.setPublisher(publisher);
+			detailedEntryData.setNowContent(nowContent.get(0));
 			return detailedEntryData;
 		}
 		return null;

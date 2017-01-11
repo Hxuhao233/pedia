@@ -6,7 +6,7 @@ package com.pedia.tool;
  * @author hxuhao
  *
  */
-public class NewEntryInfo {
+public class EntryInfo {
 	private String entryName;
 	private String entryContent;
 	private String label1;
@@ -16,7 +16,7 @@ public class NewEntryInfo {
 	private String creater;
 	private String pictureAddr;
 	private String eid;
-	public NewEntryInfo() {
+	public EntryInfo() {
 		super();
 	}
 

@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pedia.model.Action;
 import com.pedia.model.Comment;
 import com.pedia.model.Entry;
-import com.pedia.model.Label;
 import com.pedia.model.Report;
 import com.pedia.model.User;
 import com.pedia.service.IEntryService;
 import com.pedia.tool.BaseEntryDataList;
 import com.pedia.tool.DetailedEntryData;
-import com.pedia.tool.NewEntryInfo;
+import com.pedia.tool.EntryInfo;
 import com.pedia.tool.RequestData;
 import com.pedia.tool.ResponseData;
 
@@ -76,27 +76,25 @@ public class EntryController {
 			if(entryData != null){
 
 				Map<String,Object> data = new HashMap<String,Object>();
-
 				Entry e = entryData.getEntry();
-				List<Label> labels = entryData.getLabels();
+				Action a = entryData.getNowContent();
+	
 				data.put("eid", e.getEid());
 				data.put("entryName", e.getEntryname());
-				data.put("pic",e.getPictureaddr());
-				data.put("detail", e.getEntrycontent());
-				for(int i=0;i<labels.size();i++){
-					data.put("label" +(i+1), labels.get(i).getLabelcontent());
-				}
-				for(int i=labels.size();i<4;i++){
-					data.put("label" +(i+1), "");
-				}		
+				data.put("pic",a.getPictureaddr());
+				data.put("detail", a.getEntrycontent());
+				data.put("label1", a.getLabel1());
+				data.put("label2", a.getLabel2());
+				data.put("label3", a.getLabel3());
+				data.put("label4", a.getLabel4());
 				data.put("praiseTime",e.getPraisetimes());
 				data.put("badReviewTimes", e.getBadreviewtimes());
 				data.put("commentsNum",entryData.getComments().size());
 				data.put("comments", entryData.getComments());
-						
-						
+									
 				response.setCode(200);		
 				response.setData(data);
+			
 			}else{
 				response.setCode(404);
 				Map<String,Object> data = new HashMap<String,Object>();
@@ -120,19 +118,17 @@ public class EntryController {
 		if(entryData != null){
 
 			Map<String,Object> data = new HashMap<String,Object>();
-
 			Entry e = entryData.getEntry();
-			List<Label> labels = entryData.getLabels();
+			Action a = entryData.getNowContent();
+
 			data.put("eid", e.getEid());
 			data.put("entryName", e.getEntryname());
-			data.put("pic",e.getPictureaddr());
-			data.put("detail", e.getEntrycontent());
-			for(int i=0;i<labels.size();i++){
-				data.put("label" +(i+1), labels.get(i).getLabelcontent());
-			}
-			for(int i=labels.size();i<4;i++){
-				data.put("label" +(i+1), "");
-			}		
+			data.put("pic",a.getPictureaddr());
+			data.put("detail", a.getEntrycontent());
+			data.put("label1", a.getLabel1());
+			data.put("label2", a.getLabel2());
+			data.put("label3", a.getLabel3());
+			data.put("label4", a.getLabel4());
 			data.put("praiseTime",e.getPraisetimes());
 			data.put("badReviewTimes", e.getBadreviewtimes());
 			data.put("commentsNum",entryData.getComments().size());
@@ -141,6 +137,7 @@ public class EntryController {
 					
 			response.setCode(200);		
 			response.setData(data);
+			
 		}else{
 			response.setCode(404);
 		}
@@ -152,7 +149,7 @@ public class EntryController {
 	// 创建词条
 	@ResponseBody
 	@RequestMapping(value="createEntry",method=RequestMethod.POST)
-	public  ResponseData createEntry(NewEntryInfo entryInfo, @RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,HttpSession session){
+	public  ResponseData createEntry(EntryInfo entryInfo, @RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,HttpSession session){
 		ResponseData response = new ResponseData();
 		User u = (User) session.getAttribute("user");
 		
@@ -163,53 +160,32 @@ public class EntryController {
 			uid = u.getUid();
 		
 		Entry entry = new Entry();
+		Action action = new Action();
 		entry.setEntryname(entryInfo.getEntryName());
-		entry.setEntrycontent(entryInfo.getEntryContent());
-		entry.setUid(uid);
+		entry.setPublisher(u.getUsername());
+		action.setEntrycontent(entryInfo.getEntryContent());
+		action.setUid(uid);
+		action.setLabel1(entryInfo.getLabel1());
+		action.setLabel2(entryInfo.getLabel2());
+		action.setLabel3(entryInfo.getLabel3());
+		action.setLabel4(entryInfo.getLabel4());
 		String filePath = "";
 		
 		if(file!=null){
 			String pathRoot = request.getSession().getServletContext().getRealPath("/") + "../static";
 			filePath = entryService.uploadImage(pathRoot, file);
-			entry.setPictureaddr(filePath);
+			action.setPictureaddr(filePath);
 			//System.out.println(filePath);
 		}
-		
-		
-		List<Label> labels = new ArrayList<Label>();
-		String content = entryInfo.getLabel1();
-		if(content!=null){
-			Label l = new Label();
-			l.setLabelcontent(content);
-			labels.add(l);
-		}
-		content = entryInfo.getLabel2(); 	
-		if(content!=null){
-			Label l = new Label();
-			l.setLabelcontent(content);
-			labels.add(l);
-		}
-		content = entryInfo.getLabel3(); 	
-		if(content!=null){
-			Label l = new Label();
-			l.setLabelcontent(content);
-			labels.add(l);
-		}
-		content = entryInfo.getLabel4(); 	
-		if(content!=null){
-			Label l = new Label();
-			l.setLabelcontent(content);
-			labels.add(l);
-		}
-		
+
 		
 		int ret=0;
 		if(entryInfo.getEid()==null||"".equals(entryInfo.getEid())){
-			ret = entryService.createEntry(entry, labels);
+			action.setType(1);
+			ret = entryService.createEntry(entry, action);
 		}else{
-			int oldEntryid = Integer.valueOf(entryInfo.getEid());
-			entry.setEid(null);
-			ret = entryService.modifyEntry(oldEntryid, entry, labels);
+			action.setEid(Integer.valueOf(entryInfo.getEid()));
+			ret = entryService.modifyEntry(action);
 		}
 		Map<String,Object> data = new HashMap<String,Object>();
 		if(ret > 0){
@@ -354,12 +330,12 @@ public class EntryController {
 					int eid=Integer.parseInt(requestData.getData().get("eid"));
 					String comment=requestData.getData().get("comment");
 					User u = (User) session.getAttribute("user");
-					Integer uid = u!=null? u.getUid() : 2;
-					if (uid!=null){
+					
+					if (u!=null){
 						Comment submitComment=new Comment();
 						submitComment.setCommentcontent(comment);
 						submitComment.setEid(eid);
-						submitComment.setUid(uid);
+						submitComment.setUid(u.getUid());
 						entryService.submitComment(submitComment);
 						ret.setCode(200);
 						data.put("info", "提交评论成功");
