@@ -1,21 +1,36 @@
 package com.pedia.tool;
 
+import java.io.Serializable;
+
 /**
  * 
- * 创建词条时用的
+ * 词条基本信息
  * @author hxuhao
  *
  */
-public class EntryInfo {
+public class EntryInfo implements Serializable{
 	private String entryName;
 	private String entryContent;
 	private String label1;
 	private String label2;
 	private String label3;
 	private String label4;
-	private String creater;
+	private String createName;
 	private String pictureAddr;
 	private String eid;
+	private String createDate;
+	private Integer praiseTimes;
+	private Integer badReviewTimes;
+	public String getCreateDate() {
+		return createDate;
+	}
+
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
+
 	public EntryInfo() {
 		super();
 	}
@@ -81,13 +96,15 @@ public class EntryInfo {
 	}
 
 
-	public String getCreater() {
-		return creater;
+
+
+	public String getCreateName() {
+		return createName;
 	}
 
 
-	public void setCreater(String creater) {
-		this.creater = creater;
+	public void setCreateName(String createName) {
+		this.createName = createName;
 	}
 
 
@@ -108,6 +125,26 @@ public class EntryInfo {
 
 	public void setEid(String eid) {
 		this.eid = eid;
+	}
+
+
+	public Integer getPraiseTimes() {
+		return praiseTimes;
+	}
+
+
+	public void setPraiseTimes(Integer praiseTimes) {
+		this.praiseTimes = praiseTimes;
+	}
+
+
+	public Integer getBadReviewTimes() {
+		return badReviewTimes;
+	}
+
+
+	public void setBadReviewTimes(Integer badReviewTimes) {
+		this.badReviewTimes = badReviewTimes;
 	}
 	
 }

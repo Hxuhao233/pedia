@@ -11,8 +11,6 @@ public class Action {
 
     private Integer type;
 
-    private Integer neweid;
-
     private Integer status;
 
     private Date actiontime;
@@ -63,13 +61,6 @@ public class Action {
         this.type = type;
     }
 
-    public Integer getNeweid() {
-        return neweid;
-    }
-
-    public void setNeweid(Integer neweid) {
-        this.neweid = neweid;
-    }
 
     public Integer getStatus() {
         return status;

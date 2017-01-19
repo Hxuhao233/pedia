@@ -79,8 +79,8 @@ public class ManagerServiceImpl implements IManagerService{
 		for (Action action : actions){
 			User modifier = userDao.selectByPrimaryKey(action.getUid());
 			String modifierName = modifier.getUsername()!=null? modifier.getUsername() : modifier.getAccount();
-			Entry e = entryDao.selectByPrimaryKey(action.getNeweid());
-			entryDataList.addModifiedEntry(e,modifierName);
+			Entry e = entryDao.selectByPrimaryKey(action.getEid());
+			entryDataList.addModifiedEntry(e,modifierName,action.getAid());
 		}
 		return entryDataList;
 

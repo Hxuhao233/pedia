@@ -27,6 +27,7 @@ import com.pedia.model.Report;
 import com.pedia.model.User;
 import com.pedia.service.IEntryService;
 import com.pedia.tool.BaseEntryDataList;
+import com.pedia.tool.CommentData;
 import com.pedia.tool.DetailedEntryData;
 import com.pedia.tool.EntryInfo;
 import com.pedia.tool.RequestData;
@@ -48,13 +49,13 @@ public class EntryController {
 		if(info == null)
 			info=".*";
 		
-		BaseEntryDataList entryDataList = entryService.queryEntry(info);
-		if(entryDataList.getData().size()>0){
+		List<EntryInfo> entryDataList = entryService.queryEntry(info);
+		if(entryDataList.size()>0){
 			
 			response.setCode(200);
 			Map<String,Object> data = new HashMap<String,Object>();
-			data.put("listNum", entryDataList.getData().size());
-			data.put("list",entryDataList.getData());
+			data.put("listNum", entryDataList.size());
+			data.put("list",entryDataList);
 			response.setData(data);
 			
 		}else{
@@ -72,26 +73,28 @@ public class EntryController {
 		@RequestMapping(value="/enterEntryDirectly",method=RequestMethod.GET)
 		public ResponseData entryEntryDirectly(@RequestParam(value = "entryName") String entryName){
 			ResponseData response = new ResponseData();
-			DetailedEntryData entryData = entryService.enterEntry(entryName);
-			if(entryData != null){
+			EntryInfo entryData = entryService.enterEntry(entryName);
 
+			if(entryData.getEid()!=null){
+				
 				Map<String,Object> data = new HashMap<String,Object>();
-				Entry e = entryData.getEntry();
-				Action a = entryData.getNowContent();
+				List<CommentData> commentList = entryService.queryComment(Integer.valueOf(entryData.getEid()));
+				
 	
-				data.put("eid", e.getEid());
-				data.put("entryName", e.getEntryname());
-				data.put("pic",a.getPictureaddr());
-				data.put("detail", a.getEntrycontent());
-				data.put("label1", a.getLabel1());
-				data.put("label2", a.getLabel2());
-				data.put("label3", a.getLabel3());
-				data.put("label4", a.getLabel4());
-				data.put("praiseTime",e.getPraisetimes());
-				data.put("badReviewTimes", e.getBadreviewtimes());
-				data.put("commentsNum",entryData.getComments().size());
-				data.put("comments", entryData.getComments());
-									
+				data.put("eid", entryData.getEid());
+			
+ 				data.put("entryName", entryData.getEntryName());
+				data.put("pic",entryData.getPictureAddr());
+				data.put("detail", entryData.getEntryContent());
+				data.put("label1", entryData.getLabel1());
+				data.put("label2", entryData.getLabel2());
+				data.put("label3", entryData.getLabel3());
+				data.put("label4", entryData.getLabel4());
+				data.put("praiseTime",entryData.getPraiseTimes());
+				data.put("badReviewTimes", entryData.getBadReviewTimes());
+				data.put("commentsNum", commentList.size());
+				data.put("comments", commentList);
+	
 				response.setCode(200);		
 				response.setData(data);
 			
@@ -185,6 +188,7 @@ public class EntryController {
 			ret = entryService.createEntry(entry, action);
 		}else{
 			action.setEid(Integer.valueOf(entryInfo.getEid()));
+			action.setType(2);
 			ret = entryService.modifyEntry(action);
 		}
 		Map<String,Object> data = new HashMap<String,Object>();

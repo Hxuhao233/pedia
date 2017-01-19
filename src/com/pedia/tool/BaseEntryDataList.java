@@ -31,7 +31,7 @@ public class BaseEntryDataList {
 		entryInfo.put("entryName",item.getEntryname());
 		entryInfo.put("createName",item.getPublisher());
 		entryInfo.put("createDate",new SimpleDateFormat("yyyy-MM-dd").format(item.getPublishtime()));
-		entryInfo.put("pic",nowContent.getPictureaddr());
+		entryInfo.put("pictureAddr",nowContent.getPictureaddr());
 		entryInfo.put("detail",nowContent.getEntrycontent());
 		entryInfo.put("label1", nowContent.getLabel1());
 		entryInfo.put("label2", nowContent.getLabel2());
@@ -67,13 +67,14 @@ public class BaseEntryDataList {
 		//listNum++;
 		return 1;
 	}
-	public int addModifiedEntry(Entry entry,String modifier){
+	public int addModifiedEntry(Entry entry,String modifier,int aid){
 		Map<String,Object>item;
 		item = new HashMap<String,Object>();
 		item.put("entryId", entry.getEid().toString());
 		item.put("entryName",entry.getEntryname());
 		item.put("publisher",modifier);
 		item.put("modifyTime",new SimpleDateFormat("yyyy-MM-dd").format(entry.getPublishtime()));
+		item.put("aid", aid);
 		data.add(item);
 		//listNum++;
 		return 1;

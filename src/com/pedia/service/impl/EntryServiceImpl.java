@@ -26,6 +26,7 @@ import com.pedia.service.IEntryService;
 import com.pedia.tool.BaseEntryDataList;
 import com.pedia.tool.CommentData;
 import com.pedia.tool.DetailedEntryData;
+import com.pedia.tool.EntryInfo;
 
 @Service("entryService")
 public class EntryServiceImpl implements IEntryService{
@@ -136,16 +137,40 @@ public class EntryServiceImpl implements IEntryService{
 	}
 
 	@Override
-	public BaseEntryDataList queryEntry(String info) {
+	public List<EntryInfo> queryEntry(String info) {
 		// TODO Auto-generated method stub
-		BaseEntryDataList entryDataList = new BaseEntryDataList();
+		//BaseEntryDataList entryDataList = new BaseEntryDataList();
+		List<EntryInfo> entryInfoList = new ArrayList<EntryInfo>();
 		List<Entry> result  = entryDao.selectByInfo(info);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		for(Entry item : result){
-			List<Action> nowContent = actionDao.selectByEidAndStatus(item.getEid(),2);
+			List<Action> nowContentList = actionDao.selectByEidAndStatus(item.getEid(),2);
+		
 			//System.out.println("233");
-			entryDataList.addNormalEntry(item,nowContent.get(0));
+			//entryDataList.addNormalEntry(item,nowContentList.get(0));
+			
+			Action nowContent = nowContentList.get(0);
+			if(nowContent != null){
+				EntryInfo entryInfo = new EntryInfo();
+				
+				entryInfo.setEid(item.getEid().toString());
+				entryInfo.setCreateDate(simpleDateFormat.format(nowContent.getActiontime()));
+				entryInfo.setCreateName(item.getPublisher());
+				entryInfo.setEntryContent(nowContent.getEntrycontent());
+				entryInfo.setEntryName(item.getEntryname());
+				entryInfo.setLabel1(nowContent.getLabel1());
+				entryInfo.setLabel2(nowContent.getLabel2());
+				entryInfo.setLabel3(nowContent.getLabel3());
+				entryInfo.setLabel4(nowContent.getLabel4());
+				entryInfo.setPictureAddr(nowContent.getPictureaddr());
+				
+				entryInfoList.add(entryInfo);
+			}else{
+				continue;
+			}
+			
 		}
-		return entryDataList;
+		return entryInfoList;
 	}
 	
 	
@@ -251,33 +276,54 @@ public class EntryServiceImpl implements IEntryService{
 	}
 	
 	@Override
-	public DetailedEntryData enterEntry(String info) {
+	public EntryInfo enterEntry(String info) {
 		// TODO Auto-generated method stub
-		DetailedEntryData detailedEntryData = new DetailedEntryData();
-		Entry result  = entryDao.selectByAllEntryName(info);
-		if(result !=null){
+		EntryInfo entryInfo = new EntryInfo();
+		Entry entry  = entryDao.selectByAllEntryName(info);
+		if(entry !=null){
 			
-			List<Action> nowContent = actionDao.selectByEidAndStatus(result.getEid(), 2);
-			List<Comment> comments = commentDao.selectByEid(result.getEid());
-			List<CommentData> commentData = new ArrayList<CommentData>();
-			
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-			
-			for(Comment item : comments){
-				CommentData data = new CommentData();
-				User commenter = userDao.selectByPrimaryKey(item.getUid());
-				data.setCommenterName(commenter.getUsername());
-				data.setCommenterPic(commenter.getIconaddr());
-				data.setCommentDate(simpleDateFormat.format(item.getCommenttime()));
-				data.setCommentDetail(item.getCommentcontent());
-				commentData.add(data);
+			List<Action> nowContentList = actionDao.selectByEidAndStatus(entry.getEid(), 2);
+			if(nowContentList.size()>0){
+				Action nowContent = nowContentList.get(0);
+				
+				entryInfo.setEid(entry.getEid().toString());
+				entryInfo.setCreateDate( new SimpleDateFormat("yyyy-MM-dd").format(nowContent.getActiontime()));
+				entryInfo.setCreateName(entry.getPublisher());
+				entryInfo.setEntryContent(nowContent.getEntrycontent());
+				entryInfo.setEntryName(entry.getEntryname());
+				entryInfo.setLabel1(nowContent.getLabel1());
+				entryInfo.setLabel2(nowContent.getLabel2());
+				entryInfo.setLabel3(nowContent.getLabel3());
+				entryInfo.setLabel4(nowContent.getLabel4());
+				entryInfo.setPictureAddr(nowContent.getPictureaddr());
+				entryInfo.setPraiseTimes(entry.getPraisetimes());
+				entryInfo.setBadReviewTimes(entry.getBadreviewtimes());
 			}
-			
-			detailedEntryData.setEntry(result);
-			detailedEntryData.setComments(commentData);
-			detailedEntryData.setNowContent(nowContent.get(0));
-			return detailedEntryData;
+
 		}
-		return null;
+		return entryInfo;
 	}
+	
+	@Override
+	public List<CommentData> queryComment(Integer eid){
+		
+		List<Comment> comments = commentDao.selectByEid(eid);
+		List<CommentData> commentData = new ArrayList<CommentData>();
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		
+		for(Comment item : comments){
+			CommentData data = new CommentData();
+			User commenter = userDao.selectByPrimaryKey(item.getUid());
+			data.setCommenterName(commenter.getUsername());
+			data.setCommenterPic(commenter.getIconaddr());
+			data.setCommentDate(simpleDateFormat.format(item.getCommenttime()));
+			data.setCommentDetail(item.getCommentcontent());
+			commentData.add(data);
+		}
+		
+		return commentData;
+		
+	}
+	
 }

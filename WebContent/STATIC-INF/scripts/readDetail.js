@@ -382,7 +382,7 @@ function tapSearch() {
 
 function loadHtml(entryID) {
 	clear(); // 重置
-	console.log("Ajax更新");
+	console.log("Ajax更新" + entryID);
 	eID = entryID;
 	$.ajax({
         type:"GET",
@@ -464,7 +464,7 @@ $("Document").ready(function() {
   var eidsss = getEid(searchParam);
 
 
-	loadHtml(eidsss); //Ａjax加载
+	loadHtml(eID); //Ａjax加载
 	var H = $(document).height();
 	console.log(H);
 	$("body").height(H);

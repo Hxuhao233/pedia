@@ -88,12 +88,14 @@ $(function(){
    }
    $("#entry").click(function(){
     if ($("#keyword").val()!="") {
-      window.location.href=encodeURI("about/readDetail.html"+"?"+"user="+userName+"&search="+$("#keyword").val());
+     	alert(encodeURI($("#keyword").val()));
+      window.location.href="about/readDetail.html"+"?"+"user="+userName+"&search="+ encodeURI(encodeURI($("#keyword").val()));
     }
   });
   $("#search").click(function(){
     if ($("#keyword").val()!="") {
-      window.location.href=encodeURI("about/readList.html"+"?"+"user="+userName+"&search="+$("#keyword").val());
+   
+    	window.location.href="about/readList.html"+"?"+"user="+userName+"&search="+ encodeURI(encodeURI($("#keyword").val()));
     }
   });
   $("#create").click(function(){

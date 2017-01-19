@@ -38,14 +38,14 @@ function createListHtml(listData) {
 	$("#tableList").append(
 		"<div class='list'>" + 					
 			"<div class='listHeader'>" +
-				"<a href='##' onclick=\"toDetail(\'"+ data.eid +"\')\" class='listTitle'>" + data.entryName + "</a>" +
+				"<a href='##' onclick=\"toDetail("+ data.eid +")\" class='listTitle'>" + data.entryName + "</a>" +
 				"<p class='listCreate'>" +
 					"<span class='createName'>" + data.createName + "&nbsp&nbsp</span>" +
 					"<span class='createDate'>" + data.createDate + "</span>" +
 				"</p>" +
 			"</div>" +
-			"<img src='" + "../../static/images/" + data.pic + "' alt='词条图片' class='listPic' />" +
-			"<p class='listDetail'>" + data.detail + "</p>" +
+			"<img src='" + "../../static/images/" + data.pictureAddr + "' alt='词条图片' class='listPic' />" +
+			"<p class='listDetail'>" + data.entryContent + "</p>" +
 			"<p class='listLabels'>" +
 				"<span class='listLabel0'>标签：&nbsp</span>" +
 				"&nbsp&nbsp<span class='listLabel1'>" + data.label1 + "</span>" +
@@ -67,7 +67,7 @@ function createHeaderHtml(num) {
 	}
 	$("#tableHeader").html(
 		"<p>搜索<span id='listWord'>&nbsp" +
-		search +
+		decodeURI(search) +
 		"&nbsp</span>共搜索到<span id='listNum'>&nbsp" +
 		num +
 		"&nbsp</span>条结果</p>"

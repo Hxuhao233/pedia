@@ -232,11 +232,12 @@ function btn1ActionListenerTable3(){
         var sendData = {
             "data":
                 {
-                    "eid":$(this).attr("myAttr").toString(),
+                    "aid":$(this).attr("aid").toString(),
                     "allow":"1",
                     "reason":""
                 }
         }
+        console.log($(this).attr("aid"));
         var RowNum = $(this).attr("myAttrs");
         $.ajax({                                                 //使用post方法向服务器传送json字符串
             type:"POST",
@@ -402,7 +403,7 @@ $(function(){
                     oneMessage[0]=dataKey.modifiedEntryList[i].entryName;
                     oneMessage[1]=dataKey.modifiedEntryList[i].modifyTime;
                     oneMessage[2]=dataKey.modifiedEntryList[i].publisher;
-                    oneMessage[3]="<div myAttr='"+dataKey.modifiedEntryList[i].entryId+"'></div>";
+                    oneMessage[3]="<div myAttr='"+dataKey.modifiedEntryList[i].entryId+"' " +"aid='" +dataKey.modifiedEntryList[i].aid+"'></div>";
                     //dataKey.modifiedEntryList[i].entryId;
                     insertInfoTable3(oneMessage);
                 }
@@ -436,10 +437,13 @@ $(function(){
                 });
                 $("#table3 div").click(function(){
                     var entryId = $(this).attr("myAttr");
+                    var aid = $(this).attr("aid");
                     $("#btn1").attr("myAttr",entryId);
                     $("#btn1").attr("myAttrs",getRow(this));
+                    $("#btn1").attr("aid",aid);
                     $("#btn2").attr("myAttr",entryId);
                     $("#btn2").attr("myAttrs",getRow(this));
+                    $("#btn1").attr("aid",aid);
                     seeEntry(entryId);
                     document.getElementById('light').style.display='block';
                     document.getElementById('fade').style.display='block';
