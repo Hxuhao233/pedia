@@ -1,15 +1,21 @@
 package com.pedia.redis;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.hxuhao.utils.JsonUtils;
 import com.pedia.tool.EntryInfo;
+
+import redis.clients.jedis.Jedis;
 
 @Component
 @Aspect
@@ -17,26 +23,35 @@ public class RedisAspect {
 	
 	@Autowired
 	@Qualifier("redisTemplate")
-	private RedisTemplate<String, EntryInfo> redisCache;
+	private RedisTemplate<String, String> redisCache;
 	
-	 @Pointcut("execution(* com.pedia.service.IEntryService.enterEntry(java.lang.String))")    //直接进入词条
-	 public void myPointCut(){
+	
+	
+	 @Pointcut("execution(* com.pedia.service.IEntryService.enterEntry(java.lang.Integer))")    //进入词条
+	 public void enterEntry(){
 	        
 	 }
 	 
-	 @Around("myPointCut()")
+	 @Pointcut("execution(* com.pedia.service.IManagerService.checkModifiedEntry(..))")    //进入词条
+	 public void modifyEntry(){
+	        
+	 }
+	 
+	 @Around("enterEntry()")
 	 public EntryInfo around(ProceedingJoinPoint joinPoint){
 		System.out.println("before enter Entry ");
-		 
+		
 		
 		// 获取参数
-		String info = null;
+		Integer info = null;
 		Object[] args = joinPoint.getArgs();
 		if(args !=null && args.length>0){
-			info = (String) args[0];
+			info = (Integer) args[0];
 		}
-		EntryInfo entryInfo = redisCache.opsForValue().get("Entry:" + info);
-		if(entryInfo!=null){
+		String jsonEntryInfo = redisCache.opsForValue().get("Entry:" + info);
+		EntryInfo entryInfo = null;
+		if(jsonEntryInfo!=null){
+			entryInfo = JsonUtils.decode(jsonEntryInfo,new TypeReference<EntryInfo>() {});
 			System.out.println("get from the redis cache");
 			return entryInfo;
 		}
@@ -52,8 +67,36 @@ public class RedisAspect {
 		
 		// 更新缓存
 		 System.out.println("after enter Entry");
-		 redisCache.opsForValue().set("Entry:" + info, entryInfo);
+		 redisCache.opsForValue().set("Entry:" + info, JsonUtils.encode(entryInfo));
 		 return entryInfo;
 	 
+	 }
+	 
+	 @Around("modifyEntry()")
+	 public int modify(ProceedingJoinPoint joinPoint){
+		 	// 获取参数
+			Integer eid = null;
+			Boolean allow = null;
+			Object[] args = joinPoint.getArgs();
+			if(args !=null && args.length>0){
+				eid = (Integer) args[0];
+				allow = (Boolean) args[2];
+			}
+
+			int ret = 0;
+			try {
+				ret = (int) joinPoint.proceed();
+				if( ret > 0 && allow){
+					System.out.println("delete key" + eid);
+					redisCache.delete("Entry:" + eid);
+				}
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ret;
+			
+		
+			
 	 }
 }

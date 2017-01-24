@@ -10,7 +10,6 @@ import com.pedia.model.Entry;
 import com.pedia.model.Report;
 import com.pedia.tool.BaseEntryDataList;
 import com.pedia.tool.CommentData;
-import com.pedia.tool.DetailedEntryData;
 import com.pedia.tool.EntryInfo;
 
 public interface IEntryService {
@@ -18,7 +17,7 @@ public interface IEntryService {
 	int modifyEntry(Action modify);														// 修改词条
 	int deleteEntry(int eid);    																	// 删除词条
 	
-	DetailedEntryData enterEntry(int eid);											// 进入词条（返回类型待定）
+	EntryInfo enterEntry(Integer eid);								// 进入词条（返回类型待定）
 	List<EntryInfo> queryEntry(String info);								// 搜索词条
 	
 	int submitComment(Comment comment);						// 提交评论
@@ -34,6 +33,7 @@ public interface IEntryService {
 	CommentData getComment(Comment item);
 	EntryInfo enterEntry(String info);
 	List<CommentData> queryComment(Integer eid);
+
 	
 
 }

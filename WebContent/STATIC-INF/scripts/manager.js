@@ -66,7 +66,7 @@ function btn1ActionListener(){
         var RowNum = $(this).attr("myAttrs");
         //alert(RowNum);
         //delRow(RowNum);
-        //$("#goback").click();
+        //$("#goback").click();F
         $.ajax({                                                 //使用post方法向服务器传送json字符串
             type:"POST",
             url:checkEntryUrl,
@@ -232,12 +232,13 @@ function btn1ActionListenerTable3(){
         var sendData = {
             "data":
                 {
+            		"eid":$(this).attr("myAttr").toString(),
                     "aid":$(this).attr("aid").toString(),
                     "allow":"1",
                     "reason":""
                 }
         }
-        console.log($(this).attr("aid"));
+        console.log($(this).attr("myAttr"));
         var RowNum = $(this).attr("myAttrs");
         $.ajax({                                                 //使用post方法向服务器传送json字符串
             type:"POST",
@@ -269,6 +270,7 @@ function btn2ActionListenerTable3(){
             "data":
                 {
                     "eid":$(this).attr("myAttr").toString(),
+                    "aid":$(this).attr("aid").toString(),
                     "allow":"0",
                     "reason":""
                 }

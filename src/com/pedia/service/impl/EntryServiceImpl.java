@@ -107,31 +107,18 @@ public class EntryServiceImpl implements IEntryService{
 	
 	
 	@Override
-	public DetailedEntryData enterEntry(int eid) {
+	public EntryInfo enterEntry(Integer eid) {
 		// TODO Auto-generated method stub
-		DetailedEntryData detailedEntryData = new DetailedEntryData();
+
 		Entry result  = entryDao.selectByPrimaryKey(eid);
+
 		if(result !=null){
+			
 			List<Action> nowContent = actionDao.selectByEidAndStatus(eid, 2);
-			List<Comment> comments = commentDao.selectByEid(result.getEid());
-			List<CommentData> commentData = new ArrayList<CommentData>();
 			
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+			EntryInfo entryInfo = new EntryInfo(result,nowContent.get(0),new SimpleDateFormat("yyyy-MM-dd"));
 			
-			for(Comment item : comments){
-				CommentData data = new CommentData();
-				User commenter = userDao.selectByPrimaryKey(item.getUid());
-				data.setCommenterName(commenter.getUsername());
-				data.setCommenterPic(commenter.getIconaddr());
-				data.setCommentDate(simpleDateFormat.format(item.getCommenttime()));
-				data.setCommentDetail(item.getCommentcontent());
-				commentData.add(data);
-			}
-			
-			detailedEntryData.setEntry(result);
-			detailedEntryData.setComments(commentData);
-			detailedEntryData.setNowContent(nowContent.get(0));
-			return detailedEntryData;
+			return entryInfo;
 		}
 		return null;
 	}
@@ -151,19 +138,8 @@ public class EntryServiceImpl implements IEntryService{
 			
 			Action nowContent = nowContentList.get(0);
 			if(nowContent != null){
-				EntryInfo entryInfo = new EntryInfo();
-				
-				entryInfo.setEid(item.getEid().toString());
-				entryInfo.setCreateDate(simpleDateFormat.format(nowContent.getActiontime()));
-				entryInfo.setCreateName(item.getPublisher());
-				entryInfo.setEntryContent(nowContent.getEntrycontent());
-				entryInfo.setEntryName(item.getEntryname());
-				entryInfo.setLabel1(nowContent.getLabel1());
-				entryInfo.setLabel2(nowContent.getLabel2());
-				entryInfo.setLabel3(nowContent.getLabel3());
-				entryInfo.setLabel4(nowContent.getLabel4());
-				entryInfo.setPictureAddr(nowContent.getPictureaddr());
-				
+				EntryInfo entryInfo = new EntryInfo(item,nowContent,simpleDateFormat);
+							
 				entryInfoList.add(entryInfo);
 			}else{
 				continue;
@@ -278,26 +254,16 @@ public class EntryServiceImpl implements IEntryService{
 	@Override
 	public EntryInfo enterEntry(String info) {
 		// TODO Auto-generated method stub
-		EntryInfo entryInfo = new EntryInfo();
+		EntryInfo entryInfo = null;
 		Entry entry  = entryDao.selectByAllEntryName(info);
 		if(entry !=null){
 			
 			List<Action> nowContentList = actionDao.selectByEidAndStatus(entry.getEid(), 2);
 			if(nowContentList.size()>0){
-				Action nowContent = nowContentList.get(0);
 				
-				entryInfo.setEid(entry.getEid().toString());
-				entryInfo.setCreateDate( new SimpleDateFormat("yyyy-MM-dd").format(nowContent.getActiontime()));
-				entryInfo.setCreateName(entry.getPublisher());
-				entryInfo.setEntryContent(nowContent.getEntrycontent());
-				entryInfo.setEntryName(entry.getEntryname());
-				entryInfo.setLabel1(nowContent.getLabel1());
-				entryInfo.setLabel2(nowContent.getLabel2());
-				entryInfo.setLabel3(nowContent.getLabel3());
-				entryInfo.setLabel4(nowContent.getLabel4());
-				entryInfo.setPictureAddr(nowContent.getPictureaddr());
-				entryInfo.setPraiseTimes(entry.getPraisetimes());
-				entryInfo.setBadReviewTimes(entry.getBadreviewtimes());
+				Action nowContent = nowContentList.get(0);
+				entryInfo = new EntryInfo(entry,nowContent, new SimpleDateFormat("yyyy-MM-dd"));
+				
 			}
 
 		}

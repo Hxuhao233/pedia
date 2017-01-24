@@ -91,7 +91,7 @@ public class ManagerServiceImpl implements IManagerService{
 	
 	
 	@Override
-	public int checkEntry(int aid, Boolean allow,String reason) {
+	public int checkEntry(Integer aid, Boolean allow,String reason) {
 		// TODO Auto-generated method stub
 		Action a = actionDao.selectByPrimaryKey(aid);
 		//allow false 不通过 true 通过
@@ -115,7 +115,7 @@ public class ManagerServiceImpl implements IManagerService{
 	}
 
 	@Override
-	public int checkModifiedEntry(int aid, Boolean allow, String reason) {
+	public int checkModifiedEntry(Integer eid1,Integer aid, Boolean allow, String reason) {
 		// TODO Auto-generated method stub
 		Action action = actionDao.selectByPrimaryKey(aid);
 		int ret = 0;

@@ -105,10 +105,11 @@ public class ManagerController {
 	public ResponseData checkModifiedEntry(@RequestBody RequestData request){
 		ResponseData response = new ResponseData();
 		Map<String,String> requestData = request.getData();
+		Integer eid = Integer.valueOf(requestData.get("eid").trim());
 		Integer aid = Integer.valueOf(requestData.get("aid").trim());
 		Boolean allow = requestData.get("allow").equals("1") ? true : false;
 		String reason = requestData.get("reason");
-		int ret = managerService.checkModifiedEntry(aid, allow, reason);
+		int ret = managerService.checkModifiedEntry(eid,aid, allow, reason);
 		if(ret > 0){
 			response.setCode(200);
 		}else{

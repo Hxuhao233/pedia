@@ -45,7 +45,7 @@ public class EntryController {
 	public @ResponseBody ResponseData queryEntry(@RequestParam(value = "search" , required=false)String info){
 		
 		ResponseData response = new ResponseData();
-		System.out.println("info : " + info);
+		System.out.println("queryEntry : " + info);
 		if(info == null)
 			info=".*";
 		
@@ -74,15 +74,13 @@ public class EntryController {
 		public ResponseData entryEntryDirectly(@RequestParam(value = "entryName") String entryName){
 			ResponseData response = new ResponseData();
 			EntryInfo entryData = entryService.enterEntry(entryName);
-
-			if(entryData.getEid()!=null){
+			System.out.println("enterEntryDirectly :" + entryName);
+			if(entryData!=null){
 				
 				Map<String,Object> data = new HashMap<String,Object>();
 				List<CommentData> commentList = entryService.queryComment(Integer.valueOf(entryData.getEid()));
 				
-	
 				data.put("eid", entryData.getEid());
-			
  				data.put("entryName", entryData.getEntryName());
 				data.put("pic",entryData.getPictureAddr());
 				data.put("detail", entryData.getEntryContent());
@@ -117,25 +115,25 @@ public class EntryController {
 	@RequestMapping(value="/enterEntry",method=RequestMethod.GET)
 	public ResponseData entryEntry(@RequestParam(value = "eid") int eid){
 		ResponseData response = new ResponseData();
-		DetailedEntryData entryData = entryService.enterEntry(eid);
-		if(entryData != null){
+		EntryInfo e = entryService.enterEntry(eid);
+		if(e != null){
 
 			Map<String,Object> data = new HashMap<String,Object>();
-			Entry e = entryData.getEntry();
-			Action a = entryData.getNowContent();
 
+			List<CommentData> commentList = entryService.queryComment(Integer.valueOf(e.getEid()));
+			
 			data.put("eid", e.getEid());
-			data.put("entryName", e.getEntryname());
-			data.put("pic",a.getPictureaddr());
-			data.put("detail", a.getEntrycontent());
-			data.put("label1", a.getLabel1());
-			data.put("label2", a.getLabel2());
-			data.put("label3", a.getLabel3());
-			data.put("label4", a.getLabel4());
-			data.put("praiseTime",e.getPraisetimes());
-			data.put("badReviewTimes", e.getBadreviewtimes());
-			data.put("commentsNum",entryData.getComments().size());
-			data.put("comments", entryData.getComments());
+			data.put("entryName", e.getEntryName());
+			data.put("pic",e.getPictureAddr());
+			data.put("detail", e.getEntryContent());
+			data.put("label1", e.getLabel1());
+			data.put("label2", e.getLabel2());
+			data.put("label3", e.getLabel3());
+			data.put("label4", e.getLabel4());
+			data.put("praiseTime",e.getPraiseTimes());
+			data.put("badReviewTimes", e.getBadReviewTimes());
+			data.put("commentsNum",commentList.size());
+			data.put("comments",commentList);
 					
 					
 			response.setCode(200);		
@@ -300,74 +298,74 @@ public class EntryController {
 		
 		
 		//提交举报
-				@ResponseBody
-				@RequestMapping(value="/report",method = RequestMethod.POST)
-				public ResponseData report(@RequestBody RequestData requestData,HttpSession session){
-					ResponseData ret=new ResponseData();
-					Map<String, Object> data=new HashMap<>();
-					int eid=Integer.parseInt(requestData.getData().get("eid").trim());
-					String report=requestData.getData().get("report");
-					User u = (User) session.getAttribute("user");
-					if (u!=null){
-						Report submitReport=new Report();	
-						submitReport.setEid(eid);
-						submitReport.setReason(report);
-						submitReport.setUid(u.getUid());
-						entryService.submitReport(submitReport);
-						ret.setCode(200);
-						data.put("info", "提交举报成功");
-					}
-					else {
-						data.put("info", "用户未登录");
-						ret.setCode(500);
-					}
-					ret.setData(data);
-					return ret;
-				}
-				
-				//提交评论
-				@ResponseBody
-				@RequestMapping(value="/comment",method = RequestMethod.POST)
-				public ResponseData comment(@RequestBody RequestData requestData,HttpSession session){
-					ResponseData ret=new ResponseData();
-					Map<String, Object> data=new HashMap<>();
-					int eid=Integer.parseInt(requestData.getData().get("eid"));
-					String comment=requestData.getData().get("comment");
-					User u = (User) session.getAttribute("user");
-					
-					if (u!=null){
-						Comment submitComment=new Comment();
-						submitComment.setCommentcontent(comment);
-						submitComment.setEid(eid);
-						submitComment.setUid(u.getUid());
-						entryService.submitComment(submitComment);
-						ret.setCode(200);
-						data.put("info", "提交评论成功");
-						data.put("comment",entryService.getComment(submitComment));
-					}
-					else {
-						data.put("info", "用户未登录");
-						ret.setCode(500);
-					}
-					ret.setData(data);
-					return ret;
-				}
-				
-				// 查看词条
-					@ResponseBody
-					@RequestMapping(value="/seeEntry",method=RequestMethod.GET)
-					public ResponseData seeEntry(@RequestParam(value = "eid") int eid){
-						ResponseData response = new ResponseData();
-						BaseEntryDataList entryData = entryService.seeEntry(eid);
-						if(entryData.getData().size()>0){
-							response.setCode(200);
-							//Map<String,String> entryinfo = new Has
-							response.setData(entryData.getData().get(0));
-						}else{
-							response.setCode(404);
-						}
-						
-						return response;
-						
-					}
+		@ResponseBody
+		@RequestMapping(value="/report",method = RequestMethod.POST)
+		public ResponseData report(@RequestBody RequestData requestData,HttpSession session){
+			ResponseData ret=new ResponseData();
+			Map<String, Object> data=new HashMap<>();
+			int eid=Integer.parseInt(requestData.getData().get("eid").trim());
+			String report=requestData.getData().get("report");
+			User u = (User) session.getAttribute("user");
+			if (u!=null){
+				Report submitReport=new Report();	
+				submitReport.setEid(eid);
+				submitReport.setReason(report);
+				submitReport.setUid(u.getUid());
+				entryService.submitReport(submitReport);
+				ret.setCode(200);
+				data.put("info", "提交举报成功");
+			}
+			else {
+				data.put("info", "用户未登录");
+				ret.setCode(500);
+			}
+			ret.setData(data);
+			return ret;
+		}
+		
+		//提交评论
+		@ResponseBody
+		@RequestMapping(value="/comment",method = RequestMethod.POST)
+		public ResponseData comment(@RequestBody RequestData requestData,HttpSession session){
+			ResponseData ret=new ResponseData();
+			Map<String, Object> data=new HashMap<>();
+			int eid=Integer.parseInt(requestData.getData().get("eid"));
+			String comment=requestData.getData().get("comment");
+			User u = (User) session.getAttribute("user");
+			
+			if (u!=null){
+				Comment submitComment=new Comment();
+				submitComment.setCommentcontent(comment);
+				submitComment.setEid(eid);
+				submitComment.setUid(u.getUid());
+				entryService.submitComment(submitComment);
+				ret.setCode(200);
+				data.put("info", "提交评论成功");
+				data.put("comment",entryService.getComment(submitComment));
+			}
+			else {
+				data.put("info", "用户未登录");
+				ret.setCode(500);
+			}
+			ret.setData(data);
+			return ret;
+		}
+		
+		// 查看词条
+		@ResponseBody
+		@RequestMapping(value="/seeEntry",method=RequestMethod.GET)
+		public ResponseData seeEntry(@RequestParam(value = "eid") int eid){
+			ResponseData response = new ResponseData();
+			BaseEntryDataList entryData = entryService.seeEntry(eid);
+			if(entryData.getData().size()>0){
+				response.setCode(200);
+				//Map<String,String> entryinfo = new Has
+				response.setData(entryData.getData().get(0));
+			}else{
+				response.setCode(404);
+			}
+			
+			return response;
+			
+		}
 }

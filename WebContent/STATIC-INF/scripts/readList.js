@@ -122,7 +122,7 @@ function search(searchData) {
 
 $("Document").ready(function() {
 	// 检测是否有登陆
-	user = $.getUrlParam("user");
+	user = escape($.getUrlParam("user"));
 	if (user == "null") {
 		console.log("未登录");
 		loginOrNot = false;
@@ -134,7 +134,7 @@ $("Document").ready(function() {
 		$("#headerRight").css("display", "none");
 		$("#userCenter").css("display", "block");
 	}
-	searchData = $.getUrlParam("search");
+	searchData = escape($.getUrlParam("search"));
 	search(searchData);
 	
 	$("#tapSearch").click(function() {

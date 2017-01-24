@@ -34,8 +34,8 @@ public class User {
 			exp-=MAXEXP[level];
 			level++;
 		}
-		System.out.println(level);
-		System.out.println(exp);
+		//System.out.println(level);
+		//System.out.println(exp);
 	}
     
     public Integer getUid() {

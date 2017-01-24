@@ -460,9 +460,10 @@ $("Document").ready(function() {
 	eID = $.getUrlParam('eid'); // 获取entryID参数
 	console.log("OnLoad: " + eID);
 
-	searchParam = $.getUrlParam('search'); // 获取search参数
-  var eidsss = getEid(searchParam);
-
+	searchParam = escape($.getUrlParam('search')); // 获取search参数
+	console.log("search: " + searchParam);
+	var eidsss = getEid(searchParam);
+	console.log("eid: " + eidsss);
 
 	loadHtml(eID); //Ａjax加载
 	var H = $(document).height();
@@ -545,7 +546,7 @@ function getEid(search){
         type:"GET",
         url:"../../Pedia/entry/enterEntryDirectly", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
-        data:"entryName=" + search,
+        data:"entryName=" + decodeURI(search),
         dataType:"json",
         cache:false,
         async:false,
@@ -559,7 +560,7 @@ function getEid(search){
             if (code == "200") {
               //alert(loadData.eid);
               eidsss=loadData.eid;
-            } else if (code == "500"){
+            } else if (code == "404"){
               console.log("没有此数据!");
               return;
             } else {

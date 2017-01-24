@@ -12,7 +12,7 @@
   
   
   	<!-- 跨域访问 -->
-	<filter>  
+	<!-- <filter>  
 	 <filter-name>cors</filter-name>  
 	 <filter-class>com.pedia.filter.CorsFilter</filter-class>  
 	</filter>  
@@ -20,7 +20,8 @@
 	 <filter-name>cors</filter-name>  
 	 <url-pattern>/*</url-pattern>  
 	</filter-mapping>  
-  
+   	-->
+
   	<!-- Spring和mybatis的配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

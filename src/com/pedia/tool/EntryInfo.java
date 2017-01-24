@@ -1,6 +1,10 @@
 package com.pedia.tool;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
+import com.pedia.model.Action;
+import com.pedia.model.Entry;
 
 /**
  * 
@@ -21,6 +25,23 @@ public class EntryInfo implements Serializable{
 	private String createDate;
 	private Integer praiseTimes;
 	private Integer badReviewTimes;
+	
+	
+	public EntryInfo(Entry entry,Action nowContent,SimpleDateFormat simpleDateFormat){
+		this.setEid(entry.getEid().toString());
+		this.setCreateDate(simpleDateFormat.format(nowContent.getActiontime()));
+		this.setCreateName(entry.getPublisher());
+		this.setEntryContent(nowContent.getEntrycontent());
+		this.setEntryName(entry.getEntryname());
+		this.setLabel1(nowContent.getLabel1());
+		this.setLabel2(nowContent.getLabel2());
+		this.setLabel3(nowContent.getLabel3());
+		this.setLabel4(nowContent.getLabel4());
+		this.setPraiseTimes(entry.getPraisetimes());
+		this.setBadReviewTimes(entry.getBadreviewtimes());
+		this.setPictureAddr(nowContent.getPictureaddr());
+	}
+	
 	public String getCreateDate() {
 		return createDate;
 	}

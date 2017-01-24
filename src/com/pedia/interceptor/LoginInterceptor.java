@@ -34,11 +34,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		boolean flag = false;
 		boolean flag2 = true;
 		String url = request.getRequestURL().toString();
-		System.out.println(">>>: " + url);
+		//System.out.println(">>>: " + url);
 		for (String s : IGNORE_URI) {
 			if (url.contains(s)) {
 				flag = true;
-				System.out.println("允许访问");
+				//System.out.println("允许访问");
 				return flag;
 			}
 		}
@@ -55,12 +55,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			if (url.contains(s)) {
 				User user = (User) request.getSession().getAttribute("user");
 				if (user != null && user.getRole()<2) {
-					System.out.println("user role" + user.getRole());
+					//System.out.println("user role" + user.getRole());
 					flag2 = false;
 					break;
 				}else{
 					flag2 = true;
-					System.out.println("允许访问");
+					//System.out.println("允许访问");
 				}
 			}
 		}
@@ -72,6 +72,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 			Map<String,Object> info = new HashMap<String,Object>();
 			info.put("info", "no auth!");
+			//System.out.println(">>>: " + url + " no auth!");
 			responseData.setCode(403);
 			responseData.setData(info);
 
