@@ -44,8 +44,11 @@ $(function(){
             data:JSON.stringify(getData()),
             dataType:"json",
             cache:false,
-            success:function(data){              //请求成功后的返回函数
+            success:function(data,textStatus,jqXHR){              //请求成功后的返回函数
             console.log(data);
+            alert(jqXHR.getAllResponseHeaders());
+            console.log(jqXHR.getResponseHeader("x-auth-token"));
+            alert(jqXHR.getResponseHeader("x-auth-token"));
             var jsonData = data;
             var dataKey = jsonData.data;
             //var dataInfo = jsonData.info;

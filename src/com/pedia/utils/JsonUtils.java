@@ -1,4 +1,4 @@
-package com.hxuhao.utils;
+package com.pedia.utils;
 
 import java.io.IOException;
 

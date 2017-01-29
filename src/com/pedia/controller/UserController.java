@@ -46,20 +46,20 @@ public class UserController {
 	// 获取个人主页
 	@ResponseBody
 	@RequestMapping(value = "/getPersonalHomePage", method = RequestMethod.GET)
-	public ResponseData getPersonalHomePage(HttpSession session,@RequestParam(value="uid",required=false)Integer uid) {
+	public ResponseData getPersonalHomePage(HttpSession session) {
 		User user=(User)session.getAttribute("user");
-
+		System.out.println("home page");
 		ResponseData ret=new ResponseData();
-		if (user!=null|| (user==null&&uid!=null))
+		if (user!=null)
 		{
 
 			Map<String,Object> data = new HashMap<String,Object>();
 			DetailedUserData detailedUserData;
-			if(uid!=null){
-				User u = userDao.selectByPrimaryKey(uid);
+			if(user.getUid()!=null){
+				User u = userDao.selectByPrimaryKey(user.getUid());
 				data.put("level", u.getLevel());//等级
 				data.put("exp", u.getExp());//经验
-				detailedUserData=UserService.enterPersonalHomePage(uid);
+				detailedUserData=UserService.enterPersonalHomePage(user.getUid());
 			}else{
 				data.put("level", user.getLevel());//等级
 				data.put("exp", user.getExp());//经验
@@ -85,7 +85,7 @@ public class UserController {
 			ret.setCode(200);
 		}
 		else {
-
+			
 			System.out.println("获取个人主页失败！session为null");
 			ret.setCode(500);
 		}

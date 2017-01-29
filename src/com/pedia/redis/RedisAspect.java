@@ -12,8 +12,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.hxuhao.utils.JsonUtils;
 import com.pedia.tool.EntryInfo;
+import com.pedia.utils.JsonUtils;
 
 import redis.clients.jedis.Jedis;
 
@@ -21,18 +21,14 @@ import redis.clients.jedis.Jedis;
 @Aspect
 public class RedisAspect {
 	
-	@Autowired
-	@Qualifier("redisTemplate")
-	private RedisTemplate<String, String> redisCache;
-	
-	
-	
+	private RedisConnection redisCache = RedisManager.getInstance().getConnection();
+		
 	 @Pointcut("execution(* com.pedia.service.IEntryService.enterEntry(java.lang.Integer))")    //进入词条
 	 public void enterEntry(){
 	        
 	 }
 	 
-	 @Pointcut("execution(* com.pedia.service.IManagerService.checkModifiedEntry(..))")    //进入词条
+	 @Pointcut("execution(* com.pedia.service.IManagerService.checkModifiedEntry(..))")    //管理员审核词条
 	 public void modifyEntry(){
 	        
 	 }
@@ -48,7 +44,7 @@ public class RedisAspect {
 		if(args !=null && args.length>0){
 			info = (Integer) args[0];
 		}
-		String jsonEntryInfo = redisCache.opsForValue().get("Entry:" + info);
+		String jsonEntryInfo = (String) redisCache.hget("entry","content");
 		EntryInfo entryInfo = null;
 		if(jsonEntryInfo!=null){
 			entryInfo = JsonUtils.decode(jsonEntryInfo,new TypeReference<EntryInfo>() {});
@@ -67,7 +63,7 @@ public class RedisAspect {
 		
 		// 更新缓存
 		 System.out.println("after enter Entry");
-		 redisCache.opsForValue().set("Entry:" + info, JsonUtils.encode(entryInfo));
+		 redisCache.hset("Entry:" + info, "content",JsonUtils.encode(entryInfo));
 		 return entryInfo;
 	 
 	 }
@@ -88,7 +84,7 @@ public class RedisAspect {
 				ret = (int) joinPoint.proceed();
 				if( ret > 0 && allow){
 					System.out.println("delete key" + eid);
-					redisCache.delete("Entry:" + eid);
+					redisCache.del("Entry:" + eid);
 				}
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block

@@ -32,14 +32,14 @@ function seeEntry(eidNum){
                     console.log(dataKey);
                     $("#lemma").text(dataKey.entryName);
                     $("tags").html("<p>"+dataKey.label1+"</p>");
-                    if(dataKey.pic!=null){
-                        $("#starboard img").attr("src","../../static/images/"+dataKey.pic);
+                    if(dataKey.pictureAddr!=null){
+                        $("#starboard img").attr("src","../../static/images/"+dataKey.pictureAddr);
                     }
                     else{
                         $("#starboard img").attr("src","../images/manager/exam.png");
                     }
-
-                    $("#textAreas").text(dataKey.detail);
+                    alert(dataKey.detail);
+                    $("#textArea").text(dataKey.detail);
                 }
             },
             error:function(data){                          //请求失败时调用此函数
@@ -181,29 +181,6 @@ $(function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //----获取行号-----
 function getRow(r){
     var i=r.parentNode.parentNode.rowIndex;
@@ -279,7 +256,7 @@ $(function(){
                         oneMessage1[0]="<a href='#' myAttr='"+dataKey.hasPassList[i].eid+"'>"+dataKey.hasPassList[i].entryName+"</a>";
                         oneMessage1[1]=dataKey.hasPassList[i].createDate;
                         oneMessage1[2]=dataKey.hasPassList[i].passDate;
-                        oneMessage1[3]=dataKey.hasPassList[i].modifyTimes;
+                        oneMessage1[3]=dataKey.hasPassList[i].modifiTimes;
                         oneMessage1[4]="<div myAttr='"+dataKey.hasPassList[i].eid+"'></div>";
                         //dataKey.hasPassList[i].entryId;
                         insertInfo(oneMessage1);
