@@ -89,13 +89,13 @@ $(function(){
    $("#entry").click(function(){
     if ($("#keyword").val()!="") {
     //alert(encodeURI($("#keyword").val()));
-      window.location.href="about/readDetail.html"+"?"+"user="+ encodeURI(encodeURI(userName))+"&search="+ encodeURI(encodeURI($("#keyword").val()));
+      window.location.href="about/readDetail.html"+"?"+"user="+ encodeURI(userName) + "&search=" + encodeURI($("#keyword").val());
     }
   });
   $("#search").click(function(){
     if ($("#keyword").val()!="") {
    
-    	window.location.href="about/readList.html"+"?"+"user="+encodeURI(encodeURI(userName))+"&search="+ encodeURI(encodeURI($("#keyword").val()));
+    	window.location.href="about/readList.html"+"?"+"user="+encodeURI(userName)+"&search="+ encodeURI($("#keyword").val());
     }
   });
   $("#create").click(function(){

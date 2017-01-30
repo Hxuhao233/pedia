@@ -21,7 +21,7 @@ import com.pedia.tool.ResponseData;
 
 
 @Controller
-@RequestMapping(value="/manager")
+@RequestMapping(value="/back")
 public class ManagerController {
 	
 	@Autowired
@@ -56,23 +56,7 @@ public class ManagerController {
 	}
 	
 	
-	// 查看词条
-		@ResponseBody
-		@RequestMapping(value="/seeEntry",method=RequestMethod.GET)
-		public ResponseData seeEntry(@RequestParam(value = "eid") int eid){
-			ResponseData response = new ResponseData();
-			BaseEntryDataList entryData = entryService.seeEntry(eid);
-			if(entryData.getData().size()>0){
-				response.setCode(200);
-				//Map<String,String> entryinfo = new Has
-				response.setData(entryData.getData().get(0));
-			}else{
-				response.setCode(404);
-			}
-			
-			return response;
-			
-		}
+
 	
 	// 审核待发布词条
 	@ResponseBody

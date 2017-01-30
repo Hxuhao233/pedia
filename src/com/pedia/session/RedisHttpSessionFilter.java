@@ -115,7 +115,7 @@ public class RedisHttpSessionFilter implements Filter {
 
         @Override
         public String getRequestedSessionId() {
-            return token;
+            return sessionId;
         }
     }
 
@@ -135,7 +135,8 @@ public class RedisHttpSessionFilter implements Filter {
             this.response = response;
             //response.setHeader(TOKEN_HEADER_NAME, request.getSession(true).getId());
             //System.out.println("response set header fin ");
-            this.response.addCookie(new Cookie(COOKIES_NAME,request.getSession(true).getId()));
+            if(request.getRequestedSessionId() == null)
+            	this.response.addCookie(new Cookie(COOKIES_NAME,request.getSession(true).getId()));
         }
     }
 

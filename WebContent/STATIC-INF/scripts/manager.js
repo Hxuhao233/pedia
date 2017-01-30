@@ -1,9 +1,9 @@
-var InitUrl = "../../Pedia/manager/init";
-var seeEntryUrl = "../../Pedia/manager/seeEntry";
-var checkEntryUrl = "../../Pedia/manager/checkEntry";
-var checkReportedEntryUrl = "../../Pedia/manager/checkReportedEntry";
-var checkModifiedEntryUrl = "../../Pedia/manager/checkModifiedEntry";
-var logoutUrl = "../../Pedia/user/logout";
+var InitUrl = "../../Pedia/back/init";
+var seeEntryUrl = "../../Pedia/back/seeEntry";
+var checkEntryUrl = "../../Pedia/back/checkEntry";
+var checkReportedEntryUrl = "../../Pedia/back/checkReportedEntry";
+var checkModifiedEntryUrl = "../../Pedia/back/checkModifiedEntry";
+var logoutUrl = "../../Pedia/back/logout";
 
 
 //初始化函数

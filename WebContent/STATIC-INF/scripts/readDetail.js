@@ -12,7 +12,7 @@ var loginOrNot = false; // 记录是否有登陆
    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
    var r = window.location.search.substr(1).match(reg);
    if (r != null) {
-   		return unescape(r[2]);
+   		return (r[2]);		//去掉unescape
    }
    return null;
   };
@@ -26,7 +26,7 @@ function backToLast() {
 function priase() {
 	$.ajax({
         type:"GET",
-        url:"../../Pedia/entry/priase/" + eID, // 此处加入url地址
+        url:"../../Pedia/back/priase/" + eID, // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         dataType:"json",
         cache:false,
@@ -58,7 +58,7 @@ function priase() {
 function badReview() {
 	$.ajax({
         type:"GET",
-        url:"../../Pedia/entry/badReview/" + eID, // 此处加入url地址
+        url:"../../Pedia/back/badReview/" + eID, // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         dataType:"json",
         cache:false,
@@ -100,7 +100,7 @@ function getReport() {
 function report() {
 	$.ajax({
         type:"POST",
-        url:"../../Pedia/entry/report", // 此处加入url地址
+        url:"../../Pedia/back/report", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         dataType:"json",
         data: JSON.stringify(getReport()),
@@ -180,7 +180,7 @@ function commentAdd() {
 	if ($("input[name='commentAdd']").val() != "") {
 		$.ajax({
             type:"POST",
-            url:"../../Pedia/entry/comment", // 此处加入url地址
+            url:"../../Pedia/back/comment", // 此处加入url地址
             contentType:"application/json;charset=utf-8",
             dataType:"json",
             data: JSON.stringify(getComment()),
@@ -315,7 +315,7 @@ function tapGoTo() {
     searchParam = $("input[name='search']").val();
 	$.ajax({
         type:"GET",
-        url:"../../Pedia/entry/enterEntryDirectly", // 此处加入url地址
+        url:"../../Pedia/back/enterEntryDirectly", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         data:"entryName=" + searchParam,
         dataType:"json",
@@ -386,7 +386,7 @@ function loadHtml(entryID) {
 	eID = entryID;
 	$.ajax({
         type:"GET",
-        url:"../../Pedia/entry/enterEntry", // 此处加入url地址
+        url:"../../Pedia/back/enterEntry", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         data:"eid=" + eID,
         dataType:"json",
@@ -459,13 +459,16 @@ $("Document").ready(function() {
 	// 预加载
 	eID = $.getUrlParam('eid'); // 获取entryID参数
 	console.log("OnLoad: " + eID);
+	if(eID == null){
+		searchParam = $.getUrlParam('search'); // 获取search参数
+		console.log("search: " + searchParam);
+		var eidsss = getEid(searchParam);
+		console.log("eid: " + eidsss);
+		loadHtml(eidsss); //Ａjax加载
+	}else{
+		loadHtml(eID);
+	}
 
-	searchParam = escape($.getUrlParam('search')); // 获取search参数
-	console.log("search: " + searchParam);
-	var eidsss = getEid(searchParam);
-	console.log("eid: " + eidsss);
-
-	loadHtml(eID); //Ａjax加载
 	var H = $(document).height();
 	console.log(H);
 	$("body").height(H);
@@ -544,7 +547,7 @@ function getEid(search){
     var eidsss=null;
     $.ajax({
         type:"GET",
-        url:"../../Pedia/entry/enterEntryDirectly", // 此处加入url地址
+        url:"../../Pedia/back/enterEntryDirectly", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         data:"entryName=" + decodeURI(search),
         dataType:"json",

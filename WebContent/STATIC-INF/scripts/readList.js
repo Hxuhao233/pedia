@@ -8,7 +8,7 @@ var searchData = ""; // 用于保存search参数
    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
    var r = window.location.search.substr(1).match(reg);
    if (r != null) {
-   		return unescape(r[2]);
+   		return r[2];		// 去掉unescape
    }
    return null;
   };
@@ -78,9 +78,9 @@ function search(searchData) {
 	clear();
 	$.ajax({                                                 
         type:"GET",
-        url:"../../Pedia/entry/queryEntry", // 此处加入url地址
+        url:"../../Pedia/back/queryEntry", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
-        data:"search=" + searchData,
+        data:"search=" + decodeURI(searchData),
         dataType:"json",
         cache:false,
         success:function(data){              
@@ -122,7 +122,7 @@ function search(searchData) {
 
 $("Document").ready(function() {
 	// 检测是否有登陆
-	user = escape($.getUrlParam("user"));
+	user = $.getUrlParam("user");
 	if (user == "null") {
 		console.log("未登录");
 		loginOrNot = false;
@@ -134,7 +134,7 @@ $("Document").ready(function() {
 		$("#headerRight").css("display", "none");
 		$("#userCenter").css("display", "block");
 	}
-	searchData = escape($.getUrlParam("search"));
+	searchData = $.getUrlParam("search");
 	search(searchData);
 	
 	$("#tapSearch").click(function() {

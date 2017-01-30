@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -43,10 +44,18 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		if (!flag) {
-			User user = (User) request.getSession().getAttribute("user");
-			if (user != null) {
-				flag = true;
-				//System.out.println("允许访问");
+			HttpSession s = request.getSession(false);
+			if(s!=null){
+				User user = (User) s.getAttribute("user");	
+				if (user != null) {
+					System.out.println(user.getRole());
+					flag = true;
+					//System.out.println("允许访问");
+				}else{
+					System.out.println("未登录");
+				}
+			}else{
+				System.out.println("未知访问");
 			}
 		}
 
@@ -54,7 +63,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		for (String s : MANAGER_URI) {
 			if (url.contains(s)) {
 				User user = (User) request.getSession().getAttribute("user");
-				if (user != null && user.getRole()<2) {
+				if ( user==null || (user != null && user.getRole()<2) ) {
 					//System.out.println("user role" + user.getRole());
 					flag2 = false;
 					break;
@@ -72,7 +81,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 			Map<String,Object> info = new HashMap<String,Object>();
 			info.put("info", "no auth!");
-			//System.out.println(">>>: " + url + " no auth!");
+			System.out.println(">>>: " + url + " no auth!");
 			responseData.setCode(403);
 			responseData.setData(info);
 

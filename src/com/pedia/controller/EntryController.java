@@ -34,7 +34,7 @@ import com.pedia.tool.RequestData;
 import com.pedia.tool.ResponseData;
 
 @Controller
-@RequestMapping(value="/entry")
+@RequestMapping(value="/back")
 public class EntryController {
 	
 	@Autowired
@@ -205,8 +205,9 @@ public class EntryController {
 
 	//检测词条是否可以被创建
 	@ResponseBody
-	@RequestMapping(value="/checkEntryCreatable",method = RequestMethod.GET)
+	@RequestMapping(value="/checkEntryCreatable.do",method = RequestMethod.GET)
 	public ResponseData checkEntryCreatable(@PathParam("entryName")String entryName){
+			System.out.println("check " + entryName);
 			ResponseData ret=new ResponseData();
 			if (entryService.checkEntryCreatable(entryName)){
 				ret.setCode(200);
