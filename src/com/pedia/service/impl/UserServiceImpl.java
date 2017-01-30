@@ -210,7 +210,7 @@ public class UserServiceImpl implements IUserService {
 					Entry entry = entryDao.selectByPrimaryKey(action.getEid());
 					entryInfo.put("eid", action.getAid());
 					entryInfo.put("entryName", entry.getEntryname());
-					entryInfo.put("createDate", simpleDateFormat.format(action.getActiontime()));
+					entryInfo.put("createDate", simpleDateFormat.format(entry.getPublishtime()));
 					detailedUserData.addUncheckedEntry(entryInfo);
 					break;
 				
@@ -220,8 +220,8 @@ public class UserServiceImpl implements IUserService {
 					Entry entry2 = entryDao.selectByPrimaryKey(action.getEid());
 					entryInfo2.put("eid", action.getAid());
 					entryInfo2.put("entryName", entry2.getEntryname());
-					entryInfo2.put("createDate", simpleDateFormat.format(action.getActiontime()));
-					entryInfo2.put("passDate", simpleDateFormat.format(entry2.getPublishtime()));
+					entryInfo2.put("createDate", simpleDateFormat.format(entry2.getPublishtime()));
+					entryInfo2.put("passDate", simpleDateFormat.format(action.getActiontime()));
 					entryInfo2.put("modifiTimes", actionDao.selectByEidAndStatus(entry2.getEid(),2).size());
 					detailedUserData.addPassEntry(entryInfo2);
 					

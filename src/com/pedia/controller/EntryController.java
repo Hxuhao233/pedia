@@ -205,7 +205,7 @@ public class EntryController {
 
 	//检测词条是否可以被创建
 	@ResponseBody
-	@RequestMapping(value="/checkEntryCreatable.do",method = RequestMethod.GET)
+	@RequestMapping(value="/checkEntryCreatable",method = RequestMethod.GET)
 	public ResponseData checkEntryCreatable(@PathParam("entryName")String entryName){
 			System.out.println("check " + entryName);
 			ResponseData ret=new ResponseData();

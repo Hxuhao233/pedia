@@ -100,13 +100,14 @@ public class RedisHttpSession implements HttpSession{
 	// get the info from the session
 	@Override
 	public Object getAttribute(String name) {
-		System.out.println("get" + key + " field : " + name);
+		System.out.println("get " + key + " field : " + name);
 		return redisConnection.hget(key, SESSION_ATTR + name);
 	}
 
 	@Override
 	public void removeAttribute(String name) {
-		redisConnection.hdel(key, name);
+		System.out.println("remove " + key + " field : " + name);
+		redisConnection.hdel(key,SESSION_ATTR + name);
 	}
 	
 	@Override

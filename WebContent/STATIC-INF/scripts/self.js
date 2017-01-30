@@ -270,9 +270,9 @@ $(function(){
                     // insertInfoTable2(oneMessage2);
                     for (var i = 0; i < dataKey.toPassList.length; i++) {
                         //alert("ads");
-                        oneMessage2[0]="<a href='#' myAttr='"+dataKey.toPassList[i].entryId+"'>"+dataKey.toPassList[i].entryName+"</a>";
+                        oneMessage2[0]="<a href='#' myAttr='"+dataKey.toPassList[i].eid+"'>"+dataKey.toPassList[i].entryName+"</a>";
                         oneMessage2[1]=dataKey.toPassList[i].createDate;
-                        oneMessage2[2]="<div myAttr='"+dataKey.toPassList[i].entryId+"'></div>";
+                        oneMessage2[2]="<div myAttr='"+dataKey.toPassList[i].eid+"'></div>";
                         //dataKey.toPassList[i].entryId;
                         insertInfoTable2(oneMessage2);
                     }
