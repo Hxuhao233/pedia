@@ -1,9 +1,9 @@
-var getPersonalHomePageUrl = "../../Pedia/back/getPersonalHomePage";
+var getPersonalHomePageUrl = "../../Pedia/back/user/getPersonalHomePage";
 
-var seeEntryUrl = "../../Pedia/back/seeEntry";
+var seeEntryUrl = "../../Pedia/back/entry/seeEntry";
 //这个url要特别注意一下，最后加斜线
-var deleteEntryUrl= "../../Pedia/back/deleteEntry/";
-var logoutUrl = "../../Pedia/back/logout";
+var deleteEntryUrl= "../../Pedia/back/user/deleteEntry/";
+var logoutUrl = "../../Pedia/back/user/logout";
 
 //测试通过
 function PopupActionListener(){

@@ -34,7 +34,7 @@ import com.pedia.tool.RequestData;
 import com.pedia.tool.ResponseData;
 
 @Controller
-@RequestMapping(value="/back")
+@RequestMapping(value="/back/entry")
 public class EntryController {
 	
 	@Autowired

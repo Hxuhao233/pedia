@@ -1,4 +1,4 @@
-var LoginUrl = "../../Pedia/back/login";
+var LoginUrl = "../../Pedia/back/user/login";
 
 
 $(function(){
