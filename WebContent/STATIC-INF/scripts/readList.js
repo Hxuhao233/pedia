@@ -76,11 +76,12 @@ function createHeaderHtml(num) {
 
 function search(searchData) {
 	clear();
+	console.log(decodeURIComponent(searchData));
 	$.ajax({                                                 
         type:"GET",
-        url:"../../Pedia/back/entry/queryEntry", // 此处加入url地址
+        url:"../../Pedia/entry/queryEntry", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
-        data:"search=" + decodeURI(searchData),
+        data:"search=" + searchData.replace(/\+/g,'%2B'),
         dataType:"json",
         cache:false,
         success:function(data){              

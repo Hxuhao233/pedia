@@ -83,12 +83,12 @@ $(function(){
    }
    if(userName!="null"){
       $("#about").delegate(".user","click",function(){      //使用 delegate() 方法向尚未创建的元素添加事件处理程序
-        window.location.href=encodeURI("about/self.html"+"?"+"username="+userName);
+        window.location.href=encodeURIComponent("about/self.html"+"?"+"username="+userName);
       });
    }
    $("#entry").click(function(){
     if ($("#keyword").val()!="") {
-    //alert(encodeURI($("#keyword").val()));
+    //alert(encodeURIComponent($("#keyword").val()));
       window.location.href="about/readDetail.html"+"?"+"user="+ encodeURI(userName) + "&search=" + encodeURI($("#keyword").val());
     }
   });
@@ -99,6 +99,6 @@ $(function(){
     }
   });
   $("#create").click(function(){
-        window.location.href=encodeURI("about/createLemma.html"+"?"+"username="+userName);
+        window.location.href=encodeURIComponent("about/createLemma.html"+"?"+"username="+userName);
   });
 });

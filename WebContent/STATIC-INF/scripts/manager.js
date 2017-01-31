@@ -1,9 +1,9 @@
-var InitUrl = "../../Pedia/back/init";
-var seeEntryUrl = "../../Pedia/back/seeEntry";
-var checkEntryUrl = "../../Pedia/back/checkEntry";
-var checkReportedEntryUrl = "../../Pedia/back/checkReportedEntry";
-var checkModifiedEntryUrl = "../../Pedia/back/checkModifiedEntry";
-var logoutUrl = "../../Pedia/back/logout";
+var InitUrl = "../../Pedia/manager/init";
+var seeEntryUrl = "../../Pedia/entry/seeEntry";
+var checkEntryUrl = "../../Pedia/manager/checkEntry";
+var checkReportedEntryUrl = "../../Pedia/manager/checkReportedEntry";
+var checkModifiedEntryUrl = "../../Pedia/manager/checkModifiedEntry";
+var logoutUrl = "../../Pedia/user/logout";
 
 
 //初始化函数
@@ -16,13 +16,13 @@ $(function(){
         $("#drop").attr("src","../images/manager/u896_hover.png")
     })
 });
-function seeEntry(eidNum){
+function seeEntry(eidNum,aidNum){
     $.ajax({
             // JSON.stringify(sendData)                                                 //使用post方法向服务器传送json字符串
             type:"GET",
             url:seeEntryUrl,
             contentType:"application/json;charset=utf-8",
-            data:"eid="+eidNum,
+            data:"eid="+eidNum+"&aid="+aidNum,
             dataType:"json",
             cache:false,
             success:function(data){              //请求成功后的返回函数
@@ -36,8 +36,8 @@ function seeEntry(eidNum){
                     $("#labels2").text(dataKey.label2);
                     $("#labels3").text(dataKey.label3);
                     $("#labels4").text(dataKey.label4);
-                    if(dataKey.pic!=null){
-                        $("#starboard img").attr("src","../../static/images/"+dataKey.pic);
+                    if(dataKey.pictureAddr!=null){
+                        $("#starboard img").attr("src","../../static/images/"+dataKey.pictureAddr);
                     }
                     else{
                         $("#starboard img").attr("src","../images/manager/exam.png");
@@ -58,7 +58,8 @@ function btn1ActionListener(){
         var sendData = {
             "data":
                 {
-                    "eid":$(this).attr("myAttr").toString(),
+                    "eid":$(this).attr("eid"),
+                    "aid":$(this).attr("aid"),
                     "allow":"1",
                     "reason":""
                 }
@@ -98,7 +99,8 @@ function btn2ActionListener(){
         var sendData = {
             "data":
                 {
-                    "eid":$(this).attr("myAttr").toString(),
+                    "eid":$(this).attr("eid"),
+                    "aid":$(this).attr("aid"),
                     "allow":"0",
                     "reason":""
                 }
@@ -151,8 +153,8 @@ function btn1ActionListenerTable2(){
         // alert("hhhh");
         // delRowTable2($(this).attr("myAttrs"));
         var RowNum = $(this).attr("myAttrs");
-        var eid = $(this).attr("myAttr").toString();
-        var rid = $(this).attr("rid").toString();
+        var eid = $(this).attr("eid");
+        var rid = $(this).attr("rid");
 
         //alert(eid);
         $.ajax({                                                 //使用post方法向服务器传送json字符串
@@ -184,7 +186,7 @@ function btn2ActionListenerTable2(){
     $("#btn2").unbind("click");
     $("#btn2").click(function(){
         var RowNum = $(this).attr("myAttrs");
-        var eid = $(this).attr("myAttr").toString();
+        var eid = $(this).attr("eid").toString();
         var rid = $(this).attr("rid").toString();
         $.ajax({                                                 //使用post方法向服务器传送json字符串
         type:"GET",
@@ -232,13 +234,13 @@ function btn1ActionListenerTable3(){
         var sendData = {
             "data":
                 {
-            		"eid":$(this).attr("myAttr").toString(),
+            		"eid":$(this).attr("eid").toString(),
                     "aid":$(this).attr("aid").toString(),
                     "allow":"1",
                     "reason":""
                 }
         }
-        console.log($(this).attr("myAttr"));
+        console.log($(this).attr("eid"));
         var RowNum = $(this).attr("myAttrs");
         $.ajax({                                                 //使用post方法向服务器传送json字符串
             type:"POST",
@@ -269,7 +271,7 @@ function btn2ActionListenerTable3(){
         var sendData = {
             "data":
                 {
-                    "eid":$(this).attr("myAttr").toString(),
+                    "eid":$(this).attr("eid").toString(),
                     "aid":$(this).attr("aid").toString(),
                     "allow":"0",
                     "reason":""
@@ -386,7 +388,7 @@ $(function(){
                     oneMessage[0]=dataKey.uncheckedEntryList[i].entryName;
                     oneMessage[1]=dataKey.uncheckedEntryList[i].createTime;
                     oneMessage[2]=dataKey.uncheckedEntryList[i].publisher;
-                    oneMessage[3]="<div myAttr='"+dataKey.uncheckedEntryList[i].entryId+"'></div>";
+                    oneMessage[3]="<div eid="+dataKey.uncheckedEntryList[i].eid+ " aid=" + dataKey.uncheckedEntryList[i].aid + "></div>";
                     //dataKey.uncheckedEntryList[i].entryId;
                     insertInfo(oneMessage);
                 }
@@ -395,7 +397,7 @@ $(function(){
                     oneMessage[0]=dataKey.reportedEntryList[i].entryName;
                     oneMessage[1]=dataKey.reportedEntryList[i].reported;
                     oneMessage[2]=dataKey.reportedEntryList[i].reason;
-                    oneMessage[3]="<div myAttr='"+dataKey.reportedEntryList[i].entryId+"' "+"rid='"+dataKey.reportedEntryList[i].rid+"'></div>";
+                    oneMessage[3]="<div eid='"+dataKey.reportedEntryList[i].eid+"' "+"rid='"+dataKey.reportedEntryList[i].rid+"'></div>";
                     //alert(oneMessage[3]);
                     //dataKey.reportedEntryList[i].entryId;
                     insertInfoTable2(oneMessage);
@@ -405,32 +407,35 @@ $(function(){
                     oneMessage[0]=dataKey.modifiedEntryList[i].entryName;
                     oneMessage[1]=dataKey.modifiedEntryList[i].modifyTime;
                     oneMessage[2]=dataKey.modifiedEntryList[i].publisher;
-                    oneMessage[3]="<div myAttr='"+dataKey.modifiedEntryList[i].entryId+"' " +"aid='" +dataKey.modifiedEntryList[i].aid+"'></div>";
+                    oneMessage[3]="<div eid='"+dataKey.modifiedEntryList[i].eid+"' " +"aid='" +dataKey.modifiedEntryList[i].aid+"'></div>";
                     //dataKey.modifiedEntryList[i].entryId;
                     insertInfoTable3(oneMessage);
                 }
                 $("#table1 div").click(function(){
-                    var entryId = $(this).attr("myAttr");
-                    $("#btn1").attr("myAttr",entryId);
+                    var eid = $(this).attr("eid");
+                    var aid = $(this).attr("aid");
+                    $("#btn1").attr("eid",eid);
+                    $("#btn1").attr("aid",aid);
                     $("#btn1").attr("myAttrs",getRow(this));
-                    $("#btn2").attr("myAttr",entryId);
+                    $("#btn2").attr("eid",eid);
+                    $("#btn2").attr("aid",aid);
                     $("#btn2").attr("myAttrs",getRow(this));
-                    seeEntry(entryId);
+                    seeEntry(eid,aid);
                     document.getElementById('light').style.display='block';
                     document.getElementById('fade').style.display='block';
                     btn1ActionListener();
                     btn2ActionListener();
                 });
                 $("#table2 div").click(function(){
-                    var entryId = $(this).attr("myAttr");
+                    var eid = $(this).attr("eid");
                     var rid = $(this).attr("rid");
-                    $("#btn1").attr("myAttr",entryId);
+                    $("#btn1").attr("eid",eid);
                     $("#btn1").attr("myAttrs",getRow(this));
                     $("#btn1").attr("rid",rid);
-                    $("#btn2").attr("myAttr",entryId);
+                    $("#btn2").attr("eid",eid);
                     $("#btn2").attr("myAttrs",getRow(this));
                     $("#btn2").attr("rid",rid);
-                    seeEntry(entryId);
+                    seeEntry(eid);
                     document.getElementById('light').style.display='block';
                     document.getElementById('fade').style.display='block';
                     //alert("h");
@@ -438,15 +443,15 @@ $(function(){
                     btn2ActionListenerTable2();
                 });
                 $("#table3 div").click(function(){
-                    var entryId = $(this).attr("myAttr");
+                    var eid = $(this).attr("eid");
                     var aid = $(this).attr("aid");
-                    $("#btn1").attr("myAttr",entryId);
+                    $("#btn1").attr("eid",eid);
                     $("#btn1").attr("myAttrs",getRow(this));
                     $("#btn1").attr("aid",aid);
-                    $("#btn2").attr("myAttr",entryId);
+                    $("#btn2").attr("eid",eid);
                     $("#btn2").attr("myAttrs",getRow(this));
                     $("#btn1").attr("aid",aid);
-                    seeEntry(entryId);
+                    seeEntry(eid);
                     document.getElementById('light').style.display='block';
                     document.getElementById('fade').style.display='block';
                     btn1ActionListenerTable3();
@@ -479,7 +484,7 @@ $(function(){
 
 $(function(){
     $("#BackHome").click(function(){
-        window.location.href="login.html";
+        window.location.href="../index.html";
     })
 })
 //弹出框的关闭按钮

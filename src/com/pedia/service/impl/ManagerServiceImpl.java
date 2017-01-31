@@ -43,8 +43,11 @@ public class ManagerServiceImpl implements IManagerService{
 		List<Entry> result  = entryDao.selectByStatus(1);
 
 		for(Entry item : result){
-			//List<Label> labels = labelDao.selectByEid(item.getEid());
-			entryDataList.addUncheckedEntry(item);
+			List<Action> actionList = actionDao.selectByEidAndStatus(item.getEid(), 1);
+			for(Action a : actionList){
+				String name = userDao.selectByPrimaryKey(a.getUid()).getUsername();
+				entryDataList.addUncheckedEntry(item,a,name);
+			}
 		}
 		System.out.println(result.size());
 		System.out.println(entryDataList.getData().size());
@@ -91,7 +94,7 @@ public class ManagerServiceImpl implements IManagerService{
 	
 	
 	@Override
-	public int checkEntry(Integer aid, Boolean allow,String reason) {
+	public int checkEntry(Integer eid, Integer aid, Boolean allow, String reason) {
 		// TODO Auto-generated method stub
 		Action a = actionDao.selectByPrimaryKey(aid);
 		//allow false 不通过 true 通过
@@ -101,13 +104,22 @@ public class ManagerServiceImpl implements IManagerService{
 			User u = userDao.selectByPrimaryKey(a.getUid());
 			u.AddExp(5);
 			userDao.updateByPrimaryKeySelective(u);
+			
 			Entry e = entryDao.selectByPrimaryKey(a.getEid());
 			e.setStatus(2);
 			entryDao.updateByPrimaryKeySelective(e);
+		
 		}else{
 			
+			Entry e = entryDao.selectByPrimaryKey(a.getEid());
+			e.setStatus(3);
+			entryDao.updateByPrimaryKeySelective(e);
+			
 			a.setStatus(3);
+			if("".equals(reason))
+				reason = "未知原因";
 			a.setRefusereason(reason);
+			
 		}
 		
 		int ret = actionDao.updateByPrimaryKeySelective(a);

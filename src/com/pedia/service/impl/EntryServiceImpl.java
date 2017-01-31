@@ -128,6 +128,17 @@ public class EntryServiceImpl implements IEntryService{
 		// TODO Auto-generated method stub
 		//BaseEntryDataList entryDataList = new BaseEntryDataList();
 		List<EntryInfo> entryInfoList = new ArrayList<EntryInfo>();
+		
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<info.length();i++){
+			char c = info.charAt(i);
+			if(c == '+'){
+				sb.append("\\");
+			}
+			sb.append(c);
+		}
+		info = sb.toString();
+		
 		List<Entry> result  = entryDao.selectByInfo(info);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		for(Entry item : result){
@@ -151,12 +162,12 @@ public class EntryServiceImpl implements IEntryService{
 	
 	
 	@Override
-	public BaseEntryDataList seeEntry(int aid) {
+	public BaseEntryDataList seeEntry(int eid,int aid) {
 		// TODO Auto-generated method stub
 		BaseEntryDataList entryDataList = new BaseEntryDataList();
 
 		Action Content = actionDao.selectByPrimaryKey(aid);
-		Entry item  = entryDao.selectByPrimaryKey(Content.getEid());
+		Entry item  = entryDao.selectByPrimaryKey(eid);
 		entryDataList.addNormalEntry(item,Content);
 	
 		return entryDataList;

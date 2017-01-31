@@ -33,7 +33,7 @@ import com.pedia.tool.RequestData;
 import com.pedia.tool.ResponseData;
 
 @Controller
-@RequestMapping(value = "/back/user")
+@RequestMapping(value = "/user")
 public class UserController {
 	@Autowired
 	private IUserService UserService;

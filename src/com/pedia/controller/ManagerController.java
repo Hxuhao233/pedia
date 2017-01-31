@@ -3,6 +3,8 @@ package com.pedia.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pedia.model.User;
 import com.pedia.service.IEntryService;
 import com.pedia.service.IManagerService;
 import com.pedia.service.IUserService;
@@ -21,7 +24,7 @@ import com.pedia.tool.ResponseData;
 
 
 @Controller
-@RequestMapping(value="/back")
+@RequestMapping(value="/manager")
 public class ManagerController {
 	
 	@Autowired
@@ -36,16 +39,16 @@ public class ManagerController {
 	// 管理员初始页面
 	@ResponseBody
 	@RequestMapping(value="/init",method=RequestMethod.GET)
-	public ResponseData getAllData(){
+	public ResponseData getAllData(HttpSession session){
 		ResponseData response = new ResponseData();
 		
 		BaseEntryDataList uncheckedEntryList =  managerService.getUnCheckedEntry();
 		BaseEntryDataList reportedEntryList =  managerService.getReportedEntry();
 		BaseEntryDataList modifiedEntryList =  managerService.getModifiedEntry();
 		System.out.println(uncheckedEntryList.getData().size());
-		
+		User u = (User)session.getAttribute("user");
 		Map<String,Object> data = new HashMap<String,Object>();
-		data.put("userName", "root");
+		data.put("userName",u.getUsername());
 		data.put("uncheckedEntryList", uncheckedEntryList.getData());
 		data.put("reportedEntryList", reportedEntryList.getData());
 		data.put("modifiedEntryList", modifiedEntryList.getData());
@@ -70,9 +73,10 @@ public class ManagerController {
 			System.out.println(in + "     " + str);
 		}
 		Integer eid = new Integer(requestData.get("eid").trim());
+		Integer aid = new Integer(requestData.get("aid").trim());
 		Boolean allow = requestData.get("allow").equals("1") ? true : false;
 		String reason = requestData.get("reason");
-		int ret = managerService.checkEntry(eid, allow, reason);
+		int ret = managerService.checkEntry(eid,aid, allow, reason);
 		if(ret > 0){
 			response.setCode(200);
 		}else{

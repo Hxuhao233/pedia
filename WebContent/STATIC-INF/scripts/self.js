@@ -1,9 +1,9 @@
-var getPersonalHomePageUrl = "../../Pedia/back/user/getPersonalHomePage";
+var getPersonalHomePageUrl = "../../Pedia/user/getPersonalHomePage";
 
-var seeEntryUrl = "../../Pedia/back/entry/seeEntry";
+var seeEntryUrl = "../../Pedia/entry/seeEntry";
 //这个url要特别注意一下，最后加斜线
-var deleteEntryUrl= "../../Pedia/back/user/deleteEntry/";
-var logoutUrl = "../../Pedia/back/user/logout";
+var deleteEntryUrl= "../../Pedia/user/deleteEntry/";
+var logoutUrl = "../../Pedia/user/logout";
 
 //测试通过
 function PopupActionListener(){
@@ -16,12 +16,12 @@ function PopupActionListener(){
     })
 }
 
-function seeEntry(eidNum){
+function seeEntry(eidNum,aidNum){
     $.ajax({                                                 //使用post方法向服务器传送json字符串
             type:"GET",
             url:seeEntryUrl,
             contentType:"application/json;charset=utf-8",
-            data:"eid="+eidNum,
+            data:"eid=" + eidNum + "&aid=" + aidNum,
             dataType:"json",
             cache:false,
             success:function(data){              //请求成功后的返回函数
@@ -31,14 +31,17 @@ function seeEntry(eidNum){
                 if (dataCode==200) {
                     console.log(dataKey);
                     $("#lemma").text(dataKey.entryName);
-                    $("tags").html("<p>"+dataKey.label1+"</p>");
+                    $("#labels1").text(dataKey.label1);
+                    $("#labels2").text(dataKey.label2);
+                    $("#labels3").text(dataKey.label3);
+                    $("#labels4").text(dataKey.label4);
                     if(dataKey.pictureAddr!=null){
-                        $("#starboard img").attr("src","../../static/images/"+dataKey.pictureAddr);
+                        $("#starboard img").attr("src","../../static/images/" + dataKey.pictureAddr);
                     }
                     else{
                         $("#starboard img").attr("src","../images/manager/exam.png");
                     }
-                    alert(dataKey.detail);
+                
                     $("#textArea").text(dataKey.detail);
                 }
             },

@@ -46,7 +46,7 @@ public class BaseEntryDataList {
 	public int addReportedEntry(Entry entry,String reporter,Report report){
 		Map<String,Object>item;
 		item = new HashMap<String,Object>();
-		item.put("entryId", entry.getEid().toString());
+		item.put("eid", entry.getEid().toString());
 		item.put("rid",report.getRid());
 		item.put("entryName",entry.getEntryname());
 		item.put("reported", reporter);
@@ -56,12 +56,13 @@ public class BaseEntryDataList {
 		return 1;
 	}
 	
-	public int addUncheckedEntry(Entry entry){
+	public int addUncheckedEntry(Entry entry,Action action,String publisher){
 		Map<String,Object>item;
 		item = new HashMap<String,Object>();
-		item.put("entryId", entry.getEid().toString());
+		item.put("eid", entry.getEid().toString());
+		item.put("aid", action.getAid());
 		item.put("entryName",entry.getEntryname());
-		item.put("publisher", entry.getPublisher());
+		item.put("publisher",publisher);
 		item.put("createTime",new SimpleDateFormat("yyyy-MM-dd").format(entry.getPublishtime()));
 		data.add(item);
 		//listNum++;
@@ -70,9 +71,9 @@ public class BaseEntryDataList {
 	public int addModifiedEntry(Entry entry,String modifier,int aid){
 		Map<String,Object>item;
 		item = new HashMap<String,Object>();
-		item.put("entryId", entry.getEid().toString());
+		item.put("eid", entry.getEid().toString());
 		item.put("entryName",entry.getEntryname());
-		item.put("publisher",modifier);
+		item.put("modifier",modifier);
 		item.put("modifyTime",new SimpleDateFormat("yyyy-MM-dd").format(entry.getPublishtime()));
 		item.put("aid", aid);
 		data.add(item);

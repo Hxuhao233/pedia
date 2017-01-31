@@ -26,7 +26,7 @@ function backToLast() {
 function priase() {
 	$.ajax({
         type:"GET",
-        url:"../../Pedia/back/entry/priase/" + eID, // 此处加入url地址
+        url:"../../Pedia/entry/priase/" + eID, // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         dataType:"json",
         cache:false,
@@ -58,7 +58,7 @@ function priase() {
 function badReview() {
 	$.ajax({
         type:"GET",
-        url:"../../Pedia/back/entry/badReview/" + eID, // 此处加入url地址
+        url:"../../Pedia/entry/badReview/" + eID, // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         dataType:"json",
         cache:false,
@@ -100,7 +100,7 @@ function getReport() {
 function report() {
 	$.ajax({
         type:"POST",
-        url:"../../Pedia/back/entry/report", // 此处加入url地址
+        url:"../../Pedia/entry/report", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         dataType:"json",
         data: JSON.stringify(getReport()),
@@ -180,7 +180,7 @@ function commentAdd() {
 	if ($("input[name='commentAdd']").val() != "") {
 		$.ajax({
             type:"POST",
-            url:"../../Pedia/back/entry/comment", // 此处加入url地址
+            url:"../../Pedia/entry/comment", // 此处加入url地址
             contentType:"application/json;charset=utf-8",
             dataType:"json",
             data: JSON.stringify(getComment()),
@@ -315,7 +315,7 @@ function tapGoTo() {
     searchParam = $("input[name='search']").val();
 	$.ajax({
         type:"GET",
-        url:"../../Pedia/back/entry/enterEntryDirectly", // 此处加入url地址
+        url:"../../Pedia/entry/enterEntryDirectly", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         data:"entryName=" + searchParam,
         dataType:"json",
@@ -386,7 +386,7 @@ function loadHtml(entryID) {
 	eID = entryID;
 	$.ajax({
         type:"GET",
-        url:"../../Pedia/back/entry/enterEntry", // 此处加入url地址
+        url:"../../Pedia/entry/enterEntry", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         data:"eid=" + eID,
         dataType:"json",
@@ -547,7 +547,7 @@ function getEid(search){
     var eidsss=null;
     $.ajax({
         type:"GET",
-        url:"../../Pedia/back/entry/enterEntryDirectly", // 此处加入url地址
+        url:"../../Pedia/entry/enterEntryDirectly", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
         data:"entryName=" + decodeURI(search),
         dataType:"json",

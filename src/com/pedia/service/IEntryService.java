@@ -17,7 +17,7 @@ public interface IEntryService {
 	int modifyEntry(Action modify);														// 修改词条
 	int deleteEntry(int eid);    																	// 删除词条
 	
-	EntryInfo enterEntry(Integer eid);								// 进入词条（返回类型待定）
+	EntryInfo enterEntry(Integer eid);											// 进入词条（返回类型待定）
 	List<EntryInfo> queryEntry(String info);								// 搜索词条
 	
 	int submitComment(Comment comment);						// 提交评论
@@ -28,7 +28,7 @@ public interface IEntryService {
 	String uploadImage(String pathRoot, MultipartFile file);		// 上传词条图片
 	boolean checkEntryCreatable(String entryName);
 
-	BaseEntryDataList seeEntry(int eid);
+	BaseEntryDataList seeEntry(int eid,int aid);
 	int handleReport(int rid, int eid, int status);
 	CommentData getComment(Comment item);
 	EntryInfo enterEntry(String info);

@@ -63,7 +63,7 @@ function register() {
     	$.ajax({
           type: "POST",
           contentType: "application/json; charset=utf-8",
-          url: "../../Pedia/back/user/signup",
+          url: "../../Pedia/user/signup",
           data: JSON.stringify(getData()),
           dataType: "json",
           success: function(message) {

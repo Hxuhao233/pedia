@@ -34,7 +34,7 @@ import com.pedia.tool.RequestData;
 import com.pedia.tool.ResponseData;
 
 @Controller
-@RequestMapping(value="/back/entry")
+@RequestMapping(value="/entry")
 public class EntryController {
 	
 	@Autowired
@@ -45,11 +45,11 @@ public class EntryController {
 	public @ResponseBody ResponseData queryEntry(@RequestParam(value = "search" , required=false)String info){
 		
 		ResponseData response = new ResponseData();
-		System.out.println("queryEntry : " + info);
+		System.out.println("queryEntry : " + info.trim());
 		if(info == null)
 			info=".*";
 		
-		List<EntryInfo> entryDataList = entryService.queryEntry(info);
+		List<EntryInfo> entryDataList = entryService.queryEntry(info.trim());
 		if(entryDataList.size()>0){
 			
 			response.setCode(200);
@@ -355,9 +355,9 @@ public class EntryController {
 		// 查看词条
 		@ResponseBody
 		@RequestMapping(value="/seeEntry",method=RequestMethod.GET)
-		public ResponseData seeEntry(@RequestParam(value = "eid") int eid){
+		public ResponseData seeEntry(@RequestParam(value = "eid") int eid,@RequestParam(value = "aid") int aid){
 			ResponseData response = new ResponseData();
-			BaseEntryDataList entryData = entryService.seeEntry(eid);
+			BaseEntryDataList entryData = entryService.seeEntry(eid,aid);
 			if(entryData.getData().size()>0){
 				response.setCode(200);
 				//Map<String,String> entryinfo = new Has

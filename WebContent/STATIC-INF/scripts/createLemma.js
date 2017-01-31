@@ -38,7 +38,7 @@ function retriveMsg(lemId){                       //修改词条时显示给用�
   var ID=lemId;
   $.ajax({
       type:"GET",
-      url:"../../Pedia/back/entry/enterEntry", // 此处加入url地址
+      url:"../../Pedia/entry/enterEntry", // 此处加入url地址
       contentType:"application/json;charset=utf-8",
       data:"eid=" + ID,
       dataType:"json",
@@ -114,7 +114,7 @@ function validateLemma(){                                    //对词条名进�
         $.ajax({                                                 //使用post方法向服务器传送json字符串
             //type:"GET",
             async:false,                                       //取消异步操作
-            url:"../../Pedia/back/entry/checkEntryCreatable",
+            url:"../../Pedia/entry/checkEntryCreatable",
          //   contentType:"application/json;charset=utf-8",
             data:{entryName:lemmaName},     //向服务器传送词条名进行验证
              dataType: "json",
@@ -247,7 +247,7 @@ $(function(){
 function upload(){  
     var form = new FormData($("#upload_form")[0]);  
     $.ajax({  
-      url:'../../Pedia/back/entry/createEntry',  
+      url:'../../Pedia/entry/createEntry',  
       type:'POST', 
       dataType:'json',
       processData: false,
