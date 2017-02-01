@@ -30,8 +30,6 @@ public class ManagerController {
 	@Autowired
 	private IManagerService managerService;
 	
-
-	
 	@Autowired
 	private IEntryService entryService;
 	
