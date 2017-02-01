@@ -312,12 +312,12 @@ function clear() {
 // 直接进入词条
 function tapGoTo() {
 	console.log("直接进入词条Ajax");
-    searchParam = $("input[name='search']").val();
+    searchParam = $("input[name='search']").val().replace(/\+/g,'%2B');
 	$.ajax({
         type:"GET",
         url:"../../Pedia/entry/enterEntryDirectly", // 此处加入url地址
         contentType:"application/json;charset=utf-8",
-        data:"entryName=" + searchParam,
+        data:"entryName="  + searchParam,
         dataType:"json",
         cache:false,
         async:false,

@@ -83,13 +83,44 @@ $(function(){
    }
    if(userName!="null"){
       $("#about").delegate(".user","click",function(){      //使用 delegate() 方法向尚未创建的元素添加事件处理程序
-        window.location.href=encodeURIComponent("about/self.html"+"?"+"username="+userName);
+        window.location.href="about/self.html?username="+encodeURI(userName);
       });
    }
    $("#entry").click(function(){
     if ($("#keyword").val()!="") {
+    searchParam = $("#keyword").val().replace(/\+/g,'%2B');
     //alert(encodeURIComponent($("#keyword").val()));
-      window.location.href="about/readDetail.html"+"?"+"user="+ encodeURI(userName) + "&search=" + encodeURI($("#keyword").val());
+	$.ajax({                                                 
+        type:"GET",
+        url:"../../Pedia/entry/enterEntryDirectly", // 此处加入url地址
+        contentType:"application/json;charset=utf-8",
+        data:"entryName=" + searchParam,
+        dataType:"json",
+        cache:false,
+        success:function(data){              
+        var jsonData = data;
+
+        // 一级json
+        var code = jsonData.code; // 返回码
+        var listData = jsonData.data; // 数据
+
+        if (code == "200") {
+        	console.log("检索成功!");
+        	window.location.href="about/readDetail.html?user="+encodeURI(userName)+"&search="+ searchParam;
+        } else if (code == "404"){
+        	console.log("没有此数据!");
+        	window.location.href="about/readList.html?user="+encodeURI(userName)+"&search="+ searchParam;
+        	return;
+        } else {
+        	console.log("未知错误!");
+        	return;
+        }
+    },
+    error:function(data){                          //请求失败时调用此函数
+        console.log("Error");
+    }
+    });
+      //window.location.href="about/readDetail.html"+"?"+"user="+ encodeURI(userName) + "&search=" + encodeURI($("#keyword").val());
     }
   });
   $("#search").click(function(){
@@ -99,6 +130,6 @@ $(function(){
     }
   });
   $("#create").click(function(){
-        window.location.href=encodeURIComponent("about/createLemma.html"+"?"+"username="+userName);
+        window.location.href="about/createLemma.html"+"?"+"username="+encodeURI(userName);
   });
 });

@@ -406,7 +406,7 @@ $(function(){
                     //alert("ads");
                     oneMessage[0]=dataKey.modifiedEntryList[i].entryName;
                     oneMessage[1]=dataKey.modifiedEntryList[i].modifyTime;
-                    oneMessage[2]=dataKey.modifiedEntryList[i].publisher;
+                    oneMessage[2]=dataKey.modifiedEntryList[i].modifier;
                     oneMessage[3]="<div eid='"+dataKey.modifiedEntryList[i].eid+"' " +"aid='" +dataKey.modifiedEntryList[i].aid+"'></div>";
                     //dataKey.modifiedEntryList[i].entryId;
                     insertInfoTable3(oneMessage);
@@ -435,7 +435,7 @@ $(function(){
                     $("#btn2").attr("eid",eid);
                     $("#btn2").attr("myAttrs",getRow(this));
                     $("#btn2").attr("rid",rid);
-                    seeEntry(eid);
+                    seeEntry(eid,aid);
                     document.getElementById('light').style.display='block';
                     document.getElementById('fade').style.display='block';
                     //alert("h");
@@ -450,8 +450,8 @@ $(function(){
                     $("#btn1").attr("aid",aid);
                     $("#btn2").attr("eid",eid);
                     $("#btn2").attr("myAttrs",getRow(this));
-                    $("#btn1").attr("aid",aid);
-                    seeEntry(eid);
+                    $("#btn2").attr("aid",aid);
+                    seeEntry(eid,aid);
                     document.getElementById('light').style.display='block';
                     document.getElementById('fade').style.display='block';
                     btn1ActionListenerTable3();
