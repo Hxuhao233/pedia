@@ -6,9 +6,8 @@
   <link rel="stylesheet" type="text/css" href="../css/manager.css">
   <script src="../scripts/jquery-2.2.1.js"></script>
   <script src="../scripts/manager.js"></script>
-  <script type="text/javascript">
+  <script type="text/javascript" src="../scripts/check.js"></script>
 
-  </script>
 </head>
 <body>
   <div id="mainWindow">
@@ -37,13 +36,15 @@
       </div>
       <div id="dropFrame">
         <dl>
-          <dt><a href="#"  id="Picture"></a></dt>
+          <dt><a href="javascript:void(0)"  id="Picture"  onclick="show()"></a></dt>
         </dl>
         <dl>
           <dt><a href="#" id="revoke"></a></dt>
         </dl>
       </div>
     </div>
+
+
     <div id="content">
       <div id="tables">
         <table id="table1" class="mytable" style="display:none;">
@@ -101,10 +102,15 @@
         <img src="../images/manager/reportEnd.png" alt="完成" id="endReport">
       </div> -->
     </div>
-    <div id="fade" class="black_overlay" style="display:none;"></div>
 
   </div>
 
+  <div id="uploadIcon" class="uploadFrame"> 
+   	<input type="file" name="file"
+      style="width: 200px; height: 20px;" onchange="setImagePreviews();" id="upload" />
+		<div id="dd" style=" width:990px;"></div>
+    <a href="javascript:void(0)" onclick="hide()">关闭</a>
+  </div> 
 
 </body>
 </html>

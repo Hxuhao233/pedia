@@ -24,7 +24,7 @@ import com.pedia.tool.ResponseData;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	// 允许不登录就访问的内容
 	private static final String[] IGNORE_URI = { "/index","/login","enterEntryDirectly","/signup","/readDetail","/readList.html","/readDetail.html", "/queryEntry","enterEntry", "/logout", "/images", "/register",
-			"/scripts","/css","/about","/seeEntry" };
+			"/scripts","/css","/seeEntry" };
 	
 	// 允许管理员访问的内容
 	private static final String[] MANAGER_URI = { "/manager"};
@@ -32,6 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+
 		boolean flag = false;
 		boolean flag2 = true;
 		String url = request.getRequestURL().toString();
@@ -76,21 +77,25 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		// 不允许访问
 		if (!flag||!flag2) {
+			System.out.println(">>>: " + url + " no auth!");
+
 			ObjectMapper mapper = new ObjectMapper();
 			ResponseData responseData = new ResponseData();
-
 			Map<String,Object> info = new HashMap<String,Object>();
-			info.put("info", "no auth!");
-			System.out.println(">>>: " + url + " no auth!");
+			info.put("info", "无权访问,返回上一页");
 			responseData.setCode(403);
 			responseData.setData(info);
 
-			//PrintWriter pw = response.getWriter();
-			//pw.write(mapper.writeValueAsString(responseData));
+			//System.out.println(x);
+			response.setContentType("application/json;charset=UTF-8");
+			response.setCharacterEncoding("utf-8");
+			PrintWriter pw = response.getWriter();
+			pw.write(mapper.writeValueAsString(responseData));
 			//pw.flush();
-			//pw.close();
+			
+			return false;
 		}
-		return flag;
+		return true;
 	}
 
 	@Override

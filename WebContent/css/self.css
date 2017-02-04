@@ -8,6 +8,12 @@
   outline: none;
 }
 
+.button{
+	border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+}
+
 html {
   width: 1250px;
   height: 2460px;
@@ -448,3 +454,16 @@ html {
   left: 280px;
   cursor: pointer;
 }
+ .uploadFrame { 
+ 	display: none; 
+ 	position: absolute; 
+ 	top: 25%; 
+ 	left: 25%; 
+ 	width: 50%; 
+ 	height: 50%; 
+ 	padding: 16px; 
+ 	border: 2px solid #0066FF;
+ 	background-color: white; 
+ 	z-index:1002; 
+ 	overflow: auto; 
+ } 

@@ -1,9 +1,10 @@
 var getPersonalHomePageUrl = "../../Pedia/user/getPersonalHomePage";
 
 var seeEntryUrl = "../../Pedia/entry/seeEntry";
-//这个url要特别注意一下，最后加斜线
-var deleteEntryUrl= "../../Pedia/user/deleteEntry/";
+var deleteEntryUrl= "../../Pedia/user/deleteEntry";
 var logoutUrl = "../../Pedia/user/logout";
+
+
 
 //测试通过
 function PopupActionListener(){
@@ -43,6 +44,9 @@ function seeEntry(eidNum,aidNum){
                     }
                 
                     $("#textArea").text(dataKey.detail);
+                }else{
+                	handleError(dataCode,dataKey);
+                	return;
                 }
             },
             error:function(data){                          //请求失败时调用此函数
@@ -62,7 +66,7 @@ function deleteActionListener(){
         $.ajax({
             // JSON.stringify(sendData)                                                 //使用post方法向服务器传送json字符串
             type:"GET",
-            url:deleteEntryUrl+entryId,
+            url:deleteEntryUrl + "?eid=" + entryId,
             contentType:"application/json;charset=utf-8",
             dataType:"json",
             cache:false,
@@ -72,6 +76,8 @@ function deleteActionListener(){
                 //var oneMessage = new Array();
                 if (dataCode==200) {
                     delRow(RowNum);
+                }else{
+                	handleError(dataCode,jsonData.data);
                 }
             },
             error:function(data){                          //请求失败时调用此函数
@@ -98,6 +104,8 @@ function deleteActionListener(){
                 //var oneMessage = new Array();
                 if (dataCode==200) {
                     delRow(RowNum);
+                }else{
+                	handleError(dataCode,jsonData.data);
                 }
             },
             error:function(data){                          //请求失败时调用此函数
@@ -124,6 +132,8 @@ function deleteActionListener(){
                 //var oneMessage = new Array();
                 if (dataCode==200) {
                     delRow(RowNum);
+                }else{
+                	handleError(dataCode,jsonData.data);
                 }
             },
             error:function(data){                          //请求失败时调用此函数
@@ -172,6 +182,8 @@ $(function(){
             console.log(jsonData);
             if (dataCode==200) {
                 window.location.href=encodeURI("login.html");
+            }else{
+            	handleError(dataCode,jsonData.data);
             }
         },
         error:function(data){                          //请求失败时调用此函数
@@ -238,6 +250,10 @@ $(function(){
                 //hasNotPassNum  level  hasPassNum  entriesNum  passRate
                 //exp  toPassNum  hasPassList toPassList  hasNotPassList
                     //$("#username").text("root");
+            		if(dataKey.userIcon!=null)
+            			$("#icon").attr('src',"../../static/images/" + dataKey.userIcon);
+            		else
+            			$("#icon").attr('src',"../images/self/u814.png");
                     $("#username").text(dataKey.username);
                     $("#Degree").text(dataKey.level);
                     $("#expNum").text(dataKey.exp);
@@ -295,6 +311,8 @@ $(function(){
                     }
                     deleteActionListener();
                     PopupActionListener();
+            }else{
+            	handleError(dataCode,jsonData.data);
             }
         },
         error:function(data){                          //请求失败时调用此函数
@@ -407,4 +425,89 @@ function Cmd(v){
         table3.style.display = "";
         break;
     }
+
+
+}
+
+
+//显示图片上传
+function show(){
+ document.getElementById('uploadIcon').style.display='block';
+}
+function hide(){
+ document.getElementById('uploadIcon').style.display='none';
+}
+
+
+function setImagePreviews(avalue) {
+    var docObj = document.getElementById("upload");
+    var dd = document.getElementById("preview");
+    dd.innerHTML = ""
+    var fileList = docObj.files;
+    for (var i = 0; i < fileList.length; i++) {            
+        dd.innerHTML += "<div style='float:left' > <img id='img" + i + "'  /> </div>";
+        var imgObjPreview = document.getElementById("img"+i); 
+        if (docObj.files && docObj.files[i]) {
+            //火狐下，直接设img属性
+            imgObjPreview.style.display = 'block';
+            imgObjPreview.style.width = '88px';
+            imgObjPreview.style.height = '88px';
+            //imgObjPreview.src = docObj.files[0].getAsDataURL();
+            //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+            imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);
+        }
+        else {
+            //IE下，使用滤镜
+            docObj.select();
+            var imgSrc = document.selection.createRange().text;
+            alert(imgSrc)
+            var localImagId = document.getElementById("img" + i);
+            //必须设置初始大小
+            localImagId.style.width = "88px";
+            localImagId.style.height = "88px";
+            //图片异常的捕捉，防止用户修改后缀来伪造图片
+            try {
+                localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+            }
+            catch (e) {
+                alert("您上传的图片格式不正确，请重新选择!");
+                return false;
+            }
+            imgObjPreview.style.display = 'none';
+            document.selection.empty();
+        }
+    }  
+    return true;
+}
+
+$(function(){
+	$("#submit").click(function(){
+		upload();
+	})
+})
+
+function upload(){
+	 var form = new FormData($("#uploadIconForm")[0]);  
+	 alert("提交");
+	    $.ajax({  
+	      url:'../../Pedia/user/uploadIcon',  
+	      type:'POST', 
+	      dataType:false,
+	      processData: false,
+	      contentType: false,
+	      data:form,  
+	      success:function (result){  
+	        if(result.code=="200"){
+	        	alert("上传成功")
+	        	document.getElementById("tips").innerHTML = "上传成功";
+	        	
+	        }else{
+        		document.getElementById("tips").innerHTML = "上传失败";
+	        }  
+	      },  
+	      error:function (result){  
+	        console.log(result);  
+	      }  
+	   });  
 }

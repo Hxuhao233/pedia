@@ -44,7 +44,7 @@ function priase() {
             	alert(jsonData.data.info);
             	return;
             } else {
-            	console.log("未知错误!");
+            	handleError(code,jsonData.data);
             	return;
             }
         },
@@ -75,7 +75,7 @@ function badReview() {
             	alert(jsonData.data.info);
             	return;
             } else {
-            	console.log("未知错误!");
+            	handleError(code,jsonData.data);
             	return;
             }
         },
@@ -113,12 +113,12 @@ function report() {
             if (code == "200") {
             	console.log("举报成功!");
 				$("#report").find("img").attr("src", "../images/readDetail/report_Sel.png");
-				alert("感谢您的举报，我们将认真核实！");
+				alert("感谢您的举报，我们将认真核实!");
             } else if (code == "500"){
             	alert("举报失败: " + jsonData.data.info);
             	return;
             } else {
-            	console.log("未知错误!");
+            	handleError(code,jsonData.data);
             	return;
             }
         },
@@ -200,7 +200,7 @@ function commentAdd() {
 	            	alert("评论失败");
 	            	return;
 	            } else {
-	            	console.log("未知错误!");
+	            	handleError(code,jsonData.data);
 	            	return;
 	            }
             },
@@ -331,8 +331,6 @@ function tapGoTo() {
 
             if (code == "200") {
             	console.log("进入词条成功!");
-
-
             	// 创建Html
             	var HtmlStr = createHtml(loadData);
             	clear();
@@ -364,7 +362,7 @@ function tapGoTo() {
 				window.location.href = "readList.html?search=" + searchParam + "&user=" + user;
             	return;
             } else {
-            	console.log("未知错误!");
+            	handleError(code,jsonData.data);
             	return;
             }
         },
@@ -427,11 +425,11 @@ function loadHtml(entryID) {
             		$("#label1").removeClass("null");
             	}
 
-            } else if (code == "500"){
+            } else if (code == "404"){
             	console.log("没有此数据!");
             	return;
             } else {
-            	console.log("未知错误!");
+            	handleError(code,jsonData.data);
             	return;
             }
         },
@@ -567,7 +565,7 @@ function getEid(search){
               console.log("没有此数据!");
               return;
             } else {
-              console.log("未知错误!");
+            	handleError(code,loadData);
               return;
             }
         },

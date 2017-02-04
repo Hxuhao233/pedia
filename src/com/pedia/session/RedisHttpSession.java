@@ -16,7 +16,7 @@ import com.pedia.redis.RedisConnection;
 
 public class RedisHttpSession implements HttpSession{
 
-    public static final int DEFAULT_MAX_INACTIVE_INTERVAL_SECONDS = 1800;
+    public static final int DEFAULT_MAX_INACTIVE_INTERVAL_SECONDS = 1800/30;
 
     public static final String SESSION_PREFIX = "session:";
     private static final String SESSION_ATTR = "sessionAttr:";
@@ -64,7 +64,7 @@ public class RedisHttpSession implements HttpSession{
 	}
 
 	public void refresh(){
-		//System.out.println(key + " refresh");
+		System.out.println(key + " refresh");
 		redisConnection.expire(key, getMaxInactiveInterval());
 	}
 	

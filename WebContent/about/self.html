@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="../css/self.css">
   <script src="../scripts/jquery-2.2.1.js"></script>
   <script src="../scripts/self.js"></script>
+  <script type="text/javascript" src="../scripts/check.js"></script>
 </head>
 <body>
   <div id="mainWindow">
@@ -24,7 +25,7 @@
       <div id="UserInformation">
         <div id="UserGrade">
           <div id="Degree">5</div>
-          <img src="../images/self/u814.png">
+          <img id="icon" src="">
           <div id="exp">
             <div id="expTitle">经验</div>
             <div id="expNum">10</div>
@@ -62,7 +63,7 @@
             <dt><a href="#"  id="changePW"></a></dt>
           </dl>
           <dl>
-            <dt><a href="#" id="Picture"></a></dt>
+            <dt><a href="javascript:void(0)" id="Picture" onclick="show()"></a></dt>
           </dl>
           <dl>
             <dt><a href="#"  id="changeMsg"></a></dt>
@@ -119,13 +120,24 @@
       <div id="goback"></div>
       <div id="starboard">
         <img src="../images/self/exam.png">
-      </div>
+     </div>
       <span class="cutLine cut"></span>
       <p class="textLabel label2">正文</p>
       <p id ="textArea" class="textArea"></p>
     </div>
-    <div id="fade" class="black_overlay" style="display:none;"></div>
+  
+	  <div id="uploadIcon" class="uploadFrame">
 
+	    <button class="button" type="button" onclick="hide()">关闭</button>
+	    <p id="tips" style="color: black"></p>
+	   	<form id="uploadIconForm" >
+	    <button id="submit" class="button" type="button" >上传</button>
+	   	<input type="file" name="file"
+	      style="width: 200px; height: 20px;" onchange="setImagePreviews();" id="upload" />
+	      </form>
+		<div id="preview" style=" width:990px;"></div>
+	
+	  </div> 
   </div>
 
 

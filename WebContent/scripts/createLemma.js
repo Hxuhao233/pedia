@@ -45,24 +45,29 @@ function retriveMsg(lemId){                       //修改词条时显示给用�
       cache:false,
       async:false,
       success:function(result){
-         lemmaName=result.data.entryName;
-         $("#lemmaName>input").val(result.data.entryName);
-         var temp=$(".tag");
-         $(temp[0]).val(result.data.label1);
-         $(temp[1]).val(result.data.label2);
-         $(temp[2]).val(result.data.label3);
-         $(temp[3]).val(result.data.label4);
-         var i=0;
-         temp.each(function(index,value){
-              if($(temp[index]).val()!=""){
-                tags[i]=temp[index];
-                i++;
-              }
-          });
-         $("#text").val(result.data.detail);
-         var url="../../static/images/"+result.data.pic;
-         $("#addPhoto").find("img").attr("src",url);   //将图片路径存入src中，显示出图片
-          photoURL=url;
+    	  if(result.code=="200"){
+	         lemmaName=result.data.entryName;
+	         $("#lemmaName>input").val(result.data.entryName);
+	         var temp=$(".tag");
+	         $(temp[0]).val(result.data.label1);
+	         $(temp[1]).val(result.data.label2);
+	         $(temp[2]).val(result.data.label3);
+	         $(temp[3]).val(result.data.label4);
+	         var i=0;
+	         temp.each(function(index,value){
+	              if($(temp[index]).val()!=""){
+	                tags[i]=temp[index];
+	                i++;
+	              }
+	          });
+	         $("#text").val(result.data.detail);
+	         var url="../../static/images/"+result.data.pic;
+	         $("#addPhoto").find("img").attr("src",url);   //将图片路径存入src中，显示出图片
+	          photoURL=url;
+	      }else{
+	    	  handleError(result.code,result.data);
+	      }
+    	  
       },
       error:function(jqXHR,textStatus,errorThrown){                          //请求失败时调用此函数
           console.log("发生错误：" + jqXHR.status);  
@@ -123,6 +128,8 @@ function validateLemma(){                                    //对词条名进�
                 dec=1;
              }else if(text.code=="203"){
                 $("#step1").append('<span class="errorTips tip2">'+text.data.info+'</span><a class="hyperLink" href="javascript:void(0)">去看看</a>');     //词条名已存在时向用户提供错误信息
+             }else{
+            	 handleError(text.code,text.data);
              }
             },
             error:function(jqXHR,textStatus,errorThrown){                          //请求失败时调用此函数

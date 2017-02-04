@@ -87,7 +87,7 @@ public class UserServiceImpl implements IUserService {
 	@SuppressWarnings("deprecation")
 	private boolean shouldAddLoginExp(Date lastlogintime,Date now) {
 		boolean ret=false;
-		if (lastlogintime.getDay()<now.getDay()) ret=true;
+		if (lastlogintime.getDay()<now.getDay()) ret=true; 
 		if (lastlogintime.getMonth()<now.getMonth()) ret=true;
 		if (lastlogintime.getYear()<now.getYear()) ret=true;
 		return ret;

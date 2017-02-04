@@ -14,16 +14,16 @@
     <!-- 开启Aspect切面支持 -->
     <aop:aspectj-autoproxy/>
 	
-
-	<!-- <cache:annotation-driven cache-manager="cacheManager" /> -->
 	<!-- scan the package and the sub package -->
-	<context:component-scan base-package="com.pedia" />
+	<!-- <context:component-scan base-package="com.pedia" /> -->
+	<!-- 使用Annotation自动注册Bean,扫描@Controller和@ControllerAdvice-->
+	<context:component-scan base-package="com.pedia" use-default-filters="false">
+	    <!-- base-package 如果多个，用“,”分隔 -->
+	    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	    <!--控制器增强，使一个Contoller成为全局的异常处理类，类中用@ExceptionHandler方法注解的方法可以处理所有Controller发生的异常-->
+	    <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
 
-	<!-- handle the static resource -->
-	<mvc:default-servlet-handler />
-
-
-	<!-- if you use annotation you must configure following setting -->
 
 	<mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**"/> <bean 
 		id= "loginInterceptor" class="com.pedia.interceptor.LoginInterceptor" /> 
@@ -40,6 +40,7 @@
 					</list>
 				</property>
 			</bean>
+			
 			<!-- 字符串格式处理器 -->
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<property name="supportedMediaTypes">
@@ -50,10 +51,6 @@
 				</property>
 			</bean>
 			
-			<!-- XML转换器
-			<bean
-				class="org.springframework.http.converter.ResourceHttpMessageConverter" />
-				 -->
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	<!-- 定义跳转的文件的前后缀 ，视图模式配置(暂时不会用到) 
@@ -74,9 +71,13 @@
 		<property name="maxUploadSize" value="2048000" />
 		<property name="resolveLazily" value="true" />
 	</bean>
-
-
+	
+	
 	<!-- 静态资源 -->
-	<!--  <mvc:resources mapping="/**" location="/STATIC-INF/" />-->
-
+	<mvc:resources mapping="/scripts/**" location="/scripts/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/about/**" location="/about/" />
+	<mvc:resources mapping="/images/**" location="/images/" />
+	<mvc:resources mapping="/index.html" location="index.html" />
+	
 </beans>

@@ -3,6 +3,7 @@ package com.pedia.session;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import com.pedia.exception.SessionInvalidatedException;
 import com.pedia.redis.RedisConnection;
 import com.pedia.redis.RedisManager;
 
@@ -37,13 +38,13 @@ public class RedisHttpSessionRepository {
      * @param servletContext
      * @return session associate to token or null if the token is invalid
      */
-    public HttpSession getSession(String token, ServletContext servletContext) {
+    public HttpSession getSession(String token, ServletContext servletContext) throws SessionInvalidatedException{
         checkConnection();
         if (redisConnection.exists(RedisHttpSession.SESSION_PREFIX + token)) {
             RedisHttpSession redisHttpSession = RedisHttpSession.createWithExistSession(token, servletContext, redisConnection);
             return (HttpSession) new RedisHttpSessionProxy().bind(redisHttpSession);
         } else {
-            throw new IllegalStateException("The HttpSession has already be invalidated.");
+            throw new SessionInvalidatedException("The HttpSession has already be invalidated.");
         }
     }
 

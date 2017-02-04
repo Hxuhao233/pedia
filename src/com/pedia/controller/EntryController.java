@@ -46,9 +46,8 @@ public class EntryController {
 		
 		ResponseData response = new ResponseData();
 		System.out.println("queryEntry : " + info.trim());
-		if(info == null)
+		if(info.equals(""))
 			info=".*";
-		
 		List<EntryInfo> entryDataList = entryService.queryEntry(info.trim());
 		if(entryDataList.size()>0){
 			
@@ -60,7 +59,7 @@ public class EntryController {
 			
 		}else{
 			
-			response.setCode(500);
+			response.setCode(404);
 			//response.setData(new HashMap<String,Object>());
 			
 		}
@@ -134,7 +133,6 @@ public class EntryController {
 			data.put("badReviewTimes", e.getBadReviewTimes());
 			data.put("commentsNum",commentList.size());
 			data.put("comments",commentList);
-					
 					
 			response.setCode(200);		
 			response.setData(data);

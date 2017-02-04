@@ -105,13 +105,12 @@ function search(searchData) {
 	            	createListHtml(listsArray[i]);
 	            }
 
-            } else if (code == "500"){
+            } else if (code == "404"){
             	console.log("没有此数据!");
-            	
             	createHeaderHtml(0); // 创建Header
             	return;
             } else {
-            	console.log("未知错误!");
+            	handleError(code,jsonData.data);
             	return;
             }
         },

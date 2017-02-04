@@ -78,8 +78,9 @@ public class UserController {
 			data.put("hasPassList", hasPassList);//已通过版本列表
 			data.put("toPassList", toPassList);//待通过版本列表
 			data.put("hasNotPassList", hasNotPassList);//未通过版本列表
-			data.put("passRate", hasPassList.size()/ ( (hasPassList.size()+hasNotPassList.size())==0 ? 1 :hasPassList.size()+hasNotPassList.size()  )        );                //通过率
+			data.put("passRate", hasPassList.size()/ ( (hasPassList.size()+hasNotPassList.size())==0 ? 1 :hasPassList.size()+hasNotPassList.size() ) );                //通过率
 			data.put("username", user.getUsername());
+			data.put("userIcon", user.getIconaddr());
 			ret.setData(data);
 			System.out.println("获取个人主页成功！");
 			ret.setCode(200);
@@ -93,7 +94,7 @@ public class UserController {
 	}
 	
 	//删除词条
-	@RequestMapping(value = "/deleteEntry/{eid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/deleteEntry", method = RequestMethod.GET)
 	public @ResponseBody ResponseData deleteEntry(@PathVariable("eid") int eid, HttpSession session) {
 		User user=(User)session.getAttribute("user");
 		ResponseData ret=new ResponseData();

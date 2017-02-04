@@ -69,6 +69,8 @@ $(function(){
                 //alert(dataInfo);
                 $("#maincontainer").find(".failTips").remove();      //将以前的提醒元素删除
                 $("#maincontainer").append('<span class="failTips">' + dataInfo + '</span>');     //login失败时向用户显示错误信息
+             }else{
+            	 handleError(data.code,data.data)
              }
             },
             error:function(data){                          //请求失败时调用此函数
