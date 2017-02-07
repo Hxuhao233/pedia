@@ -25,9 +25,14 @@
 	</context:component-scan>
 
 
-	<mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**"/> <bean 
-		id= "loginInterceptor" class="com.pedia.interceptor.LoginInterceptor" /> 
-		</mvc:interceptor> </mvc:interceptors>  
+	<mvc:interceptors> 
+		<mvc:interceptor> 
+		<mvc:mapping path="/**"/> 
+		
+			<bean id= "loginInterceptor" class="com.pedia.interceptor.LoginInterceptor" /> 
+		</mvc:interceptor>
+
+	</mvc:interceptors>  
 
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">

@@ -28,10 +28,52 @@ public class RedisAspect {
 	        
 	 }
 	 
+		
+	 @Pointcut("execution(* com.pedia.service.IEntryService.enterEntry(java.lang.String))")    //进入词条
+	 public void enterEntryDirectly(){
+	        
+	 }
+	 
 	 @Pointcut("execution(* com.pedia.service.IManagerService.checkModifiedEntry(..))")    //管理员审核词条
 	 public void modifyEntry(){
 	        
 	 }
+	 
+	 @Around("enterEntryDirectly()")
+	 public EntryInfo aroundEnterEntryDirectly(ProceedingJoinPoint joinPoint){
+		 	System.out.println("before enter Entry ");
+			
+			
+			// 获取参数
+			String info = null;
+			Object[] args = joinPoint.getArgs();
+			if(args !=null && args.length>0){
+				info = (String) args[0];
+			}
+			String jsonEntryInfo = (String) redisCache.hget(info,"content");
+			EntryInfo entryInfo = null;
+			if(jsonEntryInfo!=null){
+				entryInfo = JsonUtils.decode(jsonEntryInfo,new TypeReference<EntryInfo>() {});
+				System.out.println("get from the redis cache");
+				return entryInfo;
+			}
+			
+			// 从数据库中查询
+			try {
+				entryInfo = (EntryInfo)joinPoint.proceed();
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			// 更新缓存
+			 System.out.println("after enter Entry directly");
+			 redisCache.hset(info, "content",JsonUtils.encode(entryInfo));
+			 return entryInfo;
+		 
+	 }
+	 
 	 
 	 @Around("enterEntry()")
 	 public EntryInfo around(ProceedingJoinPoint joinPoint){

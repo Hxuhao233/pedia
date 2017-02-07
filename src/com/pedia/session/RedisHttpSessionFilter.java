@@ -60,7 +60,19 @@ public class RedisHttpSessionFilter implements Filter {
 			// pass the request along the filter chain
 			chain.doFilter(requestWrapper, responseWrapper);
 		} catch (SessionInvalidatedException e) {
-
+			
+			
+			HttpServletRequest r1 = (HttpServletRequest)request;
+			HttpServletResponse r = (HttpServletResponse) response;
+			Cookie cookie = new Cookie(COOKIES_NAME, null);
+			cookie.setMaxAge(0);
+			cookie.setPath(r1.getContextPath());
+			System.out.println("clear cookies");
+			r.addCookie(cookie);
+			RedisSessionRequestWrapper  requestWrapper = new RedisSessionRequestWrapper(r1);
+			//System.out.println("RedisSessionRequestWrapper fin");
+			RedisSessionResponseWrapper responseWrapper = new RedisSessionResponseWrapper(r, requestWrapper);
+			/*
 			System.out.println(e.getErrMsg());
 			
 			HttpServletRequest r1 = (HttpServletRequest)request;
@@ -85,6 +97,7 @@ public class RedisHttpSessionFilter implements Filter {
 			pw.write(new ObjectMapper().writeValueAsString(exceptionData));
 			pw.flush();
 			pw.close();
+			*/
 		}
 		
 	}
@@ -127,11 +140,11 @@ public class RedisHttpSessionFilter implements Filter {
 
         @Override
         public HttpSession getSession(boolean create) {
-
+        	System.out.println("getSession : " + sessionId);
             if (/*token != null*/ sessionId !=null) {
                 return repository.getSession(sessionId, request.getServletContext());
             } else if (create){
-            	//System.out.println("create new session");
+            	System.out.println("create new session");
                 HttpSession session = repository.newSession(request.getServletContext());
                 sessionId = session.getId();
                 
@@ -178,6 +191,7 @@ public class RedisHttpSessionFilter implements Filter {
         	cookie.setPath(request.getContextPath());
         	System.out.println(request.getContextPath());
         	this.response.addCookie(cookie);
+        	System.out.println("=====================================");
             //}
         }
     }

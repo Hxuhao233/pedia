@@ -77,8 +77,11 @@ public class EntryController {
 			if(entryData!=null){
 				
 				Map<String,Object> data = new HashMap<String,Object>();
-				List<CommentData> commentList = entryService.queryComment(Integer.valueOf(entryData.getEid()));
-				
+				String eid = entryData.getEid();
+				List<CommentData> commentList = new ArrayList<>();
+				if(eid!=null){
+					commentList = entryService.queryComment(Integer.valueOf(eid));
+				}
 				data.put("eid", entryData.getEid());
  				data.put("entryName", entryData.getEntryName());
 				data.put("pic",entryData.getPictureAddr());

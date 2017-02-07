@@ -178,6 +178,7 @@ public class UserController {
 				data.put("info", "未输入用户名或密码");
 			}
 			ret.setData(data);
+        	System.out.println("=====================================");
 			return ret;
 		}
 		

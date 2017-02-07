@@ -29,7 +29,7 @@ public class RedisHttpSessionProxy implements InvocationHandler{
 			redisHttpSession.setRedisConnection(repository.getRedisConnection());
 		}
 		////System.out.println("inner invoke " + redisHttpSession.getKey());
-		if(redisHttpSession.isInvalidated()){
+		if(!redisHttpSession.isValid()){
 			
 			throw new IllegalStateException("this session has been invalidated!");
 	
