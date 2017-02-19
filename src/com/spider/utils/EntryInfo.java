@@ -1,4 +1,4 @@
-package com.pedia.tool;
+package com.spider.utils;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -14,6 +14,10 @@ import com.pedia.model.Entry;
  *
  */
 public class EntryInfo implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String entryName;
 	private String entryContent;
 	private String label1;

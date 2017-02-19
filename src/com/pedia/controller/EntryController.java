@@ -26,6 +26,7 @@ import com.pedia.model.Entry;
 import com.pedia.model.Report;
 import com.pedia.model.User;
 import com.pedia.service.IEntryService;
+import com.pedia.service.ISearchService;
 import com.pedia.tool.BaseEntryDataList;
 import com.pedia.tool.CommentData;
 import com.pedia.tool.DetailedEntryData;
@@ -40,6 +41,9 @@ public class EntryController {
 	@Autowired
 	private IEntryService entryService;
 	
+	@Autowired
+	private ISearchService searchService;
+	
 	// 查询词条
 	@RequestMapping(value = "/queryEntry",method = RequestMethod.GET)
 	public @ResponseBody ResponseData queryEntry(@RequestParam(value = "search" , required=false)String info){
@@ -49,6 +53,7 @@ public class EntryController {
 		if(info.equals(""))
 			info=".*";
 		List<EntryInfo> entryDataList = entryService.queryEntry(info.trim());
+		entryDataList.addAll(searchService.search(info));
 		if(entryDataList.size()>0){
 			
 			response.setCode(200);

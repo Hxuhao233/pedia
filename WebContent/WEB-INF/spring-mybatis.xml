@@ -54,5 +54,11 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<bean id="mobileSearchService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">  
+        <property name="serviceUrl" value="rmi://127.0.0.1:18080/MobileSearchService" />  
+        <property name="serviceInterface"  
+            value="com.pedia.service.ISearchService" />  
+    </bean>  
 
 </beans>
