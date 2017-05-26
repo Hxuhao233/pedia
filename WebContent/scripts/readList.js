@@ -44,7 +44,7 @@ function createListHtml(listData) {
 					"<span class='createDate'>" + data.createDate + "</span>" +
 				"</p>" +
 			"</div>" +
-			"<img src='" + "../../static/images/" + data.pictureAddr + "' alt='词条图片' class='listPic' />" +
+			"<img src='"  + data.pictureAddr + "' alt='词条图片' class='listPic' />" +
 			"<p class='listDetail'>" + data.entryContent + "</p>" +
 			"<p class='listLabels'>" +
 				"<span class='listLabel0'>标签：&nbsp</span>" +

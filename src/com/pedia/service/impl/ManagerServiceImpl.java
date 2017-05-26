@@ -66,7 +66,8 @@ public class ManagerServiceImpl implements IManagerService{
 			User reporter = userDao.selectByPrimaryKey(report.getUid());
 			String reporterName = reporter.getUsername()!=null? reporter.getUsername() : reporter.getAccount();
 			Entry e = entryDao.selectByPrimaryKey(report.getEid());
-			entryDataList.addReportedEntry(e,reporterName, report);
+			Action a = actionDao.selectByEidAndStatus(e.getEid(), 2).get(0);
+			entryDataList.addReportedEntry(e,reporterName, report,a);
 		}
 
 

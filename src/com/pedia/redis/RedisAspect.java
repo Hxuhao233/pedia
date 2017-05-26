@@ -20,7 +20,7 @@ import redis.clients.jedis.Jedis;
 @Component
 @Aspect
 public class RedisAspect {
-	
+	/*
 	private RedisConnection redisCache = RedisManager.getInstance().getConnection();
 		
 	 @Pointcut("execution(* com.pedia.service.IEntryService.enterEntry(java.lang.Integer))")    //进入词条
@@ -137,4 +137,5 @@ public class RedisAspect {
 		
 			
 	 }
+	 */
 }

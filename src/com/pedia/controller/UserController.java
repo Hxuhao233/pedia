@@ -50,8 +50,7 @@ public class UserController {
 		User user=(User)session.getAttribute("user");
 		System.out.println("home page");
 		ResponseData ret=new ResponseData();
-		if (user!=null)
-		{
+		if (user!=null){
 
 			Map<String,Object> data = new HashMap<String,Object>();
 			DetailedUserData detailedUserData;
@@ -90,6 +89,7 @@ public class UserController {
 			System.out.println("获取个人主页失败！session为null");
 			ret.setCode(500);
 		}
+		//throw new NullPointerException("登录");
 		return ret;
 	}
 	

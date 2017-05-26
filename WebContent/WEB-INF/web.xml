@@ -37,7 +37,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	  
-	
+	<!--  Session  转存 Redis 
 	<filter>
 		<filter-name>sessionFilter</filter-name>
 		<filter-class>com.pedia.filter.SessionFilter</filter-class>
@@ -54,7 +54,7 @@
 		<filter-name>sessionFilter</filter-name>	
 		<url-pattern>/entry/*</url-pattern>
 	</filter-mapping>
-	 
+	  -->
 	
   	<!-- Spring和mybatis的配置文件 -->
 	<context-param>

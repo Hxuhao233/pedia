@@ -37,7 +37,7 @@ public class RedisHttpSessionFilter implements Filter {
     private RedisHttpSessionRepository repository;
 
     public RedisHttpSessionFilter(){
-        repository = RedisHttpSessionRepository.getInstance();
+        //repository = RedisHttpSessionRepository.getInstance();
     }
 
 
@@ -51,8 +51,9 @@ public class RedisHttpSessionFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
+		/*
 		try{
 			RedisSessionRequestWrapper  requestWrapper = new RedisSessionRequestWrapper((HttpServletRequest)request);
 			//System.out.println("RedisSessionRequestWrapper fin");
@@ -98,7 +99,7 @@ public class RedisHttpSessionFilter implements Filter {
 			pw.flush();
 			pw.close();
 			*/
-		}
+		/*}*/
 		
 	}
 

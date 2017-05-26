@@ -10,7 +10,7 @@ var logoutUrl = "../../Pedia/user/logout";
 $(function(){
     $("#goback").click(function(){
         document.getElementById('light').style.display='none';
-        document.getElementById('fade').style.display='none';
+        //document.getElementById('fade').style.display='none';
     });
     $("#usernameController").hover(function(){
         $("#drop").attr("src","../images/manager/u896_hover.png")
@@ -57,6 +57,7 @@ function seeEntry(eidNum,aidNum){
 function btn1ActionListener(){
     $("#btn1").unbind("click");
     $("#btn1").click(function(){
+    	//alert("222");
         var sendData = {
             "data":
                 {
@@ -161,7 +162,7 @@ function btn1ActionListenerTable2(){
         var RowNum = $(this).attr("myAttrs");
         var eid = $(this).attr("eid");
         var rid = $(this).attr("rid");
-
+        
         //alert(eid);
         $.ajax({                                                 //使用post方法向服务器传送json字符串
         type:"GET",
@@ -413,7 +414,7 @@ $(function(){
                     oneMessage[0]=dataKey.reportedEntryList[i].entryName;
                     oneMessage[1]=dataKey.reportedEntryList[i].reported;
                     oneMessage[2]=dataKey.reportedEntryList[i].reason;
-                    oneMessage[3]="<div eid='"+dataKey.reportedEntryList[i].eid+"' "+"rid='"+dataKey.reportedEntryList[i].rid+"'></div>";
+                    oneMessage[3]="<div eid='"+dataKey.reportedEntryList[i].eid+"' "+"rid='"+dataKey.reportedEntryList[i].rid+"' aid='"+dataKey.reportedEntryList[i].aid + "'></div>";
                     //alert(oneMessage[3]);
                     //dataKey.reportedEntryList[i].entryId;
                     insertInfoTable2(oneMessage);
@@ -438,22 +439,27 @@ $(function(){
                     $("#btn2").attr("myAttrs",getRow(this));
                     seeEntry(eid,aid);
                     document.getElementById('light').style.display='block';
-                    document.getElementById('fade').style.display='block';
+                    //document.getElementById('fade').style.display='block';
                     btn1ActionListener();
                     btn2ActionListener();
                 });
                 $("#table2 div").click(function(){
                     var eid = $(this).attr("eid");
                     var rid = $(this).attr("rid");
+                    var aid = $(this).attr("aid");
+                    
                     $("#btn1").attr("eid",eid);
+                    $("#btn1").attr("aid",aid);
                     $("#btn1").attr("myAttrs",getRow(this));
                     $("#btn1").attr("rid",rid);
+
+                    $("#btn2").attr("aid",aid);
                     $("#btn2").attr("eid",eid);
                     $("#btn2").attr("myAttrs",getRow(this));
                     $("#btn2").attr("rid",rid);
                     seeEntry(eid,aid);
                     document.getElementById('light').style.display='block';
-                    document.getElementById('fade').style.display='block';
+                    //document.getElementById('fade').style.display='block';
                     //alert("h");
                     btn1ActionListenerTable2();
                     btn2ActionListenerTable2();
@@ -469,7 +475,7 @@ $(function(){
                     $("#btn2").attr("aid",aid);
                     seeEntry(eid,aid);
                     document.getElementById('light').style.display='block';
-                    document.getElementById('fade').style.display='block';
+                    //document.getElementById('fade').style.display='block';
                     btn1ActionListenerTable3();
                     btn2ActionListenerTable3();
                 });
@@ -508,7 +514,7 @@ $(function(){
 //弹出框的关闭按钮
 function Close(){
     document.getElementById('light').style.display='none';
-    document.getElementById('fade').style.display='none';
+    //document.getElementById('fade').style.display='none';
 }
 
 window.onload=function(){

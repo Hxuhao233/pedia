@@ -40,7 +40,7 @@ public class EntryInfo implements Serializable{
 		this.setLabel4(nowContent.getLabel4());
 		this.setPraiseTimes(entry.getPraisetimes());
 		this.setBadReviewTimes(entry.getBadreviewtimes());
-		this.setPictureAddr(nowContent.getPictureaddr());
+		this.setPictureAddr("../../static/images/" + nowContent.getPictureaddr());
 	}
 	
 	public String getCreateDate() {

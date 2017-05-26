@@ -43,7 +43,7 @@ public class BaseEntryDataList {
 		
 	}
 	
-	public int addReportedEntry(Entry entry,String reporter,Report report){
+	public int addReportedEntry(Entry entry,String reporter,Report report,Action action){
 		Map<String,Object>item;
 		item = new HashMap<String,Object>();
 		item.put("eid", entry.getEid().toString());
@@ -51,6 +51,7 @@ public class BaseEntryDataList {
 		item.put("entryName",entry.getEntryname());
 		item.put("reported", reporter);
 		item.put("reason",report.getReason());
+		item.put("aid", action.getAid());
 		data.add(item);
 		//listNum++;
 		return 1;
